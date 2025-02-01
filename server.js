@@ -1,6 +1,6 @@
 const http = require('http');
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
 
 	res.setHeader('Access-Control-Allow-Origin', '*'); // Or specify your frontend's origin
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'); // Specify allowed methods
@@ -27,7 +27,7 @@ const server = http.createServer((req, res) => {
 			message = "The render app works!";
 			break;
 		case "/print":
-			message = printDoc(req, res);
+			message = await printDoc(req, res);
 			break;
 
 		default:
@@ -37,21 +37,21 @@ const server = http.createServer((req, res) => {
 	res.end(message);
 })
 
-function obtaintextToPrint(req){
-    let body = '';
+async function obtaintextToPrint(req){
+    let body = null;
 
-    req.on('data', chunk => {
-        body += chunk.toString();
+	await req.on('data', chunk => {
+        body = JSON.parse(chunk.toString());
     });
 
 	return body;
 }
 
-function printDoc(req, res) {
+async function printDoc(req, res) {
 
-	const textToPrint = obtaintextToPrint(req);
+	const textToPrint = await obtaintextToPrint(req);
 
-	console.log(textToPrint);
+	console.log("text to print", textToPrint);
 
 }
 
