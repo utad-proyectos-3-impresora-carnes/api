@@ -89,7 +89,6 @@ async function printFile(filePath) {
 	});
 }
 
-
 async function printDoc(req, res) {
 
 	const body = await obtaintextToPrint(req);
