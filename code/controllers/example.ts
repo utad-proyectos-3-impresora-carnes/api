@@ -38,12 +38,79 @@ function exampleGet(req: any, res: any) {
  * @param res Response
  * @returns La respuesta después de realizar las acciones.
  */
-function examplePost(req, res) {
+function examplePost(req: any, res: any) {
 
 	// Siempre debe haber try catch para que aunque falle la operación el servidor no se caiga.
 	try {
 
-		return res.status(200).send("Thou arth seeing an example POST!");
+		// Crea un nuevo objeto de servicio.
+		const exampleService = new ExampleService();
+
+		return res.status(200).send({
+			text: "Thou arth seeing an example POST!",
+			fetchedData: exampleService.getUsefulNumber()
+		});
+
+	} catch (error: any) {
+
+		// Al menos poned un pequeño mensaje de ejemplo para que se sepa de donde proviene el error.
+		return res.status(500).send({
+			alert: "The example POST controller failed!",
+			error: error
+		});
+
+	}
+}
+
+/**
+ * Ejemplo de un controlador.
+ * @param req Request
+ * @param res Response
+ * @returns La respuesta después de realizar las acciones.
+ */
+function examplePut(req: any, res: any) {
+
+	// Siempre debe haber try catch para que aunque falle la operación el servidor no se caiga.
+	try {
+
+		// Crea un nuevo objeto de servicio.
+		const exampleService = new ExampleService();
+
+		return res.status(200).send({
+			text: "Thou arth seeing an example PUT!",
+			fetchedData: exampleService.getUsefulString()
+		});
+
+	} catch (error: any) {
+
+		// Al menos poned un pequeño mensaje de ejemplo para que se sepa de donde proviene el error.
+		return res.status(500).send({
+			alert: "The example PUT controller failed!",
+			error: error
+		});
+
+	}
+}
+
+/**
+ * Ejemplo de un controlador.
+ * @param req Request
+ * @param res Response
+ * @returns La respuesta después de realizar las acciones.
+ */
+function examplePatch(req: any, res: any) {
+
+	// Siempre debe haber try catch para que aunque falle la operación el servidor no se caiga.
+	try {
+
+		// Crea un nuevo objeto de servicio.
+		const exampleService = new ExampleService();
+
+		return res.status(200).send({
+			text: "Thou arth seeing an example PATCH!",
+			fetchedData: exampleService.getUsefulBool()
+		});
+
 
 	} catch (error: any) {
 
@@ -62,58 +129,12 @@ function examplePost(req, res) {
  * @param res Response
  * @returns La respuesta después de realizar las acciones.
  */
-function examplePut(req, res) {
+function exampleDelete(req: any, res: any) {
 
 	// Siempre debe haber try catch para que aunque falle la operación el servidor no se caiga.
 	try {
 
-		return res.status(200).send("Thou arth seeing an example PUT!");
-
-	} catch (error: any) {
-
-		// Al menos poned un pequeño mensaje de ejemplo para que se sepa de donde proviene el error.
-		return res.status(500).send({
-			alert: "The example GET controller failed!",
-			error: error
-		});
-
-	}
-}
-
-/**
- * Ejemplo de un controlador.
- * @param req Request
- * @param res Response
- * @returns La respuesta después de realizar las acciones.
- */
-function examplePatch(req, res) {
-
-	// Siempre debe haber try catch para que aunque falle la operación el servidor no se caiga.
-	try {
-
-		return res.status(200).send("Thou arth seeing an example PATCH!");
-
-	} catch (error: any) {
-
-		// Al menos poned un pequeño mensaje de ejemplo para que se sepa de donde proviene el error.
-		return res.status(500).send({
-			alert: "The example GET controller failed!",
-			error: error
-		});
-
-	}
-}
-
-/**
- * Ejemplo de un controlador.
- * @param req Request
- * @param res Response
- * @returns La respuesta después de realizar las acciones.
- */
-function exampleDelete(req, res) {
-
-	// Siempre debe haber try catch para que aunque falle la operación el servidor no se caiga.
-	try {
+		throw new Error("Ejemplod de fallo de controlador");
 
 		return res.status(200).send("Thou arth seeing an example DELETE!");
 
