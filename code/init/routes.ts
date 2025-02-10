@@ -19,4 +19,5 @@ router.use('*', function (req: any, res: any) {
 	res.send("<h1>404! Skill issue!</h1>");
 });
 
+//Exporta el router una vez definidos todos los sub routers.
 export { router };

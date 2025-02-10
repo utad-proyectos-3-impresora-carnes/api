@@ -1,6 +1,4 @@
-export { };
-
-class ExampleService {
+export default class ExampleService {
 
 	private usefulString: string;
 	private usefulNumber: number;
@@ -33,7 +31,3 @@ class ExampleService {
 	}
 
 }
-
-module.exports = {
-	ExampleService
-};
