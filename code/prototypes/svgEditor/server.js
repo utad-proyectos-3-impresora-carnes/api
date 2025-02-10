@@ -3,6 +3,9 @@ const path = require("path")
 const server = express();
 const fs = require('fs');
 const { JSDOM } = require('jsdom');
+const cors = require('cors');
+
+server.use(cors())
 
 server.use(express.json());
 
