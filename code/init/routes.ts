@@ -1,5 +1,3 @@
-export { };
-
 const express = require("express");
 const exampleRouter = require("../routers/example");
 
@@ -15,5 +13,4 @@ router.use('*', function (req:any, res:any) {
 	res.send("<h1>404! Skill issue!</h1>");
 });
 
-
-module.exports = router;
+export {router};

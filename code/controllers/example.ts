@@ -2,7 +2,7 @@ export { };
 
 const ExampleService = require('../services/example');
 
-function exampleGet(req: Express.Request, res: Express.Response) {
+function exampleGet(req:any, res: any) {
 
 	const exampleService = new ExampleService();
 
