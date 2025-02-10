@@ -1,6 +1,6 @@
-export { };
 
-const express = require("express");
+
+import express from "express";
 const controller = require("../controllers/example");
 
 const exampleRouter = express.Router();
@@ -14,6 +14,4 @@ exampleRouter.put("/", controller.examplePut);
 exampleRouter.patch("/", controller.examplePatch);
 
 exampleRouter.delete("/", controller.exampleDelete);
-
-
-module.exports = exampleRouter;
+export { exampleRouter };
