@@ -2,19 +2,24 @@
   "name": "api",
   "version": "1.0.0",
   "description": "Api de la impresora de carnes",
-  "main": "index.js",
+  "main": "app.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "nodemon ./server.js",
-    "start": "node ./server.js"
+    "watch": "nodemon ./app.ts",
+    "start": "node ./app.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "express": "^4.21.2"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "@types/express": "^5.0.0",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
   }
 }
