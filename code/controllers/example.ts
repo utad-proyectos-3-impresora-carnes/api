@@ -1,5 +1,3 @@
-export { };
-
 const ExampleService = require('../services/example');
 
 function exampleGet(req:any, res: any) {
@@ -29,7 +27,7 @@ function exampleDelete(req, res) {
 	return res.status(200).send("Thou arth seeing an example DELETE!");
 }
 
-module.exports = {
+export default {
 	exampleGet,
 	examplePost,
 	examplePut,
