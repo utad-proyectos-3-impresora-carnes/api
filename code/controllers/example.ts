@@ -2,6 +2,9 @@ import ExampleService from "../services/example";
 
 /**
  * Ejemplo de un controlador.
+ * Las req y res no se pueden tipar, pero el resto si se debería. 'any' no clarifica los contenidos!
+ * Un controlador nunca puede llamar a otro controlador, solo a servicios!
+ * 
  * @param req Request
  * @param res Response
  * @returns La respuesta después de realizar las acciones.
@@ -25,7 +28,7 @@ function exampleGet(req: any, res: any) {
 		// Al menos poned un pequeño mensaje de ejemplo para que se sepa de donde proviene el error.
 		return res.status(500).send({
 			alert: "The example GET controller failed!",
-			error: error
+			error: error.message
 		});
 
 	}
@@ -34,6 +37,9 @@ function exampleGet(req: any, res: any) {
 
 /**
  * Ejemplo de un controlador.
+ * Las req y res no se pueden tipar, pero el resto si se debería. 'any' no clarifica los contenidos!
+ * Un controlador nunca puede llamar a otro controlador, solo a servicios!
+ * 
  * @param req Request
  * @param res Response
  * @returns La respuesta después de realizar las acciones.
@@ -56,7 +62,7 @@ function examplePost(req: any, res: any) {
 		// Al menos poned un pequeño mensaje de ejemplo para que se sepa de donde proviene el error.
 		return res.status(500).send({
 			alert: "The example POST controller failed!",
-			error: error
+			error: error.message
 		});
 
 	}
@@ -64,6 +70,9 @@ function examplePost(req: any, res: any) {
 
 /**
  * Ejemplo de un controlador.
+ * Las req y res no se pueden tipar, pero el resto si se debería. 'any' no clarifica los contenidos!
+ * Un controlador nunca puede llamar a otro controlador, solo a servicios!
+ * 
  * @param req Request
  * @param res Response
  * @returns La respuesta después de realizar las acciones.
@@ -86,7 +95,7 @@ function examplePut(req: any, res: any) {
 		// Al menos poned un pequeño mensaje de ejemplo para que se sepa de donde proviene el error.
 		return res.status(500).send({
 			alert: "The example PUT controller failed!",
-			error: error
+			error: error.message
 		});
 
 	}
@@ -94,6 +103,9 @@ function examplePut(req: any, res: any) {
 
 /**
  * Ejemplo de un controlador.
+ * Las req y res no se pueden tipar, pero el resto si se debería. 'any' no clarifica los contenidos!
+ * Un controlador nunca puede llamar a otro controlador, solo a servicios!
+ * 
  * @param req Request
  * @param res Response
  * @returns La respuesta después de realizar las acciones.
@@ -116,8 +128,8 @@ function examplePatch(req: any, res: any) {
 
 		// Al menos poned un pequeño mensaje de ejemplo para que se sepa de donde proviene el error.
 		return res.status(500).send({
-			alert: "The example GET controller failed!",
-			error: error
+			alert: "The example PATCH controller failed!",
+			error: error.message
 		});
 
 	}
@@ -125,6 +137,9 @@ function examplePatch(req: any, res: any) {
 
 /**
  * Ejemplo de un controlador.
+ * Las req y res no se pueden tipar, pero el resto si se debería. 'any' no clarifica los contenidos!
+ * Un controlador nunca puede llamar a otro controlador, solo a servicios!
+ * 
  * @param req Request
  * @param res Response
  * @returns La respuesta después de realizar las acciones.
@@ -134,7 +149,7 @@ function exampleDelete(req: any, res: any) {
 	// Siempre debe haber try catch para que aunque falle la operación el servidor no se caiga.
 	try {
 
-		throw new Error("Ejemplod de fallo de controlador");
+		throw new Error("Ejemplo de fallo de controlador");
 
 		return res.status(200).send("Thou arth seeing an example DELETE!");
 
@@ -142,8 +157,8 @@ function exampleDelete(req: any, res: any) {
 
 		// Al menos poned un pequeño mensaje de ejemplo para que se sepa de donde proviene el error.
 		return res.status(500).send({
-			alert: "The example GET controller failed!",
-			error: error
+			alert: "The example DELETE controller failed!",
+			error: error.message
 		});
 
 	}
