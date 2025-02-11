@@ -16,7 +16,7 @@ router.use('/example', exampleRouter);
  * Tiene que estar abajo del todo porque los routers son como los switch, van de arriba abajo y si pillan un resultado válido no siguen buscando.
  */
 router.use('*', function (req: any, res: any) {
-	res.send("<h1>404! Skill issue!</h1>");
+	res.status(404).send("<h1>404! Skill issue!</h1>");
 });
 
 //Exporta el router una vez definidos todos los sub routers.
