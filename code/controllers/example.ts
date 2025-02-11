@@ -1,4 +1,4 @@
-import ExampleService from "../services/example";
+import ExampleService from "../utils/example";
 
 /**
  * Ejemplo de un controlador.
@@ -9,7 +9,7 @@ import ExampleService from "../services/example";
  * @param res Response
  * @returns La respuesta después de realizar las acciones.
  */
-function exampleGet(req: any, res: any) {
+async function exampleGet(req: any, res: any) {
 
 	// Siempre debe haber try catch para que aunque falle la operación el servidor no se caiga.
 	try {
@@ -44,7 +44,7 @@ function exampleGet(req: any, res: any) {
  * @param res Response
  * @returns La respuesta después de realizar las acciones.
  */
-function examplePost(req: any, res: any) {
+async function examplePost(req: any, res: any) {
 
 	// Siempre debe haber try catch para que aunque falle la operación el servidor no se caiga.
 	try {
@@ -77,7 +77,7 @@ function examplePost(req: any, res: any) {
  * @param res Response
  * @returns La respuesta después de realizar las acciones.
  */
-function examplePut(req: any, res: any) {
+async function examplePut(req: any, res: any) {
 
 	// Siempre debe haber try catch para que aunque falle la operación el servidor no se caiga.
 	try {
@@ -110,7 +110,7 @@ function examplePut(req: any, res: any) {
  * @param res Response
  * @returns La respuesta después de realizar las acciones.
  */
-function examplePatch(req: any, res: any) {
+async function examplePatch(req: any, res: any) {
 
 	// Siempre debe haber try catch para que aunque falle la operación el servidor no se caiga.
 	try {
@@ -144,7 +144,7 @@ function examplePatch(req: any, res: any) {
  * @param res Response
  * @returns La respuesta después de realizar las acciones.
  */
-function exampleDelete(req: any, res: any) {
+async function exampleDelete(req: any, res: any) {
 
 	// Siempre debe haber try catch para que aunque falle la operación el servidor no se caiga.
 	try {
