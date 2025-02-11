@@ -5,58 +5,58 @@ import requests
 from io import BytesIO
 
 def cargar_imagen(foto_path):
-    """Carga una imagen desde una URL o una ruta local."""
+    """Carga una imagen desde una URL o una ruta local con mejor calidad."""
     if foto_path.startswith("http"):
         response = requests.get(foto_path)
         if response.status_code == 200:
-            return Image.open(BytesIO(response.content))
+            img = Image.open(BytesIO(response.content)).convert("RGBA")
         else:
             raise Exception("No se pudo descargar la imagen desde la URL.")
     else:
-        return Image.open(foto_path)
+        img = Image.open(foto_path).convert("RGBA")
+    
+    return img
 
 def generar_tarjeta(nombre, grado, dni, foto_path):
-    # Crear una imagen en blanco con las dimensiones de la tarjeta
-    tarjeta = Image.new("RGB", (300, 180), "white")
+    # Crear una imagen en blanco con mayor resolución (600x360)
+    tarjeta = Image.new("RGB", (600, 360), "white")
 
-    # Cargar y pegar la imagen de la foto del alumno (desde URL o local)
-    foto_alumno = cargar_imagen(foto_path).resize((70, 90))
-    tarjeta.paste(foto_alumno, (22, 18))
+    # Cargar y mejorar la imagen del alumno
+    foto_alumno = cargar_imagen(foto_path).resize((140, 180), Image.LANCZOS)  # 2x tamaño original
+    tarjeta.paste(foto_alumno, (44, 36))  # Duplicamos coordenadas (2x escala)
 
-    # Generar código de barras sin texto
+    # Generar código de barras con más resolución
     code128 = barcode.get("code128", dni, writer=ImageWriter())
-    barcode_path = "barcode"  # Sin extensión, porque python-barcode añade .png automáticamente
-    code128.save(barcode_path, {"module_width": 0.4, "module_height": 20, "add_text": False})
+    barcode_path = "barcode"
+    code128.save(barcode_path, {"module_width": 0.8, "module_height": 40, "add_text": False})  # 2x tamaño original
 
-    # Cargar el código de barras
-    barcode_img = Image.open(barcode_path + ".png")
-    
-    # Recortar la parte inferior (ajusta según el tamaño del texto generado)
+    # Cargar y recortar el código de barras
+    barcode_img = Image.open(barcode_path + ".png").convert("L")  # Escala de grises para calidad
     width, height = barcode_img.size
-    barcode_img = barcode_img.crop((0, 0, width, int(height * 0.75)))  # Elimina el 25% inferior
-    
-    # Redimensionar al tamaño deseado y pegar en la tarjeta
-    barcode_img = barcode_img.resize((138, 22))
-    tarjeta.paste(barcode_img, (139, 135))
+    barcode_img = barcode_img.crop((0, 0, width, int(height * 0.75)))  # Recortar parte inferior
 
-    # Dibujar texto (nombre y grado)
+    # Redimensionar y pegar código de barras
+    barcode_img = barcode_img.resize((276, 44), Image.LANCZOS)  # 2x tamaño original
+    tarjeta.paste(barcode_img, (278, 270))  # Duplicamos coordenadas (2x escala)
+
+    # Dibujar texto con mayor tamaño
     draw = ImageDraw.Draw(tarjeta)
-    font = ImageFont.truetype("arial.ttf", 9.1)  # Ajusta la fuente y tamaño si es necesario
+    font = ImageFont.truetype("arial.ttf", 12.1 * 2)  # 2x tamaño original
 
-    draw.text((139, 68), nombre, font=font, fill="black")
-    draw.text((139, 98), grado, font=font, fill="black")
+    draw.text((278, 136), nombre, font=font, fill="black")
+    draw.text((278, 196), grado, font=font, fill="black")
 
-    # Guardar la imagen final
-    tarjeta.save("tarjeta_generada.png")
-    print("Tarjeta generada correctamente.")
+    # Reducir a tamaño original (300x180) si es necesario
+    tarjeta = tarjeta.resize((300, 180), Image.LANCZOS)
 
-# Ejemplo de uso con URL y ruta local
+    # Guardar imagen final con alta calidad
+    tarjeta.save("tarjeta_generada.png", dpi=(300, 300))
+    print("Tarjeta generada con mejor resolución.")
+
+# Ejemplo de uso
 generar_tarjeta(
-    "Rafael Sánchez Fernández", 
-    "Grado INSO", 
-    "12345678A", 
-    "https://cdn.discordapp.com/attachments/1334909232117448785/1337048440760176690/Foto.png?ex=67a80125&is=67a6afa5&hm=77c5ae241cca3f7e79a8d1f9d79ba9e13d7876a4840bab3cbaf03d551b093d89&"
+    "Rafael Sánchez Fernández",
+    "Grado INSO",
+    "12345678A",
+    "https://cdn.discordapp.com/attachments/1334909232117448785/1337048440760176690/Foto.png?ex=67abf5a5&is=67aaa425&hm=4a4d96d953e2943a44473596219b7373f83f1113136a457ea3ca6873ef3e413a&"
 )
-
-# También funcionaría con una imagen local:
-# generar_tarjeta("Nombre", "Grado", "DNI", "foto_alumno.png")
