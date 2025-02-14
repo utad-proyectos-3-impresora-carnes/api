@@ -7,16 +7,16 @@ const GroupSchema = new Schema(
 	{
 		// El nombre del grupo.
 		name: {
-			type: String
+			type: Schema.Types.String
 		},
 		// El tipo del grupo. Solo los valores del enum son válidos.
 		type: {
-			type: String,
+			type: Schema.Types.String,
 			enum: ["grado", "master", "ciclo", "staff"]
 		},
 		// Fecha de creación del grupo
 		creationYear: {
-			type: Date
+			type: Schema.Types.Date
 		}
 	},
 	{
