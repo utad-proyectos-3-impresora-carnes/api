@@ -5,23 +5,27 @@ import { Schema, model } from "mongoose";
  */
 const UserSchema = new Schema(
 	{
-		name: {
-			type: String
+		// El email.
+		email: {
+			type: Schema.Types.String
 		},
-		age: {
-			type: Number
+		// Contraseña cifrada, marcada para que no se devuelva en los select.
+		password: {
+			type: Schema.Types.String,
+			select: false
 		},
-		password:{
-			type:String,
-			select:false
+		// Teléfono del usuario. De momento no es usado pero será necesario para el doble factor de autenticación.
+		phone: {
+			type: Schema.Types.String
 		}
 	},
 	{
+		// Guarda Los tiempos de creación.
 		timestamps: true,
 		versionKey: false
 	}
 
-);	
+);
 
 /**
  * Crear un modelo de mongoose.
