@@ -51,7 +51,7 @@ userRouter.post(
  * Obtener todos los datos de un usuario para ver su perfil.
  */
 userRouter.get(
-	"/:id",
+	"/",
 	[
 
 	],

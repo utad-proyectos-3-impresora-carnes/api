@@ -12,13 +12,13 @@ async function createUser(req: any, res: any) {
 
 	try {
 
-		const userService:UserService = await new UserService();
+		const userService: UserService = new UserService();
 
 		// Extra los datos del cuerpo.
 		const { email, password, phone } = req.body;
 
 		// Comprueba si el email está libre
-		if (! await userService.checkEmailAvailable(email)){
+		if (! await userService.checkEmailAvailable(email)) {
 			throw new Error("Email is already taken! Choose another please.");
 		}
 
@@ -68,6 +68,7 @@ async function login(req: any, res: any) {
 		// Crea el objeto.
 		const userObject = await new UserService().checkLoginCredentials(userData);
 
+		// TODO: somehow make a token for the user
 		console.log(userObject)
 
 		// Devuelve el objeto creado.
@@ -94,7 +95,8 @@ async function resetPassword(req: any, res: any) {
 
 	try {
 
-		res.send("Not implemented yet!");
+		// No tocar durante sprint 2
+		res.send("Not implemented yet! Come back in sprint 3!");
 
 	} catch (error: any) {
 
@@ -117,7 +119,11 @@ async function getUserData(req: any, res: any) {
 
 	try {
 
-		res.send("Not implemented yet!");
+		const userId: string = req.query.id;
+
+		const userObject = await new UserService().getUserById(userId);
+
+		res.status(200).send(userObject);
 
 	} catch (error: any) {
 

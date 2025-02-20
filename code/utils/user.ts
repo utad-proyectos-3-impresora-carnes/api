@@ -77,4 +77,23 @@ export default class UserService {
 		}
 	}
 
+	/**
+	 * Get an user object from the database by ID.
+	 * @param userId Id of the user
+	 * @returns The object of the user
+	 */
+	public async getUserById(userId:string) {
+
+		try {
+
+			return await UserModel.findById(userId);
+
+		} catch (error) {
+
+			console.error(error)
+			throw new Error("Error looking up user by id");
+
+		}
+	}
+
 }
