@@ -17,5 +17,5 @@ export default interface UserInterface extends MongoDBGenericObjectInterface {
 	/**
 	 * El teléfono del usuario.
 	 */
-	phone: string,
+	phone?: string,
 }

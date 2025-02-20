@@ -16,7 +16,7 @@ async function createUser(req: any, res: any) {
 		const { email, password, phone } = req.body;
 
 		// Formatea los datos en una interfaz de datos de usuario.
-		const userData:UserInterface = {
+		const userData: UserInterface = {
 			email,
 			password,
 			phone
@@ -49,7 +49,22 @@ async function login(req: any, res: any) {
 
 	try {
 
-		res.send("Not implemented yet!");
+		// Extra los datos del cuerpo.
+		const { email, password } = req.body;
+
+		// Formatea los datos en una interfaz de datos de usuario.
+		const userData: UserInterface = {
+			email,
+			password
+		}
+
+		// Crea el objeto.
+		const userObject = await new UserService().checkLoginCredentials(userData);
+
+		console.log(userObject)
+
+		// Devuelve el objeto creado.
+		res.status(201).send(userObject);
 
 	} catch (error: any) {
 
