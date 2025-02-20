@@ -11,19 +11,24 @@ export default class UserService {
 
 	}
 
+	/**
+	 * Comprueba si ya existe algún usuario con el email que se pase.
+	 * @param email Email a verificar
+	 * @returns Si está libre
+	 */
 	public async checkEmailAvailable(email: string): Promise<boolean> {
 
 		try {
 
-			let emailTaken: boolean = false;
+			let emailAvailable: boolean = true;
 
 			const userObject = await UserModel.findOne({ email });
-
-			if (userObject) {
-				emailTaken = true;
-			}
 			
-			return emailTaken;
+			if (userObject) {
+				emailAvailable = false;
+			}
+
+			return emailAvailable;
 
 		} catch (error) {
 

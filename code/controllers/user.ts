@@ -12,8 +12,15 @@ async function createUser(req: any, res: any) {
 
 	try {
 
+		const userService:UserService = await new UserService();
+
 		// Extra los datos del cuerpo.
 		const { email, password, phone } = req.body;
+
+		// Comprueba si el email está libre
+		if (! await userService.checkEmailAvailable(email)){
+			throw new Error("Email is already taken! Choose another please.");
+		}
 
 		// Formatea los datos en una interfaz de datos de usuario.
 		const userData: UserInterface = {
@@ -23,7 +30,7 @@ async function createUser(req: any, res: any) {
 		}
 
 		// Crea el objeto.
-		const userObject = await new UserService().createUser(userData);
+		const userObject = await userService.createUser(userData);
 
 		// Devuelve el objeto creado.
 		res.status(201).send(userObject);
@@ -32,7 +39,7 @@ async function createUser(req: any, res: any) {
 
 		console.error(error);
 
-		return res.status(500).send("The operation to create a user failed!");
+		return res.status(500).send(error.message);
 
 	}
 
