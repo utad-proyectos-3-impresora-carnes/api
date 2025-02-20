@@ -26,7 +26,7 @@ Content-Type: application/json
 }
 
 ### Obtener los datos de un usuario
-GET http://localhost:3000/api/user/?id=67b6f9dc0ec7fb586e64c8b0 HTTP/1.1
+GET http://localhost:3000/api/user/?id=67b7058e22e9254ae658b074 HTTP/1.1
 
 ### Editar parte o todos los datos de un usuario
 PATCH  http://localhost:3000/api/user/ HTTP/1.1
@@ -39,4 +39,4 @@ Content-Type: application/json
 }
 
 ### Borrar un usuario
-DELETE http://localhost:3000/api/user/ HTTP/1.1
+DELETE http://localhost:3000/api/user/?id=67b7058e22e9254ae658b074 HTTP/1.1

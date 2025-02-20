@@ -63,7 +63,7 @@ userRouter.get(
  * Actualiza los datos de un usuario
  */
 userRouter.patch(
-	"/:id",
+	"/",
 	[
 
 	],
@@ -75,7 +75,7 @@ userRouter.patch(
  * Elemina un usuario.
  */
 userRouter.delete(
-	"/:id",
+	"/",
 	[
 
 	],

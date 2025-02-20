@@ -96,7 +96,7 @@ async function resetPassword(req: any, res: any) {
 	try {
 
 		// No tocar durante sprint 2
-		res.send("Not implemented yet! Come back in sprint 3!");
+		res.status(501).send("Not implemented yet! Come back in sprint 3!");
 
 	} catch (error: any) {
 
@@ -119,11 +119,23 @@ async function getUserData(req: any, res: any) {
 
 	try {
 
+		// Extrae los datos de la query
 		const userId: string = req.query.id;
 
+		// Busca el usuario
 		const userObject = await new UserService().getUserById(userId);
 
-		res.status(200).send(userObject);
+		let data: any = userObject;
+		let status: number = 200;
+
+		// Comprueba que el usuario exista, sino, cambia los datos que se envían.
+		if (!userObject) {
+			data = "User not found!";
+			status = 404;
+		}
+
+		// Devuelve el usuario.
+		res.status(status).send(data);
 
 	} catch (error: any) {
 
@@ -170,13 +182,20 @@ async function deleteUser(req: any, res: any) {
 
 	try {
 
-		res.send("Not implemented yet!");
+		// Extrae los datos de la query
+		const userId: string = req.query.id;
+
+		// Busca el usuario
+		const userObject = await new UserService().deleteUserById(userId);
+
+		// Devuelve el usuario.
+		res.status(200).send(userObject);
 
 	} catch (error: any) {
 
 		console.error(error);
 
-		return res.status(500).send("The operation to delete a user failed!");
+		return res.status(500).send("The operation to get a user's data failed!");
 
 	}
 

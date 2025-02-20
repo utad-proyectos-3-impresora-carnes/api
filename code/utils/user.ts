@@ -23,7 +23,7 @@ export default class UserService {
 			let emailAvailable: boolean = true;
 
 			const userObject = await UserModel.findOne({ email });
-			
+
 			if (userObject) {
 				emailAvailable = false;
 			}
@@ -82,7 +82,7 @@ export default class UserService {
 	 * @param userId Id of the user
 	 * @returns The object of the user
 	 */
-	public async getUserById(userId:string) {
+	public async getUserById(userId: string) {
 
 		try {
 
@@ -92,6 +92,25 @@ export default class UserService {
 
 			console.error(error)
 			throw new Error("Error looking up user by id");
+
+		}
+	}
+
+	/**
+	 * Deletes a user with the given ID.
+	 * @param userId User Id
+	 * @returns The 
+	 */
+	public async deleteUserById(userId: string) {
+
+		try {
+
+			return await UserModel.findByIdAndDelete(userId);
+
+		} catch (error) {
+
+			console.error(error)
+			throw new Error("Error deleting user by id");
 
 		}
 	}
