@@ -1,3 +1,4 @@
+import { Response } from "express";
 import UserInterface from "../interfaces/user";
 import UserService from "../utils/user";
 
@@ -8,7 +9,7 @@ import UserService from "../utils/user";
  * @param res Response
  * @returns El objeto de usuario creado.
  */
-async function createUser(req: any, res: any) {
+async function createUser(req: any, res: Response) {
 
 	try {
 
@@ -54,7 +55,7 @@ async function createUser(req: any, res: any) {
  * @param res Response
  * @returns Token de autenticación para el usuario.
  */
-async function login(req: any, res: any) {
+async function login(req: any, res: Response) {
 
 	try {
 
@@ -93,7 +94,7 @@ async function login(req: any, res: any) {
  * @param res Response
  * @returns Confirmación de que el email se ha enviado o mensaje de que el envio ha fallado.
  */
-async function resetPassword(req: any, res: any) {
+async function resetPassword(req: any, res: Response) {
 
 	try {
 
@@ -117,7 +118,7 @@ async function resetPassword(req: any, res: any) {
  * @param res Response
  * @returns El objeto con todos los datos de un usuario.
  */
-async function getUserData(req: any, res: any) {
+async function getUserData(req: any, res: Response) {
 
 	try {
 
@@ -156,7 +157,7 @@ async function getUserData(req: any, res: any) {
  * @param res Response
  * @returns El objeto de usuario con sus valores actualizados.
  */
-async function updateUser(req: any, res: any) {
+async function updateUser(req: any, res: Response) {
 
 	try {
 
@@ -204,7 +205,7 @@ async function updateUser(req: any, res: any) {
  * @param res Response
  * @returns Confirmación de que se ha borrado la cuenta del usuario o un error en caso contrario.
  */
-async function deleteUser(req: any, res: any) {
+async function deleteUser(req: any, res: Response) {
 
 	try {
 
