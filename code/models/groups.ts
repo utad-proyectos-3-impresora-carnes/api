@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import GroupTypes from "../constants/groupTypes";
 
 /**
  * Crear el esqema del grupo
@@ -12,7 +13,7 @@ const GroupSchema = new Schema(
 		// El tipo del grupo. Solo los valores del enum son válidos.
 		type: {
 			type: Schema.Types.String,
-			enum: ["grado", "master", "ciclo", "staff"]
+			enum: GroupTypes
 		},
 		// Fecha de creación del grupo
 		creationYear: {

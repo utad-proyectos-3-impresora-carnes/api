@@ -1,6 +1,7 @@
 import express from "express";
 import { exampleRouter } from "../routers/example";
 import { userRouter } from "../routers/user";
+import { memberRouter } from "../routers/member";
 
 /**
  * Crea un objeto router.
@@ -12,6 +13,7 @@ const router = express.Router();
  */
 router.use('/api/example', exampleRouter);
 router.use('/api/user', userRouter);
+router.use('/api/member', memberRouter);
 
 /**
  * Lo que devuelve si todos los demás routers por encima no se encontró la dirección buscada.

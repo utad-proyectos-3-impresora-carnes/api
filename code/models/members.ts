@@ -5,33 +5,37 @@ import { Schema, model } from "mongoose";
  */
 const MemberSchema = new Schema(
 	{
+		
 		// El nombre completo del miembro.
 		fullName: {
 			type: Schema.Types.String
 		},
+
 		// El DNI del miembro.
 		dni: {
 			type: Schema.Types.String
 		},
+		
 		// El grupo del miembro
 		group: {
-			id: {
+			
+			_id: {
 				type: Schema.Types.ObjectId
 			},
+			
 			name: {
 				type: Schema.Types.String
 			}
+
 		},
+		
 		// El link a la foto en el servidor de la UTAD
 		profileImageLink: {
 			type: Schema.Types.String
 		},
-		// Fecha de actualización de los datos
-		dataUpdateDate: {
-			type: Date
-		},
-		// Fecha de expedición del primer carné (dejar en null si todavía no se ha impreso).
-		firstCardPrintedDate: {
+			
+		// Fecha de expedición del último carné (dejar en null si todavía no se ha impreso).
+		lastCardPrintedDate: {
 			type: Schema.Types.Date
 		}
 	},

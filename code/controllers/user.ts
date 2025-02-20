@@ -1,3 +1,4 @@
+import { Response } from "express";
 import UserInterface from "../interfaces/user";
 import UserService from "../utils/user";
 

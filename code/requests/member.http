@@ -1,0 +1,23 @@
+### Obtiene todos los meimbros.
+GET http://localhost:3000/api/member  HTTP/1.1
+Content-Type: application/json
+
+
+### Obtiene todos los meimbros filtrados.
+GET http://localhost:3000/api/member/filtered  HTTP/1.1
+Content-Type: application/json
+
+
+### Obtiene todos los meimbros en un grupo.
+GET http://localhost:3000/api/member/inGroup  HTTP/1.1
+Content-Type: application/json
+
+
+### Obtiene la previsualización de un miembro.
+GET http://localhost:3000/api/member/preview  HTTP/1.1
+Content-Type: application/json
+
+
+### Manda a un miembro a imprimir.
+PATCH http://localhost:3000/api/member  HTTP/1.1
+Content-Type: application/json
