@@ -15,7 +15,7 @@ const mongooseConnect = () => {
 
 	} catch (error: any) {
 
-		console.log("Error conectando a la base de datos");
+		console.error("Error conectando a la base de datos");
 
 	}
 
