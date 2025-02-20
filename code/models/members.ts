@@ -34,8 +34,8 @@ const MemberSchema = new Schema(
 			type: Schema.Types.String
 		},
 			
-		// Fecha de expedición del primer carné (dejar en null si todavía no se ha impreso).
-		firstCardPrintedDate: {
+		// Fecha de expedición del último carné (dejar en null si todavía no se ha impreso).
+		lastCardPrintedDate: {
 			type: Schema.Types.Date
 		}
 	},

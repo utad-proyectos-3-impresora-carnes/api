@@ -29,5 +29,5 @@ export default interface MemberInterface extends MongoDBGenericObjectInterface {
 	/**
 	 * Fecha de la primera impresión del carné
 	 */
-	firstCardPrintedDate: Date
+	lastCardPrintedDate: Date
 }

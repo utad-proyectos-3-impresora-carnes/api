@@ -60,7 +60,7 @@ userRouter.get(
 );
 
 /**
- * Actualiza los datos de un usuario
+ * Actualiza los datos de un usuario.
  */
 userRouter.patch(
 	"/",
@@ -83,5 +83,5 @@ userRouter.delete(
 	controller.deleteUser
 );
 
-// Exporta el router una vez definidos todos los endpoints.s
+// Exporta el router una vez definidos todos los endpoints.
 export { userRouter };
