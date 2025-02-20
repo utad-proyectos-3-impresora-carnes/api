@@ -1,3 +1,4 @@
+import MemberService from "../utils/member";
 
 /**
  * Obtiene todos los miembros de la plataforma.
@@ -10,8 +11,9 @@ async function getAllMembers(req: any, res: any) {
 
 	try {
 
-		// No tocar durante sprint 2
-		res.status(501).send("Not implemented yet! Come back in sprint 3!");
+		const members = await new MemberService().getAllMembers();
+
+		res.status(202).send(members);
 
 	} catch (error: any) {
 
