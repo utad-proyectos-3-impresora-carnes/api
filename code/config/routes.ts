@@ -1,5 +1,6 @@
 import express from "express";
 import { exampleRouter } from "../routers/example";
+import { userRouter } from "../routers/user";
 
 /**
  * Crea un objeto router.
@@ -9,7 +10,8 @@ const router = express.Router();
 /**
  * Asigna un subdominio del servidor a un router en concreto.
  */
-router.use('/example', exampleRouter);
+router.use('/api/example', exampleRouter);
+router.use('/api/user', userRouter);
 
 /**
  * Lo que devuelve si todos los demás routers por encima no se encontró la dirección buscada.
