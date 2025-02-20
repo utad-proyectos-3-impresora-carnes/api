@@ -22,8 +22,10 @@ export default class UserService {
 
 			let emailAvailable: boolean = true;
 
+			// Busca un usuario en la base de datos con el email.
 			const userObject = await UserModel.findOne({ email });
 
+			// Si hay un match, el amil no está disponible.
 			if (userObject) {
 				emailAvailable = false;
 			}
@@ -47,6 +49,7 @@ export default class UserService {
 
 		try {
 
+			// Crea el usuario
 			return await UserModel.create(userData);
 
 		} catch (error) {
@@ -67,6 +70,7 @@ export default class UserService {
 
 		try {
 
+			// Busca un usuario con las credenciales que se le pasan.
 			return await UserModel.findOne({ email: userData.email, password: userData.password });
 
 		} catch (error) {
@@ -86,6 +90,7 @@ export default class UserService {
 
 		try {
 
+			// Busca un usuario según su id.
 			return await UserModel.findById(userId);
 
 		} catch (error) {
@@ -106,8 +111,10 @@ export default class UserService {
 
 		try {
 
+			// Actualiza el usuario
 			await UserModel.updateOne({ _id: userId }, userData);
 
+			// Una vez actualizado lo vuelve a buscar para obtener los nuevos datos (mongoose no deveulve el objeto actualizado).
 			return this.getUserById(userId);
 
 		} catch (error) {
@@ -122,12 +129,13 @@ export default class UserService {
 	/**
 	 * Deletes a user with the given ID.
 	 * @param userId User Id
-	 * @returns The 
+	 * @returns The object of teh user that has been deleted.
 	 */
 	public async deleteUserById(userId: string) {
 
 		try {
 
+			// Borra el usuario.
 			return await UserModel.findByIdAndDelete(userId);
 
 		} catch (error) {
