@@ -19,11 +19,29 @@ export default class MemberService {
 		try {
 
 			return await MemberModel.find();
-		
+
 		} catch (error) {
 
 			console.error(error)
 			throw new Error("Error checking fetching all members data available");
+
+		}
+	}
+
+	/**
+	 * Obtiene todos los miembros cuyo grupo contenga ese id.
+	 * @param groupId El id del grupo.
+	 */
+	public async getMembersInGroup(groupId: string) {
+
+		try {
+
+			return await MemberModel.find({ "group.id": groupId })
+
+		} catch (error) {
+
+			console.error(error)
+			throw new Error("Error checking getting all members in a group");
 
 		}
 	}

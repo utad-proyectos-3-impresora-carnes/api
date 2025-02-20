@@ -11,9 +11,14 @@ async function getAllMembers(req: any, res: any) {
 
 	try {
 
-		const members = await new MemberService().getAllMembers();
+		// Crea el servicio
+		const memberService = new MemberService();
 
-		res.status(202).send(members);
+		// Obiene todos los miembros
+		const members = await memberService.getAllMembers();
+
+		// Devuelve todos los miembros
+		res.status(200).send(members);
 
 	} catch (error: any) {
 
@@ -60,8 +65,17 @@ async function getMembersInGroup(req: any, res: any) {
 
 	try {
 
-		// No tocar durante sprint 2
-		res.status(501).send("Not implemented yet! Come back in sprint 3!");
+		// Crea el servicio
+		const memberService = new MemberService();
+
+		// Extrae el parámetro de la query
+		const groupId = req.query.groupId;
+
+		// Obten los miembros del grupo
+		const membersInGroup = await memberService.getMembersInGroup(groupId);
+
+		// Devuelve los meimbros del grupo
+		res.status(501).send(membersInGroup);
 
 	} catch (error: any) {
 
