@@ -11,11 +11,16 @@ export default class UserService {
 
 	}
 
-	public createUser(userData: UserInterface) {
+	/**
+	 * Crea un usuario en la base de datos.
+	 * @param userData Datos del usuario que se quiere crear.
+	 * @returns El objeto del usaurio creado en la base de datos.
+	 */
+	public async createUser(userData: UserInterface) {
 
 		try {
 
-			return UserModel.create(userData);
+			return await UserModel.create(userData);
 
 		} catch (error) {
 

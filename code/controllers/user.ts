@@ -1,3 +1,4 @@
+import UserInterface from "../interfaces/user";
 import UserService from "../utils/user";
 
 /**
@@ -11,10 +12,21 @@ async function createUser(req: any, res: any) {
 
 	try {
 
+		// Extra los datos del cuerpo.
 		const { email, password, phone } = req.body;
 
-		
-		res.send("Not implemented yet!");
+		// Formatea los datos en una interfaz de datos de usuario.
+		const userData:UserInterface = {
+			email,
+			password,
+			phone
+		}
+
+		// Crea el objeto.
+		const userObject = await new UserService().createUser(userData);
+
+		// Devuelve el objeto creado.
+		res.status(201).send(userObject);
 
 	} catch (error: any) {
 
