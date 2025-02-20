@@ -22,6 +22,8 @@ async function createUser(req: any, res: any) {
 			throw new Error("Email is already taken! Choose another please.");
 		}
 
+		// TODO: cypher password.
+		
 		// Formatea los datos en una interfaz de datos de usuario.
 		const userData: UserInterface = {
 			email,
@@ -158,7 +160,31 @@ async function updateUser(req: any, res: any) {
 
 	try {
 
-		res.send("Not implemented yet!");
+		// Crea el servicio
+		const userService = new UserService();
+
+		// Extrae los datos de la query
+		const userId: string = req.query.id;
+		const { email, password, phone } = req.body;
+
+		// Si hay nuevo email, comprueba que esté disponible.
+		if (email !== undefined && ! await userService.checkEmailAvailable(email)) {
+			throw new Error("Email is already taken! Choose another please.");
+		}
+
+		// TODO: if new password cypher it
+
+		const userData: UserInterface = {
+			email,
+			password,
+			phone
+		}
+
+		// Actualiza el usuario.
+		const userObject = await userService.updateUserById(userId, userData);
+
+		// Devuelve el nuevo usuario.
+		res.status(200).send(userObject);
 
 	} catch (error: any) {
 

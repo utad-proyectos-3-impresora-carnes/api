@@ -97,6 +97,29 @@ export default class UserService {
 	}
 
 	/**
+	 * Updates the user with a given id, changing the given data.
+	 * @param userId The Id of the user to update
+	 * @param userData The data to update
+	 * @returns The updated object of the user
+	 */
+	public async updateUserById(userId: string, userData: UserInterface) {
+
+		try {
+
+			await UserModel.updateOne({ _id: userId }, userData);
+
+			return this.getUserById(userId);
+
+		} catch (error) {
+
+			console.error(error)
+			throw new Error("Error looking up user by id");
+
+		}
+	}
+
+
+	/**
 	 * Deletes a user with the given ID.
 	 * @param userId User Id
 	 * @returns The 

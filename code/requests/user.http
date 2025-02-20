@@ -26,14 +26,14 @@ Content-Type: application/json
 }
 
 ### Obtener los datos de un usuario
-GET http://localhost:3000/api/user/?id=67b7058e22e9254ae658b074 HTTP/1.1
+GET http://localhost:3000/api/user/?id=67b708913428753374fbefad HTTP/1.1
 
 ### Editar parte o todos los datos de un usuario
-PATCH  http://localhost:3000/api/user/ HTTP/1.1
+PATCH  http://localhost:3000/api/user/?id=67b708913428753374fbefad HTTP/1.1
 Content-Type: application/json
 
 {
-    "email": "realEmail@gmail.com",
+     "email": "realEmail@gmail.com",
 	"password":"12341234Abc",
 	"phone":"+34 111222333"
 }
