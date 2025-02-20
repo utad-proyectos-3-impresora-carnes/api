@@ -1,154 +1,144 @@
-import ExampleService from "../utils/example";
+import UserService from "../utils/user";
 
 /**
- * Ejemplo de un controlador.
- * Las req y res no se pueden tipar, pero el resto si se debería. 'any' no clarifica los contenidos!
- * Un controlador nunca puede llamar a otro controlador, solo a servicios!
+ * Crea un usuario.
  * 
  * @param req Request
  * @param res Response
- * @returns La respuesta después de realizar las acciones.
+ * @returns El objeto de usuario creado.
  */
 async function createUser(req: any, res: any) {
 
 	try {
 
+		res.send("Not implemented yet!");
 
 	} catch (error: any) {
 
 		console.error(error);
 
-		// Al menos poned un pequeño mensaje de ejemplo para que se sepa de donde proviene el error.
-		return res.status(500).send("The example GET controller failed!");
+		return res.status(500).send("The operation to create a user failed!");
 
 	}
 
 }
 
 /**
- * Ejemplo de un controlador.
- * Las req y res no se pueden tipar, pero el resto si se debería. 'any' no clarifica los contenidos!
- * Un controlador nunca puede llamar a otro controlador, solo a servicios!
+ * Realiza el login.
  * 
  * @param req Request
  * @param res Response
- * @returns La respuesta después de realizar las acciones.
+ * @returns Token de autenticación para el usuario.
  */
 async function login(req: any, res: any) {
 
 	try {
 
+		res.send("Not implemented yet!");
 
 	} catch (error: any) {
 
 		console.error(error);
 
-		// Al menos poned un pequeño mensaje de ejemplo para que se sepa de donde proviene el error.
-		return res.status(500).send("The example GET controller failed!");
+		return res.status(500).send("The operation to log in failed!");
 
 	}
 
 }
+
 /**
- * Ejemplo de un controlador.
- * Las req y res no se pueden tipar, pero el resto si se debería. 'any' no clarifica los contenidos!
- * Un controlador nunca puede llamar a otro controlador, solo a servicios!
+ * Solicitar cambio de contraseña.
  * 
  * @param req Request
  * @param res Response
- * @returns La respuesta después de realizar las acciones.
+ * @returns Confirmación de que el email se ha enviado o mensaje de que el envio ha fallado.
  */
 async function resetPassword(req: any, res: any) {
 
 	try {
 
+		res.send("Not implemented yet!");
 
 	} catch (error: any) {
 
 		console.error(error);
 
-		// Al menos poned un pequeño mensaje de ejemplo para que se sepa de donde proviene el error.
-		return res.status(500).send("The example GET controller failed!");
+		return res.status(500).send("The operation to reset password failed!");
 
 	}
 
 }
+
 /**
- * Ejemplo de un controlador.
- * Las req y res no se pueden tipar, pero el resto si se debería. 'any' no clarifica los contenidos!
- * Un controlador nunca puede llamar a otro controlador, solo a servicios!
+ * Obtener todos los datos de un usuario.
  * 
  * @param req Request
  * @param res Response
- * @returns La respuesta después de realizar las acciones.
+ * @returns El objeto con todos los datos de un usuario.
  */
 async function getUserData(req: any, res: any) {
 
 	try {
 
+		res.send("Not implemented yet!");
 
 	} catch (error: any) {
 
 		console.error(error);
 
-		// Al menos poned un pequeño mensaje de ejemplo para que se sepa de donde proviene el error.
-		return res.status(500).send("The example GET controller failed!");
+		return res.status(500).send("The operation to get a user's data failed!");
 
 	}
 
 }
+
 /**
- * Ejemplo de un controlador.
- * Las req y res no se pueden tipar, pero el resto si se debería. 'any' no clarifica los contenidos!
- * Un controlador nunca puede llamar a otro controlador, solo a servicios!
+ * Cambia los datos de usuario que se envién el petición.
  * 
  * @param req Request
  * @param res Response
- * @returns La respuesta después de realizar las acciones.
+ * @returns El objeto de usuario con sus valores actualizados.
  */
 async function updateUser(req: any, res: any) {
 
 	try {
 
+		res.send("Not implemented yet!");
 
 	} catch (error: any) {
 
 		console.error(error);
 
-		// Al menos poned un pequeño mensaje de ejemplo para que se sepa de donde proviene el error.
-		return res.status(500).send("The example GET controller failed!");
+		return res.status(500).send("The operation to update a user failed!");
 
 	}
 
+
 }
+
 /**
- * Ejemplo de un controlador.
- * Las req y res no se pueden tipar, pero el resto si se debería. 'any' no clarifica los contenidos!
- * Un controlador nunca puede llamar a otro controlador, solo a servicios!
+ * Borra el usuario que realizó esta petición
  * 
  * @param req Request
  * @param res Response
- * @returns La respuesta después de realizar las acciones.
+ * @returns Confirmación de que se ha borrado la cuenta del usuario o un error en caso contrario.
  */
 async function deleteUser(req: any, res: any) {
 
 	try {
 
+		res.send("Not implemented yet!");
 
 	} catch (error: any) {
 
 		console.error(error);
 
-		// Al menos poned un pequeño mensaje de ejemplo para que se sepa de donde proviene el error.
-		return res.status(500).send("The example GET controller failed!");
+		return res.status(500).send("The operation to delete a user failed!");
 
 	}
 
 }
-/**
- * Añadir aquí abajo los controladores para que se exporten bien!
- * Se puede poner un export al principio de la función del controlador 'export function nombreFuncion' pero entonces no te autocompletará en el router con el objeto controldor.
- */
+
 export default {
 	createUser,
 	login,
