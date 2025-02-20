@@ -11,6 +11,9 @@ async function createUser(req: any, res: any) {
 
 	try {
 
+		const { email, password, phone } = req.body;
+
+		
 		res.send("Not implemented yet!");
 
 	} catch (error: any) {
