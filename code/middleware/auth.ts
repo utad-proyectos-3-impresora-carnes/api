@@ -1,7 +1,7 @@
-export default function auth(req:any, res:any){
+export default function auth(req:any, res:any, next:any){
 
 	console.log("Going thorugh auth!");
 
-	return true;
-	
+	next();
+
 }
