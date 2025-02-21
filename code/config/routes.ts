@@ -3,6 +3,9 @@ import { exampleRouter } from "../routers/example";
 import { userRouter } from "../routers/user";
 import { memberRouter } from "../routers/member";
 import { groupRouter } from "../routers/group";
+import swaggerUi from 'swagger-ui-express';
+import swaggerDocs from "./swagger";
+
 
 /**
  * Crea un objeto router.
@@ -16,6 +19,8 @@ router.use('/api/example', exampleRouter);
 router.use('/api/user', userRouter);
 router.use('/api/member', memberRouter);
 router.use('/api/group', groupRouter);
+router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 
 /**
  * Lo que devuelve si todos los demás routers por encima no se encontró la dirección buscada.

@@ -12,7 +12,14 @@ const exampleRouter = express.Router();
 /**
  * Asigna a cualquier request de tipo GET la función del controlador de ejemplo 'exampleGet'.
  */
-exampleRouter.get("*", controller.exampleGet);
+exampleRouter.get("*",[
+  /**  
+    #swagger.requestBody = {  
+        required: true,  
+        schema: { $ref: "#/components/schemas/UpdateEmployeeRequest" }  
+    }  
+     */ 
+], controller.exampleGet);
 
 
 /**
