@@ -23,7 +23,7 @@ const userRouter = express.Router();
 
 /**
  * @swagger
- * /user:
+ * /api/user:
  *   post:
  *     summary: Creación de un nuevo usuario.
  *     tags: [User]
@@ -41,7 +41,7 @@ userRouter.post(
 
 /**
  * @swagger
- * /user/login:
+ * /api/user/login:
  *   post:
  *     summary: Realizar un login.
  *     tags: [User]
@@ -59,7 +59,7 @@ userRouter.post(
 
 /**
  * @swagger
- * /user/resetPassword:
+ * /api/user/resetPassword:
  *   post:
  *     summary: Recibe un email para reiniciar la contraseña.
  *     tags: [User]
@@ -77,7 +77,7 @@ userRouter.post(
 
 /**
  * @swagger
- * /user:
+ * /api/user:
  *   get:
  *     summary: Obtener todos los datos de un usuario para ver su perfil.
  *     tags: [User]
@@ -96,7 +96,7 @@ userRouter.get(
 
 /**
  * @swagger
- * /user:
+ * /api/user:
  *   patch:
  *     summary: Actualiza los datos de un usuario.
  *     tags: [User]
@@ -115,7 +115,7 @@ userRouter.patch(
 
 /**
  * @swagger
- * /user:
+ * /api/user:
  *   delete:
  *     summary: Elimina un usuario.
  *     tags: [User]
