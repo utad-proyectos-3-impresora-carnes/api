@@ -55,7 +55,7 @@ async function getFilteredMembers(req: any, res: any) {
 }
 
 /**
- * Obtiene los meimbros de un grupo.
+ * Obtiene los miembros de un grupo.
  * 
  * @param req Request
  * @param res Response
@@ -74,7 +74,7 @@ async function getMembersInGroup(req: any, res: any) {
 		// Obten los miembros del grupo
 		const membersInGroup = await memberService.getMembersInGroup(groupId);
 
-		// Devuelve los meimbros del grupo
+		// Devuelve los miembros del grupo
 		res.status(501).send(membersInGroup);
 
 	} catch (error: any) {
@@ -88,11 +88,11 @@ async function getMembersInGroup(req: any, res: any) {
 }
 
 /**
- * Obtiene la imagen de previsualización de un carné.
+ * Obtiene la imagen de previsualización de un carne.
  * 
  * @param req Request
  * @param res Response
- * @returns La imagen de previsualización de un carné
+ * @returns La imagen de previsualización de un carne.
  */
 async function previewMemberCard(req: any, res: any) {
 
@@ -116,7 +116,7 @@ async function previewMemberCard(req: any, res: any) {
  * 
  * @param req Request
  * @param res Response
- * @returns Cornfirmación de que el meimbro se mandó a imprimir.
+ * @returns Cornfirmación de que el miembro se mandó a imprimir.
  */
 async function printMember(req: any, res: any) {
 

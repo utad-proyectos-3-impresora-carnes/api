@@ -1,14 +1,18 @@
 import mongoose from "mongoose";
 
+/**
+ * Connect to the mongo database
+ */
 const mongooseConnect = () => {
-
-	const db_uri = process.env.MONGO_DB_URI;
-
-	mongoose.set('strictQuery', false);
 
 	try {
 
+		const db_uri = process.env.MONGO_DB_URI;
+
+		mongoose.set('strictQuery', false);
+		
 		mongoose.connect(db_uri);
+		
 		mongoose.connection.on("connected", () => {
 			console.log("Conexión con mongoDb iniciada sin problemas.");
 		});

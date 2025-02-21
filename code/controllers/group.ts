@@ -59,7 +59,7 @@ async function getFilteredGroups(req: any, res: any) {
  * 
  * @param req Request
  * @param res Response
- * @returns Cornfirmación de que el grupo se mandó a imprimir.
+ * @returns Confirmación de que el grupo se mandó a imprimir.
  */
 async function printGroup(req: any, res: any) {
 

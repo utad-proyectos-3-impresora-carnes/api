@@ -151,7 +151,7 @@ async function getUserData(req: any, res: any) {
 }
 
 /**
- * Cambia los datos de usuario que se envién el petición.
+ * Cambia los datos del usuario que se envié en la petición.
  * 
  * @param req Request
  * @param res Response
@@ -199,7 +199,7 @@ async function updateUser(req: any, res: any) {
 }
 
 /**
- * Borra el usuario que realizó esta petición
+ * Borra al usuario que se solicitó en esta perición.
  * 
  * @param req Request
  * @param res Response
