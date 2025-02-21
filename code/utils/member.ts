@@ -36,7 +36,7 @@ export default class MemberService {
 
 		try {
 
-			return await MemberModel.find({ "group.id": groupId })
+			return await MemberModel.find({ "group.id" : groupId })
 
 		} catch (error) {
 

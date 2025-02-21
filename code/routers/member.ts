@@ -65,7 +65,7 @@ memberRouter.get(
  * Mandar a imprimir un meimbro.
  */
 memberRouter.patch(
-	"/",
+	"/print",
 	[
 
 	],
