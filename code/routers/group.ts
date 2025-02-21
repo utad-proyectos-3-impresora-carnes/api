@@ -39,7 +39,7 @@ groupRouter.get(
  * Mandar a imprimir un grupo.
  */
 groupRouter.patch(
-	"/",
+	"/print",
 	[
 
 	],
