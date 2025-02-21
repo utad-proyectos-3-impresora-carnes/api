@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 import GroupTypes from "../constants/groupTypes";
 
 /**
- * Crear el esqema del grupo
+ * Crear el esquema del grupo
  */
 const GroupSchema = new Schema(
 	{

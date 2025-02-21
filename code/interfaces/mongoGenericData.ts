@@ -4,6 +4,7 @@ import { Schema } from "mongoose";
  * Interfaz de un objeto generico de mongodb.
  */
 export default interface MongoDBGenericObjectInterface {
+	
 	/**
 	 * El id del objeto.
 	 */

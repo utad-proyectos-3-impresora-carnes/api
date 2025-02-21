@@ -3,6 +3,13 @@ import controller from "../controllers/group";
 import auth from "../middleware/auth";
 
 /**
+ * @swagger
+ * tags:
+ *   name: Group
+ *   description: API endpoints for the groups of the database.
+ */
+
+/**
  * Objeto de router de los grupos.
  * Ofrece los siguientes endpoints:
  * - GET / -> devuelve todos los grupos en la base de datos
@@ -12,7 +19,20 @@ import auth from "../middleware/auth";
 const groupRouter = express.Router();
 
 /**
- * Obtener todos los grupos.
+ * @swagger
+ * /api/group/:
+ *   get:
+ *     summary: Obtener todos los grupos
+ *     tags: [Group]
+ *     responses:
+ *       200:
+ *         description: Lista de todos los grupos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Group'
  */
 groupRouter.get(
 	"/",
@@ -24,7 +44,20 @@ groupRouter.get(
 );
 
 /**
- * Obtener los grupos filtrados.
+ * @swagger
+ * /api/group/filtered:
+ *   get:
+ *     summary: Obtener los grupos filtrados
+ *     tags: [Group]
+ *     responses:
+ *       200:
+ *         description: Lista de grupos filtrados
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Group'
  */
 groupRouter.get(
 	"/filtered",
@@ -36,7 +69,28 @@ groupRouter.get(
 );
 
 /**
- * Mandar a imprimir un grupo.
+ * @swagger
+ * /api/group/print:
+ *   patch:
+ *     summary: Mandar a imprimir un grupo
+ *     tags: [Group]
+ *     parameters:
+ *       - in: query
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID del grupo
+ *     responses:
+ *       200:
+ *         description: Confirmación de impresión
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
  */
 groupRouter.patch(
 	"/print",
