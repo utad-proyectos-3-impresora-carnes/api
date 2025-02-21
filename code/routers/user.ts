@@ -26,11 +26,32 @@ const userRouter = express.Router();
  * /api/user:
  *   post:
  *     summary: Creación de un nuevo usuario.
- *     tags: [User]
+ *     tags: 
+ *       - User
+ * 
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: "exampleEmail@gmail.com"
+ *               password:
+ *                 type: string
+ *                 example: "12341234Aa"
+ *               phone:
+ *                 type: string
+ *                 example: "+34123123123"
  *     responses:
  *       200:
  *         description: Usuario creado exitosamente.
+ *       500:
+ *         description: Erorr interno (puede ser que el email no sea válido)
  */
+
 userRouter.post(
 	"/",
 	[
@@ -44,10 +65,28 @@ userRouter.post(
  * /api/user/login:
  *   post:
  *     summary: Realizar un login.
- *     tags: [User]
+ *     tags: 
+ *       - User
+ *
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: "exampleEmail@gmail.com"
+ *               password:
+ *                 type: string
+ *                 example: "12341234Aa"
+ * 
  *     responses:
  *       200:
  *         description: Login exitoso.
+ *       500:
+ *         description: Fallo de autenticación.
  */
 userRouter.post(
 	"/login",
@@ -62,10 +101,25 @@ userRouter.post(
  * /api/user/resetPassword:
  *   post:
  *     summary: Recibe un email para reiniciar la contraseña.
- *     tags: [User]
+ *     tags: 
+ *       - User
+ * 
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: "exampleEmail@gmail.com"
+ * 
  *     responses:
  *       200:
  *         description: Email enviado exitosamente.
+ *       500:
+ *         description: Error al enviar el email de resetear la contraseña.
  */
 userRouter.post(
 	"/resetPassword",
@@ -80,10 +134,22 @@ userRouter.post(
  * /api/user:
  *   get:
  *     summary: Obtener todos los datos de un usuario para ver su perfil.
- *     tags: [User]
+ *     tags: 
+ *       - User
+ * 
+ *     parameters:
+ *       - in: query
+ *         name: userId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID del usuario
+ * 
  *     responses:
  *       200:
  *         description: Datos del usuario obtenidos exitosamente.
+ *       500:
+ *         description: Error buscar los datos de un usuario en particular.
  */
 userRouter.get(
 	"/",
@@ -99,10 +165,39 @@ userRouter.get(
  * /api/user:
  *   patch:
  *     summary: Actualiza los datos de un usuario.
- *     tags: [User]
+ *     tags: 
+ *       - User
+ * 
+ *     parameters:
+ *       - in: query
+ *         name: userId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID del usuario
+ *
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: "exampleEmail@gmail.com"
+ *               password:
+ *                 type: string
+ *                 example: "12341234Aa"
+ *               phone:
+ *                 type: string
+ *                 example: "+34123123123" 
+ * 
  *     responses:
  *       200:
  *         description: Usuario actualizado exitosamente.
+ *       500:
+ *         description: Error al actualizar los datos del usuario. 
  */
 userRouter.patch(
 	"/",
@@ -118,10 +213,22 @@ userRouter.patch(
  * /api/user:
  *   delete:
  *     summary: Elimina un usuario.
- *     tags: [User]
+ *     tags: 
+ *       - User
+ * 
+ *     parameters:
+ *       - in: query
+ *         name: userId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID del usuario
+ * 
  *     responses:
  *       200:
  *         description: Usuario eliminado exitosamente.
+ *       500:
+ *         description: Error al eliminar un usuario. 
  */
 userRouter.delete(
 	"/",
