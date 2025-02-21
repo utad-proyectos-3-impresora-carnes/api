@@ -3,6 +3,13 @@ import controller from "../controllers/member";
 import auth from "../middleware/auth";
 
 /**
+ * @swagger
+ * tags:
+ *   name: Member
+ *   description: API endpoints for the members of the database.
+ */
+
+/**
  * Objeto de router de los miembros.
  * Ofrece los siguientes endpoints:
  * - GET / -> devuelve todos los miembros en la base de datos

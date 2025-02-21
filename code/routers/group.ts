@@ -3,6 +3,13 @@ import controller from "../controllers/group";
 import auth from "../middleware/auth";
 
 /**
+ * @swagger
+ * tags:
+ *   name: Group
+ *   description: API endpoints for the groups of the database.
+ */
+
+/**
  * Objeto de router de los grupos.
  * Ofrece los siguientes endpoints:
  * - GET / -> devuelve todos los grupos en la base de datos

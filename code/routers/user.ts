@@ -3,6 +3,13 @@ import controller from "../controllers/user";
 import auth from "../middleware/auth";
 
 /**
+ * @swagger
+ * tags:
+ *   name: User
+ *   description: API endpoints for the users of the database.
+ */
+
+/**
  * Objeto de router del usuario.
  * Ofrece los siguientes endpoints:
  * - POST / -> Creación de usuario.
@@ -15,7 +22,14 @@ import auth from "../middleware/auth";
 const userRouter = express.Router();
 
 /**
- * Creación de un nuevo usuario.
+ * @swagger
+ * /user:
+ *   post:
+ *     summary: Creación de un nuevo usuario.
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description: Usuario creado exitosamente.
  */
 userRouter.post(
 	"/",
@@ -26,7 +40,14 @@ userRouter.post(
 );
 
 /**
- * Realizar un login.
+ * @swagger
+ * /user/login:
+ *   post:
+ *     summary: Realizar un login.
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description: Login exitoso.
  */
 userRouter.post(
 	"/login",
@@ -37,7 +58,14 @@ userRouter.post(
 );
 
 /**
- * Recibe un email para reiniciar la contraseña.
+ * @swagger
+ * /user/resetPassword:
+ *   post:
+ *     summary: Recibe un email para reiniciar la contraseña.
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description: Email enviado exitosamente.
  */
 userRouter.post(
 	"/resetPassword",
@@ -48,7 +76,14 @@ userRouter.post(
 );
 
 /**
- * Obtener todos los datos de un usuario para ver su perfil.
+ * @swagger
+ * /user:
+ *   get:
+ *     summary: Obtener todos los datos de un usuario para ver su perfil.
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description: Datos del usuario obtenidos exitosamente.
  */
 userRouter.get(
 	"/",
@@ -60,7 +95,14 @@ userRouter.get(
 );
 
 /**
- * Actualiza los datos de un usuario.
+ * @swagger
+ * /user:
+ *   patch:
+ *     summary: Actualiza los datos de un usuario.
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description: Usuario actualizado exitosamente.
  */
 userRouter.patch(
 	"/",
@@ -72,7 +114,14 @@ userRouter.patch(
 );
 
 /**
- * Elemina un usuario.
+ * @swagger
+ * /user:
+ *   delete:
+ *     summary: Elimina un usuario.
+ *     tags: [User]
+ *     responses:
+ *       200:
+ *         description: Usuario eliminado exitosamente.
  */
 userRouter.delete(
 	"/",
