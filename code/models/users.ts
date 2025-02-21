@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 
 /**
- * Crear el esqema del usuario
+ * Crear el esquema del usuario
  */
 const UserSchema = new Schema(
 	{

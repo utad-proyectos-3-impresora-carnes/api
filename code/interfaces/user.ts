@@ -3,7 +3,8 @@ import MongoDBGenericObjectInterface from "./mongoGenericData";
 /**
  * Interfaz de un objeto usuario.
  */
-export default interface UserInterface extends MongoDBGenericObjectInterface {	
+export default interface UserInterface extends MongoDBGenericObjectInterface {
+		
 	/**
 	 * El email
 	 */

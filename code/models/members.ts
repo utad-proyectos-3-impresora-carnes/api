@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 
 /**
- * Crear el esqema de los miembros.
+ * Crear el esquema de los miembros.
  */
 const MemberSchema = new Schema(
 	{
