@@ -1,4 +1,4 @@
-import MemberService from "../utils/member";
+import GroupService from "../utils/group";
 
 /**
  * Obtiene todos los grupos de la plataforma.
@@ -12,19 +12,19 @@ async function getAllGroups(req: any, res: any) {
 	try {
 
 		// Crea el servicio
-		const memberService = new MemberService();
+		const groupService = new GroupService();
 
-		// Obiene todos los miembros
-		const members = await memberService.getAllMembers();
+		// Obiene todos los grupos
+		const groups = await groupService.getAllGroups();
 
 		// Devuelve todos los miembros
-		res.status(200).send(members);
+		res.status(200).send(groups);
 
 	} catch (error: any) {
 
 		console.error(error);
 
-		return res.status(500).send("The operation to get all members failed!");
+		return res.status(500).send("The operation to get all groups failed!");
 
 	}
 
@@ -48,7 +48,7 @@ async function getFilteredGroups(req: any, res: any) {
 
 		console.error(error);
 
-		return res.status(500).send("The operation to get filtered members failed!");
+		return res.status(500).send("The operation to get filtered groups failed!");
 
 	}
 
