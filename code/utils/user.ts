@@ -93,7 +93,7 @@ export default class UserService {
 
 		try {
 
-			// Busca un usuario según su email.
+			// Busca un usuario según su email. Adicionalmente, selecciona su contraseña de manera explicita.
 			return await UserModel.findOne({ email: email }).select("email +password");
 
 		} catch (error) {

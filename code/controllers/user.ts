@@ -1,6 +1,7 @@
 import UserInterface from "../interfaces/user";
 import UserService from "../utils/user";
 import CypherService from "../utils/cypher";
+import jwt from "jsonwebtoken";
 
 /**
  * Crea un usuario.
@@ -74,22 +75,15 @@ async function login(req: any, res: any) {
 			password
 		}
 
-		// Obtener el usuario.
-		const userAuthData = await userService.getUserAuthData(userData.email);
+		// Comrprueba que los datos de autenticación sean correctos.
+		checkAuthData(userData);
 
-		// Comprueba que el usuario existiese en el sistema.
-		if (!userAuthData) {
-			throw new Error("No existe un usuario con este email!")
-		}
 
-		// Comprueba que la contraseña sea correcta.
-		const passwordMatch:boolean = await cypherService.checkIfStringMatchesHash(userData.password, userAuthData.password);
-
-		if (!passwordMatch){
-			throw new Error("La contraseña no es correcta!")
-		}
 
 		// TODO: generate token
+		const token = jwt.sign({ userId: user._id }, 'your-secret-key', {
+			expiresIn: '1h',
+		});
 
 		// Devuelve el objeto creado.
 		res.status(201).send("Token!!!");
@@ -103,6 +97,33 @@ async function login(req: any, res: any) {
 			description: error.message
 		});
 
+	}
+
+}
+
+/**
+ * Comprueba que los datos de autenticación del usuario sean correctos.
+ * @param userData Los datos del usuario
+ */
+async function checkAuthData(userData: UserInterface) {
+	
+	// Crea los servicios
+	const userService = new UserService();
+	const cypherService: CypherService = new CypherService();
+	
+	// Obtener el usuario.
+	const userAuthData = await userService.getUserAuthData(userData.email);
+
+	// Comprueba que el usuario existiese en el sistema.
+	if (!userAuthData) {
+		throw new Error("No existe un usuario con este email!")
+	}
+
+	// Comprueba que la contraseña sea correcta.
+	const passwordMatch: boolean = await cypherService.checkIfStringMatchesHash(userData.password, userAuthData.password);
+
+	if (!passwordMatch) {
+		throw new Error("La contraseña no es correcta!")
 	}
 
 }
