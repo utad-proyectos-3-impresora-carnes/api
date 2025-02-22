@@ -65,26 +65,6 @@ export default class UserService {
 	}
 
 	/**
-	 * Comprueba si existe algún usuario con los parámetros de autenticación que se pasan al servidor.
-	 * @param userData Los datos del usario
-	 * @returns El objeto del usuario si encuentra alguno que coincida
-	 */
-	public async checkLoginCredentials(userData: UserInterface) {
-
-		try {
-
-			// Busca un usuario con las credenciales que se le pasan.
-			return await UserModel.findOne({ email: userData.email, password: userData.password });
-
-		} catch (error) {
-
-			console.error(error)
-			throw new Error("Error looking up user by credentials");
-
-		}
-	}
-
-	/**
 	 * Get an user object from the database by ID.
 	 * @param userId Id of the user
 	 * @returns The object of the user
@@ -100,6 +80,26 @@ export default class UserService {
 
 			console.error(error)
 			throw new Error("Error looking up user by id");
+
+		}
+	}
+
+	/**
+	 * Get an user object auth data from the database by email.
+	 * @param email Email of the user
+	 * @returns The object of the user with the fields of email and password
+	 */
+	public async getUserAuthData(email: string) {
+
+		try {
+
+			// Busca un usuario según su email.
+			return await UserModel.findOne({ email: email }).select("email +password");
+
+		} catch (error) {
+
+			console.error(error)
+			throw new Error("Error looking up user by email");
 
 		}
 	}

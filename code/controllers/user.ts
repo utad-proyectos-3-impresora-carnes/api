@@ -61,6 +61,10 @@ async function login(req: any, res: any) {
 
 	try {
 
+		// Crea los servicios
+		const userService = new UserService();
+		const cypherService: CypherService = new CypherService();
+
 		// Extra los datos del cuerpo.
 		const { email, password } = req.body;
 
@@ -70,20 +74,34 @@ async function login(req: any, res: any) {
 			password
 		}
 
-		// Crea el objeto.
-		const userObject = await new UserService().checkLoginCredentials(userData);
+		// Obtener el usuario.
+		const userAuthData = await userService.getUserAuthData(userData.email);
 
-		// TODO: somehow make a token for the user
-		console.log(userObject)
+		// Comprueba que el usuario existiese en el sistema.
+		if (!userAuthData) {
+			throw new Error("No existe un usuario con este email!")
+		}
+
+		// Comprueba que la contraseña sea correcta.
+		const passwordMatch:boolean = await cypherService.checkIfStringMatchesHash(userData.password, userAuthData.password);
+
+		if (!passwordMatch){
+			throw new Error("La contraseña no es correcta!")
+		}
+
+		// TODO: generate token
 
 		// Devuelve el objeto creado.
-		res.status(201).send(userObject);
+		res.status(201).send("Token!!!");
 
 	} catch (error: any) {
 
 		console.error(error);
 
-		return res.status(500).send("The operation to log in failed!");
+		return res.status(500).send({
+			alert: "The operation to log in failed!",
+			description: error.message
+		});
 
 	}
 
@@ -163,8 +181,9 @@ async function updateUser(req: any, res: any) {
 
 	try {
 
-		// Crea el servicio
+		// Crea los servicio
 		const userService = new UserService();
+		const cypherService: CypherService = new CypherService();
 
 		// Extrae los datos de la query
 		const userId: string = req.query.id;
@@ -175,13 +194,18 @@ async function updateUser(req: any, res: any) {
 			throw new Error("Email is already taken! Choose another please.");
 		}
 
-		// TODO: if new password cypher it
+		// Si hay nueva contraseña se hashea, sino, se deja en unedfined.
+		const hashedPassword: string = password !== undefined ?
+			await cypherService.encryptString(password) :
+			password;
 
+		// Formatea los datos en una interfaz de datos de usuario.
 		const userData: UserInterface = {
-			email,
-			password,
-			phone
+			email: email,
+			password: hashedPassword,
+			phone: phone
 		}
+
 
 		// Actualiza el usuario.
 		const userObject = await userService.updateUserById(userId, userData);

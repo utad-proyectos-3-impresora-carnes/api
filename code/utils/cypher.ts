@@ -35,13 +35,7 @@ export default class CypherService {
 	 */
 	public async checkIfStringMatchesHash(stringToCheck: string, hashRecorded: string) {
 
-		bcrypt.compare(userProvidedPassword, storedHash, function (err, result) {
-			if (err) throw err;
-			if (result === true) {
-				// Passwords match, grant access
-			} else {
-				// Passwords do not match, deny access
-			}
-		});
+		return bcrypt.compare(stringToCheck, hashRecorded);
+		
 	}
 }
