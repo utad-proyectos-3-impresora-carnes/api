@@ -50,7 +50,10 @@ export default class UserService {
 		try {
 
 			// Crea el usuario
-			return await UserModel.create(userData);
+			const user = await UserModel.create(userData);
+
+			// Busca el usuario en la base de datos. Con esto se fuerza a se apliquen las reglas de búsqueda en vez de devolver la contraseña.
+			return await this.getUserById(user._id.toString());
 
 		} catch (error) {
 

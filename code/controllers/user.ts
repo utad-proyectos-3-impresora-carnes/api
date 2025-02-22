@@ -1,6 +1,6 @@
-import { Response } from "express";
 import UserInterface from "../interfaces/user";
 import UserService from "../utils/user";
+import CypherService from "../utils/cypher";
 
 /**
  * Crea un usuario.
@@ -14,6 +14,7 @@ async function createUser(req: any, res: any) {
 	try {
 
 		const userService: UserService = new UserService();
+		const cypherService: CypherService = new CypherService();
 
 		// Extra los datos del cuerpo.
 		const { email, password, phone } = req.body;
@@ -23,13 +24,14 @@ async function createUser(req: any, res: any) {
 			throw new Error("Email is already taken! Choose another please.");
 		}
 
-		// TODO: cypher password.
-		
+		// Encripta la contraseña
+		const hashedPassword: string = await cypherService.encryptString(password);
+
 		// Formatea los datos en una interfaz de datos de usuario.
 		const userData: UserInterface = {
-			email,
-			password,
-			phone
+			email: email,
+			password: hashedPassword,
+			phone: phone
 		}
 
 		// Crea el objeto.
