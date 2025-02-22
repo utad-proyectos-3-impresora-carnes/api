@@ -62,10 +62,6 @@ async function login(req: any, res: any) {
 
 	try {
 
-		// Crea los servicios
-		const userService = new UserService();
-		const cypherService: CypherService = new CypherService();
-
 		// Extra los datos del cuerpo.
 		const { email, password } = req.body;
 
@@ -78,15 +74,11 @@ async function login(req: any, res: any) {
 		// Comrprueba que los datos de autenticación sean correctos.
 		checkAuthData(userData);
 
-
-
-		// TODO: generate token
-		const token = jwt.sign({ userId: user._id }, 'your-secret-key', {
-			expiresIn: '1h',
-		});
+		// Genera el token del usuario.
+		const { token, user } = await generateUserToken(userData);
 
 		// Devuelve el objeto creado.
-		res.status(201).send("Token!!!");
+		res.status(201).send({ token: token, user: user });
 
 	} catch (error: any) {
 
@@ -106,11 +98,11 @@ async function login(req: any, res: any) {
  * @param userData Los datos del usuario
  */
 async function checkAuthData(userData: UserInterface) {
-	
+
 	// Crea los servicios
 	const userService = new UserService();
 	const cypherService: CypherService = new CypherService();
-	
+
 	// Obtener el usuario.
 	const userAuthData = await userService.getUserAuthData(userData.email);
 
@@ -125,6 +117,25 @@ async function checkAuthData(userData: UserInterface) {
 	if (!passwordMatch) {
 		throw new Error("La contraseña no es correcta!")
 	}
+
+}
+
+/**
+ * Generate user token
+ */
+async function generateUserToken(userData: UserInterface) {
+
+	// Crea los servicios
+	const userService = new UserService();
+
+	const userObject = await userService.getUserByEmail(userData.email);
+
+	// TODO: generate token
+	const token = jwt.sign({ userId: userObject._id }, process.env.TOKEN_KEY_CONTENTS, {
+		expiresIn: process.env.TOKEN_KEY_DURATION,
+	});
+
+	return { user: userObject, token: token };
 
 }
 

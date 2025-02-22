@@ -85,6 +85,26 @@ export default class UserService {
 	}
 
 	/**
+	 * Get an user object from the database by email.
+	 * @param email Email of the user
+	 * @returns The object of the user
+	 */
+	public async getUserByEmail(email: string) {
+
+		try {
+
+			// Busca un usuario según su email.
+			return await UserModel.findOne({ email: email });
+
+		} catch (error) {
+
+			console.error(error)
+			throw new Error("Error looking up user by email");
+
+		}
+	}
+
+	/**
 	 * Get an user object auth data from the database by email.
 	 * @param email Email of the user
 	 * @returns The object of the user with the fields of email and password
@@ -99,7 +119,7 @@ export default class UserService {
 		} catch (error) {
 
 			console.error(error)
-			throw new Error("Error looking up user by email");
+			throw new Error("Error getting user auth data.");
 
 		}
 	}

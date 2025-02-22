@@ -30,6 +30,7 @@ GET http://localhost:3000/api/user/?id=67b708913428753374fbefad HTTP/1.1
 
 ### Editar parte o todos los datos de un usuario
 PATCH  http://localhost:3000/api/user/?id=67b708913428753374fbefad HTTP/1.1
+Authorization: Bearer "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2I5YzJhMzhjOTBhOTkyODAwZTQzOGUiLCJpYXQiOjE3NDAyMjk4OTUsImV4cCI6MTc0MDIzMzQ5NX0.HdI273i7jfWm3dRTUK9DOO80YeYdtIMrJN68YS9YHHc"
 Content-Type: application/json
 
 {
