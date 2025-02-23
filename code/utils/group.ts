@@ -51,4 +51,24 @@ export default class GroupService {
 		}
 
 	}
+
+	/**
+	 * Obtiene un grupo basado en su nombre.
+	 * @param groupName Nombre del grupo que se busca.
+	 * @returns El grupo con ese nombre.
+	 */
+	public async getGroupByName(groupName:string):Promise<any>{
+
+		try {
+
+			return await GroupModel.find({name:groupName});
+
+		} catch (error) {
+
+			console.error(error)
+			throw new Error("Error checking fetching group by name.");
+
+		}
+
+	}
 }

@@ -84,7 +84,7 @@ export default function addDummyData(req: any, res: any) {
 
 		createGroups(data);
 
-		// createMembers(data);
+		createMembers(data);
 
 		return res.status(201).send("Se han creado los datos de prueba");
 
