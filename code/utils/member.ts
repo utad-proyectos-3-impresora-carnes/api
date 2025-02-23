@@ -1,3 +1,4 @@
+import MemberInterface from "../interfaces/member";
 import MemberModel from "../models/members";
 
 /**
@@ -31,12 +32,13 @@ export default class MemberService {
 	/**
 	 * Obtiene todos los miembros cuyo grupo contenga ese id.
 	 * @param groupId El id del grupo.
+	 * @returns Los miembros en un grupo.
 	 */
-	public async getMembersInGroup(groupId: string) {
+	public async getMembersInGroup(groupId: string): Promise<any> {
 
 		try {
 
-			return await MemberModel.find({ "group.id" : groupId })
+			return await MemberModel.find({ "group.id": groupId })
 
 		} catch (error) {
 
@@ -45,4 +47,33 @@ export default class MemberService {
 
 		}
 	}
+
+	/**
+	 * Crea un miembro.
+	 * @param memberData Los datos de un miembro.
+	 * @returns El objeto de miembro creado.
+	 */
+	public async createMember(memberData: MemberInterface): Promise<any> {
+
+		try {
+
+			return await MemberModel.create({
+				fullName: memberData.fullName,
+				dni: memberData.dni,
+				group: {
+					_id: memberData?.group?._id,
+					name: memberData?.group?.name
+				},
+				profileImageLink: memberData.profileImageLink
+			});
+
+		} catch (error: any) {
+
+			console.error(error)
+			throw new Error("Error creating a new member.");
+
+		}
+
+	}
+
 }

@@ -36,7 +36,8 @@ const MemberSchema = new Schema(
 			
 		// Fecha de expedición del último carné (dejar en null si todavía no se ha impreso).
 		lastCardPrintedDate: {
-			type: Schema.Types.Date
+			type: Schema.Types.Date,
+			default: undefined
 		}
 	},
 	{
