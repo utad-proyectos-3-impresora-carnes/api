@@ -1,6 +1,7 @@
-import { Response } from "express";
 import UserInterface from "../interfaces/user";
 import UserService from "../utils/user";
+import CypherService from "../utils/cypher";
+import jwt from "jsonwebtoken";
 
 /**
  * Crea un usuario.
@@ -14,6 +15,7 @@ async function createUser(req: any, res: any) {
 	try {
 
 		const userService: UserService = new UserService();
+		const cypherService: CypherService = new CypherService();
 
 		// Extra los datos del cuerpo.
 		const { email, password, phone } = req.body;
@@ -23,13 +25,14 @@ async function createUser(req: any, res: any) {
 			throw new Error("Email is already taken! Choose another please.");
 		}
 
-		// TODO: cypher password.
-		
+		// Encripta la contraseña
+		const hashedPassword: string = await cypherService.encryptString(password);
+
 		// Formatea los datos en una interfaz de datos de usuario.
 		const userData: UserInterface = {
-			email,
-			password,
-			phone
+			email: email,
+			password: hashedPassword,
+			phone: phone
 		}
 
 		// Crea el objeto.
@@ -68,22 +71,71 @@ async function login(req: any, res: any) {
 			password
 		}
 
-		// Crea el objeto.
-		const userObject = await new UserService().checkLoginCredentials(userData);
+		// Comrprueba que los datos de autenticación sean correctos.
+		checkAuthData(userData);
 
-		// TODO: somehow make a token for the user
-		console.log(userObject)
+		// Genera el token del usuario.
+		const { token, user } = await generateUserToken(userData);
 
 		// Devuelve el objeto creado.
-		res.status(201).send(userObject);
+		res.status(201).send({ token: token, user: user });
 
 	} catch (error: any) {
 
 		console.error(error);
 
-		return res.status(500).send("The operation to log in failed!");
+		return res.status(500).send({
+			alert: "The operation to log in failed!",
+			description: error.message
+		});
 
 	}
+
+}
+
+/**
+ * Comprueba que los datos de autenticación del usuario sean correctos.
+ * @param userData Los datos del usuario
+ */
+async function checkAuthData(userData: UserInterface) {
+
+	// Crea los servicios
+	const userService = new UserService();
+	const cypherService: CypherService = new CypherService();
+
+	// Obtener el usuario.
+	const userAuthData = await userService.getUserAuthData(userData.email);
+
+	// Comprueba que el usuario existiese en el sistema.
+	if (!userAuthData) {
+		throw new Error("No existe un usuario con este email!")
+	}
+
+	// Comprueba que la contraseña sea correcta.
+	const passwordMatch: boolean = await cypherService.checkIfStringMatchesHash(userData.password, userAuthData.password);
+
+	if (!passwordMatch) {
+		throw new Error("La contraseña no es correcta!")
+	}
+
+}
+
+/**
+ * Generate user token
+ */
+async function generateUserToken(userData: UserInterface) {
+
+	// Crea los servicios
+	const userService = new UserService();
+
+	const userObject = await userService.getUserByEmail(userData.email);
+
+	// TODO: generate token
+	const token = jwt.sign({ userId: userObject._id }, process.env.TOKEN_KEY_CONTENTS, {
+		expiresIn: process.env.TOKEN_KEY_DURATION,
+	});
+
+	return { user: userObject, token: token };
 
 }
 
@@ -161,8 +213,9 @@ async function updateUser(req: any, res: any) {
 
 	try {
 
-		// Crea el servicio
+		// Crea los servicio
 		const userService = new UserService();
+		const cypherService: CypherService = new CypherService();
 
 		// Extrae los datos de la query
 		const userId: string = req.query.id;
@@ -173,13 +226,18 @@ async function updateUser(req: any, res: any) {
 			throw new Error("Email is already taken! Choose another please.");
 		}
 
-		// TODO: if new password cypher it
+		// Si hay nueva contraseña se hashea, sino, se deja en unedfined.
+		const hashedPassword: string = password !== undefined ?
+			await cypherService.encryptString(password) :
+			password;
 
+		// Formatea los datos en una interfaz de datos de usuario.
 		const userData: UserInterface = {
-			email,
-			password,
-			phone
+			email: email,
+			password: hashedPassword,
+			phone: phone
 		}
+
 
 		// Actualiza el usuario.
 		const userObject = await userService.updateUserById(userId, userData);

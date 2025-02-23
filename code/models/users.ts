@@ -7,7 +7,8 @@ const UserSchema = new Schema(
 	{
 		// El email.
 		email: {
-			type: Schema.Types.String
+			type: Schema.Types.String,
+			unique: true
 		},
 		// Contraseña cifrada, marcada para que no se devuelva en los select.
 		password: {

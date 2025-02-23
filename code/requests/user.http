@@ -26,16 +26,17 @@ Content-Type: application/json
 }
 
 ### Obtener los datos de un usuario
-GET http://localhost:3000/api/user/?id=67b708913428753374fbefad HTTP/1.1
+GET http://localhost:3000/api/user/?id=67b9c2a38c90a992800e438e HTTP/1.1
 
 ### Editar parte o todos los datos de un usuario
-PATCH  http://localhost:3000/api/user/?id=67b708913428753374fbefad HTTP/1.1
+PATCH http://localhost:3000/api/user?id=67b9c2a38c90a992800e438e HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2I5YzJhMzhjOTBhOTkyODAwZTQzOGUiLCJpYXQiOjE3NDAzNDE0MzcsImV4cCI6MTc0MDM0NTAzN30.688gqsq1vFuGgapE--S5dx2kDXePwjm5kAIrkDJz5W0
 Content-Type: application/json
 
 {
-     "email": "realEmail@gmail.com",
-	"password":"12341234Abc",
-	"phone":"+34 111222333"
+    "email": "realEmail@gmail.com",
+    "password": "12341234Abc",
+    "phone": "+34 111222333"
 }
 
 ### Borrar un usuario

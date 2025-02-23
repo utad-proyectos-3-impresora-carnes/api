@@ -50,7 +50,10 @@ export default class UserService {
 		try {
 
 			// Crea el usuario
-			return await UserModel.create(userData);
+			const user = await UserModel.create(userData);
+
+			// Busca el usuario en la base de datos. Con esto se fuerza a se apliquen las reglas de búsqueda en vez de devolver la contraseña.
+			return await this.getUserById(user._id.toString());
 
 		} catch (error) {
 
@@ -59,26 +62,6 @@ export default class UserService {
 
 		}
 
-	}
-
-	/**
-	 * Comprueba si existe algún usuario con los parámetros de autenticación que se pasan al servidor.
-	 * @param userData Los datos del usario
-	 * @returns El objeto del usuario si encuentra alguno que coincida
-	 */
-	public async checkLoginCredentials(userData: UserInterface) {
-
-		try {
-
-			// Busca un usuario con las credenciales que se le pasan.
-			return await UserModel.findOne({ email: userData.email, password: userData.password });
-
-		} catch (error) {
-
-			console.error(error)
-			throw new Error("Error looking up user by credentials");
-
-		}
 	}
 
 	/**
@@ -97,6 +80,46 @@ export default class UserService {
 
 			console.error(error)
 			throw new Error("Error looking up user by id");
+
+		}
+	}
+
+	/**
+	 * Get an user object from the database by email.
+	 * @param email Email of the user
+	 * @returns The object of the user
+	 */
+	public async getUserByEmail(email: string) {
+
+		try {
+
+			// Busca un usuario según su email.
+			return await UserModel.findOne({ email: email });
+
+		} catch (error) {
+
+			console.error(error)
+			throw new Error("Error looking up user by email");
+
+		}
+	}
+
+	/**
+	 * Get an user object auth data from the database by email.
+	 * @param email Email of the user
+	 * @returns The object of the user with the fields of email and password
+	 */
+	public async getUserAuthData(email: string) {
+
+		try {
+
+			// Busca un usuario según su email. Adicionalmente, selecciona su contraseña de manera explicita.
+			return await UserModel.findOne({ email: email }).select("email +password");
+
+		} catch (error) {
+
+			console.error(error)
+			throw new Error("Error getting user auth data.");
 
 		}
 	}
