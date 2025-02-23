@@ -65,14 +65,16 @@ async function createMembers(data: any) {
 			dni: data[pokemon]["HP Min"] + data[pokemon]["Attack Base"],
 			profileImageLink: pathToImage,
 			group: {
-				_id: groupObject._id,
-				name: groupObject.name
+				_id: groupObject?._id,
+				name: groupObject?.name
 			},
 			lastCardPrintedDate: undefined
 
 		}
 
-		memberService.createMember(memberData);
+		memberService.createMember(memberData).then(member => {
+			console.log(member)
+		})
 
 	}
 

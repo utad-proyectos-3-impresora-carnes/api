@@ -8,8 +8,7 @@ const GroupSchema = new Schema(
 	{
 		// El nombre del grupo.
 		name: {
-			type: Schema.Types.String,
-			unique: true
+			type: Schema.Types.String
 		},
 		// El tipo del grupo. Solo los valores del enum son válidos.
 		type: {

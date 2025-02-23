@@ -13,7 +13,7 @@ export default async function auth(req: any, res: any, next: any) {
 
 	const token = req.header('Authorization');
 
-	if (!token) return res.status(401).json({ error: 'Access denied, there is no token!' });
+	// if (!token) return res.status(401).json({ error: 'Access denied, there is no token!' });
 
 	try {
 

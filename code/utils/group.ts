@@ -61,7 +61,7 @@ export default class GroupService {
 
 		try {
 
-			return await GroupModel.find({name:groupName});
+			return await GroupModel.findOne({name:groupName});
 
 		} catch (error) {
 
