@@ -5,6 +5,8 @@ import GroupTypes from '../constants/groupTypes';
 import { randomInt } from 'crypto';
 import GroupInterface from '../interfaces/group';
 import GroupService from '../utils/group';
+import MemberService from '../utils/member';
+import { connection } from 'mongoose';
 
 
 function getRandomGroupType(): string {
@@ -30,7 +32,7 @@ async function createGroups(data: any): Promise<void> {
 	}
 
 	groupNames.forEach(type => {
-		
+
 		const groupData: GroupInterface = {
 
 			name: type,
@@ -48,20 +50,29 @@ async function createGroups(data: any): Promise<void> {
 
 async function createMembers(data: any) {
 
+	const groupService: GroupService = new GroupService();
+	const memberService: MemberService = new MemberService();
+
 	for (const pokemon in data) {
 
 		const pathToImage = path.join(__dirname, "images", pokemon, pokemon + ".png");
+		const mainType: string = data[pokemon]["Type"].split(",").map(pokemonType => pokemonType.trim())[0];
+		const groupObject: any = await groupService.getGroupByName(mainType);
 
 		const memberData: MemberInterface = {
 
 			fullName: pokemon,
 			dni: data[pokemon]["HP Min"] + data[pokemon]["Attack Base"],
 			profileImageLink: pathToImage,
+			group: {
+				_id: groupObject._id,
+				name: groupObject.name
+			},
 			lastCardPrintedDate: undefined
 
 		}
 
-		console.log(memberData);
+		memberService.createMember(memberData);
 
 	}
 
@@ -71,7 +82,9 @@ async function createMembers(data: any) {
  * Adds dummy data to the database.
  * Only used during development.
  */
-export default function addDummyData(req: any, res: any) {
+export default async function addDummyData(req: any, res: any) {
+
+	await connection.dropDatabase();
 
 	const pathToDataFile = path.join(__dirname, "pokemonDB_dataset.json");
 
