@@ -109,6 +109,15 @@ memberRouter.get(
  *   get:
  *     summary: Obtener la previsualización de un carné
  *     tags: [Member]
+ * 
+ *     parameters:
+ *       - in: query
+ *         name: memberId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID del miembro
+ * 
  *     responses:
  *       200:
  *         description: Previsualización del carné
