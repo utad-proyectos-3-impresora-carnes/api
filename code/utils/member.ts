@@ -57,19 +57,12 @@ export default class MemberService {
 
 		try {
 
-			const member =  await MemberModel.create({
+			return await MemberModel.create({
 				fullName: memberData.fullName,
 				dni: memberData.dni,
-				group: {
-					_id: memberData?.group?._id,
-					name: memberData?.group?.name
-				},
+				group: memberData.group,
 				profileImageLink: memberData.profileImageLink
 			});
-
-			member.save();
-
-			return member;
 
 		} catch (error: any) {
 
@@ -88,7 +81,7 @@ export default class MemberService {
 	public async getMemberById(memberId: string): Promise<any> {
 		try {
 
-			return await MemberModel.findById(memberId);
+			return await MemberModel.findById(memberId).populate("group");
 
 		} catch (error) {
 

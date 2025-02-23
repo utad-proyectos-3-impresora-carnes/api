@@ -103,11 +103,11 @@ async function previewMemberCard(req: any, res: any) {
 		const memberService = new MemberService();
 
 		// Extrae el parámetro de la query
-		// const memberId = req.query.memberId;
-		const memberId = "67bb95e5a813c9694e704ce3";
+		const memberId = req.query.memberId;
 
 		const memberObject = await memberService.getMemberById(memberId) as MemberInterface;
 
+		console.log(memberObject)
 		const filePath = await  generarTarjeta(memberObject);
 
 		res.status(501).sendFile(filePath);

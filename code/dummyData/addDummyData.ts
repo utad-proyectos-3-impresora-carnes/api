@@ -73,7 +73,7 @@ async function createMembers(data: any) {
 		}
 
 		memberService.createMember(memberData);
-
+		
 	}
 
 }
