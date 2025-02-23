@@ -1,4 +1,6 @@
+import MemberInterface from "../interfaces/member";
 import MemberService from "../utils/member";
+import generarTarjeta from "../utils/cardGenerator";
 
 /**
  * Obtiene todos los miembros de la plataforma.
@@ -97,9 +99,17 @@ async function getMembersInGroup(req: any, res: any) {
 async function previewMemberCard(req: any, res: any) {
 
 	try {
+		// Crea el servicio
+		const memberService = new MemberService();
 
-		// No tocar durante sprint 2
-		res.status(501).send("Not implemented yet! Come back in sprint 3!");
+		// Extrae el parámetro de la query
+		const memberId = req.query.memberId;
+
+		const memberObject = await memberService.getMemberById(memberId) as MemberInterface;
+
+		const filePath = generarTarjeta(memberObject);
+
+		res.status(501).sendFile(filePath);
 
 	} catch (error: any) {
 

@@ -2,7 +2,6 @@ import sharp from 'sharp';
 import bwipjs from 'bwip-js';
 import axios from 'axios';
 import fs from 'fs';
-import { join } from 'path';
 import { createCanvas, loadImage } from 'canvas';
 
 async function cargarImagen(fotoPath: string): Promise<Buffer> {

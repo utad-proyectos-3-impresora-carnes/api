@@ -76,4 +76,21 @@ export default class MemberService {
 
 	}
 
+	/**
+	 * Encuentra un miembro en la base de datos basado en su id.
+	 * @param memberId El id del miembro
+	 * @returns El objeto del miembro cuya id se buscó
+	 */
+	public async getMemberById(memberId: string): Promise<any> {
+		try {
+
+			return await MemberModel.findById(memberId);
+
+		} catch (error) {
+
+			console.error(error)
+			throw new Error("Error fetching member by id.");
+
+		}
+	}
 }
