@@ -37,7 +37,7 @@ def generar_tarjeta(nombre, grado, dni, foto_path):
 
     # Redimensionar y pegar código de barras
     barcode_img = barcode_img.resize((420, 53), Image.LANCZOS)  # Ajuste proporcional
-    tarjeta.paste(barcode_img, (464, 500))  # Ajustado a nueva resolución
+    tarjeta.paste(barcode_img, (464, 530))  # Ajustado a nueva resolución
 
     # Dibujar texto con mayor tamaño
     draw = ImageDraw.Draw(tarjeta)
