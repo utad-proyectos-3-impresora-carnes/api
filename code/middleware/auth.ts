@@ -17,17 +17,17 @@ export default async function auth(req: any, res: any, next: any) {
 
 	try {
 
-		const userService: UserService = new UserService();
+		// const userService: UserService = new UserService();
 		
-		const decoded = jwt.verify(token, 'your-secret-key');
+		// const decoded = jwt.verify(token, 'your-secret-key');
 		
-		const user = await userService.getUserById(decoded.userId);
+		// const user = await userService.getUserById(decoded.userId);
 
-		if (!user) {
-			return res.status(401).json({ error: 'The user doesn\'t exist!' });
-		}
+		// if (!user) {
+		// 	return res.status(401).json({ error: 'The user doesn\'t exist!' });
+		// }
 		
-		req.user = user;
+		// req.user = user;
 		
 		next();
 
