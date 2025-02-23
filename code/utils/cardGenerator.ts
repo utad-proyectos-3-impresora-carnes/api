@@ -63,7 +63,16 @@ export default async function generarTarjeta(memberData: MemberInterface) {
 		.toFormat('png')
 		.toBuffer();
 
-	const filePath: string = path.join(__dirname, '..', 'out', "carne_" + memberData.dni + ".png");
+	// Define the file path
+	const filePath: string = path.join(__dirname, '..', 'out', `carne_${memberData.dni}.png`);
+
+	// Ensure the 'out' directory exists
+	const dirPath = path.dirname(filePath);
+	if (!fs.existsSync(dirPath)) {
+		fs.mkdirSync(dirPath, { recursive: true });
+	} 
+	
 	fs.writeFileSync(filePath, finalImage);
+	
 	return filePath;
 }
