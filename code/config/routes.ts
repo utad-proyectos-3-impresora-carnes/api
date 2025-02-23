@@ -5,6 +5,7 @@ import { memberRouter } from "../routers/member";
 import { groupRouter } from "../routers/group";
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocs from "./swagger";
+import debugRouter from "../routers/debug";
 
 
 /**
@@ -19,6 +20,11 @@ router.use('/api/example', exampleRouter);
 router.use('/api/user', userRouter);
 router.use('/api/member', memberRouter);
 router.use('/api/group', groupRouter);
+router.use('/api/debug', debugRouter);
+
+/**
+ * Devuelve la documentación swagger.
+ */
 router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 
