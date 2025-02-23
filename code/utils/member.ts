@@ -57,7 +57,7 @@ export default class MemberService {
 
 		try {
 
-			return await MemberModel.create({
+			const member =  await MemberModel.create({
 				fullName: memberData.fullName,
 				dni: memberData.dni,
 				group: {
@@ -66,6 +66,10 @@ export default class MemberService {
 				},
 				profileImageLink: memberData.profileImageLink
 			});
+
+			member.save();
+
+			return member;
 
 		} catch (error: any) {
 

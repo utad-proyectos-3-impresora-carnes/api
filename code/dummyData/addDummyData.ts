@@ -72,9 +72,7 @@ async function createMembers(data: any) {
 
 		}
 
-		memberService.createMember(memberData).then(member => {
-			console.log(member)
-		})
+		memberService.createMember(memberData);
 
 	}
 

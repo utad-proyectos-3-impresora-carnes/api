@@ -20,7 +20,7 @@ const MemberSchema = new Schema(
 		group: {
 			
 			_id: {
-				type: Schema.Types.ObjectId
+				type: Schema.Types.String
 			},
 			
 			name: {
