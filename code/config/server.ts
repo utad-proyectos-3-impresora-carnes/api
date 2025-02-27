@@ -7,7 +7,7 @@ import mongooseConnect from "./mongo";
  * Crea el servidor con toda la configuración necesaria.
  * @returns Un objeto de servidor.
  */
-export function createServer(): any {
+export default function createServer(): any {
 
 	const server = express();
 

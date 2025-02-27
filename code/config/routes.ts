@@ -1,8 +1,8 @@
 import express from "express";
+import swaggerUi from 'swagger-ui-express';
 import userRouter from "../routers/user";
 import memberRouter from "../routers/member";
 import groupRouter from "../routers/group";
-import swaggerUi from 'swagger-ui-express';
 import swaggerDocs from "./swagger";
 import debugRouter from "../routers/debug";
 
