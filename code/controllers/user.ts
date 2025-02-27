@@ -2,6 +2,7 @@ import UserInterface from "../interfaces/user";
 import UserService from "../utils/user";
 import CypherService from "../utils/cypher";
 import jwt from "jsonwebtoken";
+import { validationResult } from "express-validator";
 
 /**
  * Crea un usuario.

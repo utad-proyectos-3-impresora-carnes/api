@@ -1,6 +1,7 @@
 import MemberInterface from "../interfaces/member";
 import MemberService from "../utils/member";
 import generarTarjeta from "../utils/cardGenerator";
+import { validationResult } from "express-validator";
 
 /**
  * Obtiene todos los miembros de la plataforma.

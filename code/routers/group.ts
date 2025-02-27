@@ -1,5 +1,6 @@
 import express from "express";
 import * as controller from "../controllers/group";
+import * as validator from "../validators/group";
 import auth from "../middleware/auth";
 
 /**
@@ -35,9 +36,6 @@ const groupRouter = express.Router();
  */
 groupRouter.get(
 	"/",
-	[
-
-	],
 	auth,
 	controller.getAllGroups
 );
@@ -79,9 +77,6 @@ groupRouter.get(
  */
 groupRouter.get(
 	"/filtered",
-	[
-
-	],
 	auth,
 	controller.getFilteredGroups
 );
@@ -114,10 +109,8 @@ groupRouter.get(
  */
 groupRouter.patch(
 	"/print/:groupId",
-	[
-
-	],
 	auth,
+	validator.checkGroupId,
 	controller.printGroup
 );
 

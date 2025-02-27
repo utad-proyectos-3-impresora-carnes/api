@@ -1,4 +1,5 @@
 import GroupService from "../utils/group";
+import { validationResult } from "express-validator";
 
 /**
  * Obtiene todos los grupos de la plataforma.

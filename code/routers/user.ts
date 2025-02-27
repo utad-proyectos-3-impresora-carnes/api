@@ -1,5 +1,6 @@
 import express from "express";
 import * as controller from "../controllers/user";
+import * as validator from "../validators/user";
 import auth from "../middleware/auth";
 
 /**
