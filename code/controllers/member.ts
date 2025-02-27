@@ -103,7 +103,9 @@ export async function previewMemberCard(req: any, res: any) {
 		const memberService = new MemberService();
 
 		// Extrae el parámetro de la query
-		const memberId = req.query.memberId;
+		const memberId = req.params.memberId;
+
+		console.log(memberId)
 
 		const memberObject = await memberService.getMemberById(memberId) as MemberInterface;
 

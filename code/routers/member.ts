@@ -130,7 +130,7 @@ memberRouter.get(
  *                   format: binary
  */
 memberRouter.get(
-	"/preview:memberId",
+	"/preview/:memberId",
 	[
 
 	],
@@ -166,7 +166,7 @@ memberRouter.get(
  *                   type: string
  */
 memberRouter.patch(
-	"/print:memberId",
+	"/print/:memberId",
 	[
 
 	],

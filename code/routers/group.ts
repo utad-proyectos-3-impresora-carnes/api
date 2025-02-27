@@ -24,6 +24,7 @@ const groupRouter = express.Router();
  *   get:
  *     summary: Obtener todos los grupos
  *     tags: [Group]
+ * 
  *     responses:
  *       200:
  *         description: Lista de todos los grupos
@@ -112,7 +113,7 @@ groupRouter.get(
  *                   type: string
  */
 groupRouter.patch(
-	"/print:groupId",
+	"/print/:groupId",
 	[
 
 	],
