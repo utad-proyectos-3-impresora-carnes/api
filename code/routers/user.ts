@@ -170,7 +170,7 @@ userRouter.get(
  *       - User
  * 
  *     parameters:
- *       - in: query
+ *       - in: path
  *         name: userId
  *         schema:
  *           type: string
@@ -201,7 +201,7 @@ userRouter.get(
  *         description: Error al actualizar los datos del usuario. 
  */
 userRouter.patch(
-	"/",
+	"/:userId",
 	[
 
 	],
@@ -218,7 +218,7 @@ userRouter.patch(
  *       - User
  * 
  *     parameters:
- *       - in: query
+ *       - in: path
  *         name: userId
  *         schema:
  *           type: string
@@ -232,7 +232,7 @@ userRouter.patch(
  *         description: Error al eliminar un usuario. 
  */
 userRouter.delete(
-	"/",
+	"/:userId",
 	[
 
 	],
