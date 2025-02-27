@@ -1,7 +1,7 @@
 import express from "express";
-import { userRouter } from "../routers/user";
-import { memberRouter } from "../routers/member";
-import { groupRouter } from "../routers/group";
+import userRouter from "../routers/user";
+import memberRouter from "../routers/member";
+import groupRouter from "../routers/group";
 import swaggerUi from 'swagger-ui-express';
 import swaggerDocs from "./swagger";
 import debugRouter from "../routers/debug";
@@ -35,4 +35,4 @@ router.use('*', function (req: any, res: any) {
 });
 
 //Exporta el router una vez definidos todos los sub routers.
-export { router };
+export default router;

@@ -1,8 +1,7 @@
 import express from "express";
-import { router } from "./routes";
+import router from "./routes";
 import cors from 'cors';
 import mongooseConnect from "./mongo";
-import path from "path";
 
 /**
  * Crea el servidor con toda la configuración necesaria.
@@ -26,6 +25,6 @@ export function createServer(): any {
 
 	// Conectar a la base de datos
 	mongooseConnect();
-	
+
 	return server;
 }
