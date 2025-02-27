@@ -75,7 +75,13 @@ memberRouter.get(
  *           type: string
  *         required: false
  *         description: Año en el que se añadió al miembro
- * 
+ *       - in: query
+ *         name: printed
+ *         schema:
+ *           type: boolean
+ *         required: false
+ *         description: Si el carné ha sido ya impreso
+ *
  *     responses:
  *       200:
  *         description: Lista de miembros filtrados

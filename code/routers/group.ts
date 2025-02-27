@@ -31,8 +31,6 @@ const groupRouter = express.Router();
  *           application/json:
  *             schema:
  *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Group'
  */
 groupRouter.get(
 	"/",
@@ -49,6 +47,27 @@ groupRouter.get(
  *   get:
  *     summary: Obtener los grupos filtrados
  *     tags: [Group]
+ * 
+ *     parameters:
+ *       - in: query
+ *         name: name
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: Nombre del grupo
+ *       - in: query
+ *         name: type
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: DNI o pasaporte del miembro
+ *       - in: query
+ *         name: year
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: Año en el que se creo el grupo
+ * 
  *     responses:
  *       200:
  *         description: Lista de grupos filtrados
@@ -56,8 +75,6 @@ groupRouter.get(
  *           application/json:
  *             schema:
  *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Group'
  */
 groupRouter.get(
 	"/filtered",
@@ -70,17 +87,19 @@ groupRouter.get(
 
 /**
  * @swagger
- * /api/group/print:
+ * /api/group/print/{groupId}:
  *   patch:
  *     summary: Mandar a imprimir un grupo
  *     tags: [Group]
+ * 
  *     parameters:
- *       - in: query
+ *       - in: path
  *         name: id
  *         schema:
  *           type: string
  *         required: true
  *         description: ID del grupo
+ * 
  *     responses:
  *       200:
  *         description: Confirmación de impresión
@@ -93,7 +112,7 @@ groupRouter.get(
  *                   type: string
  */
 groupRouter.patch(
-	"/print",
+	"/print:groupId",
 	[
 
 	],
