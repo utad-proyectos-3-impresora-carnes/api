@@ -132,14 +132,14 @@ userRouter.post(
 
 /**
  * @swagger
- * /api/user:
+ * /api/user/{userId}:
  *   get:
  *     summary: Obtener todos los datos de un usuario para ver su perfil.
  *     tags: 
  *       - User
  * 
  *     parameters:
- *       - in: query
+ *       - in: path
  *         name: userId
  *         schema:
  *           type: string
@@ -153,7 +153,7 @@ userRouter.post(
  *         description: Error buscar los datos de un usuario en particular.
  */
 userRouter.get(
-	"/",
+	"/:userId",
 	[
 
 	],

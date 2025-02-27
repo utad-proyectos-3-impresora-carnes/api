@@ -45,6 +45,7 @@ memberRouter.get(
 	controller.getAllMembers
 );
 
+
 /**
  * @swagger
  * /api/member/filtered:
@@ -68,38 +69,6 @@ memberRouter.get(
 	],
 	auth,
 	controller.getFilteredMembers
-);
-
-/**
- * @swagger
- * /api/member/inGroup:
- *   get:
- *     summary: Obtener los miembros en un grupo
- *     tags: [Member]
- *     parameters:
- *       - in: query
- *         name: groupId
- *         schema:
- *           type: string
- *         required: true
- *         description: ID del grupo
- *     responses:
- *       200:
- *         description: Lista de miembros en el grupo
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Member'
- */
-memberRouter.get(
-	"/inGroup",
-	[
-
-	],
-	auth,
-	controller.getMembersInGroup
 );
 
 
@@ -138,6 +107,7 @@ memberRouter.get(
 	auth,
 	controller.previewMemberCard
 );
+
 
 /**
  * @swagger
