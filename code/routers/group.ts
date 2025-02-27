@@ -1,5 +1,5 @@
 import express from "express";
-import controller from "../controllers/group";
+import * as controller from "../controllers/group";
 import auth from "../middleware/auth";
 
 /**
@@ -102,4 +102,4 @@ groupRouter.patch(
 );
 
 // Exporta el router una vez definidos todos los endpointss.
-export { groupRouter };
+export default groupRouter;

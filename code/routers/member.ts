@@ -1,5 +1,5 @@
 import express from "express";
-import controller from "../controllers/member";
+import * as controller from "../controllers/member";
 import auth from "../middleware/auth";
 
 /**
@@ -173,4 +173,4 @@ memberRouter.patch(
 );
 
 // Exporta el router una vez definidos todos los endpointss.
-export { memberRouter };
+export default memberRouter ;

@@ -1,5 +1,5 @@
 import express from "express";
-import controller from "../controllers/user";
+import * as controller from "../controllers/user";
 import auth from "../middleware/auth";
 
 /**
@@ -45,6 +45,7 @@ const userRouter = express.Router();
  *               phone:
  *                 type: string
  *                 example: "+34123123123"
+ * 
  *     responses:
  *       200:
  *         description: Usuario creado exitosamente.
@@ -240,4 +241,4 @@ userRouter.delete(
 );
 
 // Exporta el router una vez definidos todos los endpoints.
-export { userRouter };
+export default userRouter;

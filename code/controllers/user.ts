@@ -10,7 +10,7 @@ import jwt from "jsonwebtoken";
  * @param res Response
  * @returns El objeto de usuario creado.
  */
-async function createUser(req: any, res: any) {
+export async function createUser(req: any, res: any) {
 
 	try {
 
@@ -58,7 +58,7 @@ async function createUser(req: any, res: any) {
  * @param res Response
  * @returns Token de autenticación para el usuario.
  */
-async function login(req: any, res: any) {
+export async function login(req: any, res: any) {
 
 	try {
 
@@ -97,7 +97,7 @@ async function login(req: any, res: any) {
  * Comprueba que los datos de autenticación del usuario sean correctos.
  * @param userData Los datos del usuario
  */
-async function checkAuthData(userData: UserInterface) {
+export async function checkAuthData(userData: UserInterface) {
 
 	// Crea los servicios
 	const userService = new UserService();
@@ -123,7 +123,7 @@ async function checkAuthData(userData: UserInterface) {
 /**
  * Generate user token
  */
-async function generateUserToken(userData: UserInterface) {
+export async function generateUserToken(userData: UserInterface) {
 
 	// Crea los servicios
 	const userService = new UserService();
@@ -146,7 +146,7 @@ async function generateUserToken(userData: UserInterface) {
  * @param res Response
  * @returns Confirmación de que el email se ha enviado o mensaje de que el envio ha fallado.
  */
-async function resetPassword(req: any, res: any) {
+export async function resetPassword(req: any, res: any) {
 
 	try {
 
@@ -170,7 +170,7 @@ async function resetPassword(req: any, res: any) {
  * @param res Response
  * @returns El objeto con todos los datos de un usuario.
  */
-async function getUserData(req: any, res: any) {
+export async function getUserData(req: any, res: any) {
 
 	try {
 
@@ -209,7 +209,7 @@ async function getUserData(req: any, res: any) {
  * @param res Response
  * @returns El objeto de usuario con sus valores actualizados.
  */
-async function updateUser(req: any, res: any) {
+export async function updateUser(req: any, res: any) {
 
 	try {
 
@@ -263,7 +263,7 @@ async function updateUser(req: any, res: any) {
  * @param res Response
  * @returns Confirmación de que se ha borrado la cuenta del usuario o un error en caso contrario.
  */
-async function deleteUser(req: any, res: any) {
+export async function deleteUser(req: any, res: any) {
 
 	try {
 
@@ -286,11 +286,3 @@ async function deleteUser(req: any, res: any) {
 
 }
 
-export default {
-	createUser,
-	login,
-	resetPassword,
-	getUserData,
-	updateUser,
-	deleteUser
-};
