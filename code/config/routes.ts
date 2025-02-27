@@ -1,9 +1,8 @@
 import express from "express";
-import { exampleRouter } from "../routers/example";
-import { userRouter } from "../routers/user";
-import { memberRouter } from "../routers/member";
-import { groupRouter } from "../routers/group";
 import swaggerUi from 'swagger-ui-express';
+import userRouter from "../routers/user";
+import memberRouter from "../routers/member";
+import groupRouter from "../routers/group";
 import swaggerDocs from "./swagger";
 import debugRouter from "../routers/debug";
 
@@ -16,7 +15,6 @@ const router = express.Router();
 /**
  * Asigna un subdominio del servidor a un router en concreto.
  */
-router.use('/api/example', exampleRouter);
 router.use('/api/user', userRouter);
 router.use('/api/member', memberRouter);
 router.use('/api/group', groupRouter);
@@ -37,4 +35,4 @@ router.use('*', function (req: any, res: any) {
 });
 
 //Exporta el router una vez definidos todos los sub routers.
-export { router };
+export default router;

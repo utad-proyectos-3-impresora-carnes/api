@@ -1,5 +1,5 @@
 import express from "express";
-import { router } from "./routes";
+import router from "./routes";
 import cors from 'cors';
 import mongooseConnect from "./mongo";
 
@@ -7,7 +7,7 @@ import mongooseConnect from "./mongo";
  * Crea el servidor con toda la configuración necesaria.
  * @returns Un objeto de servidor.
  */
-export function createServer(): any {
+export default function createServer(): any {
 
 	const server = express();
 
@@ -17,11 +17,14 @@ export function createServer(): any {
 	// Permite tratar los cuerpos de las requests como si fueran jsons.
 	server.use(express.json());
 
+	// Añadir los ficheros estáticos
+	server.use(express.static('assets'))
+
 	// Añade el objeto router que el servidor usará.
 	server.use(router);
 
 	// Conectar a la base de datos
 	mongooseConnect();
-	
+
 	return server;
 }

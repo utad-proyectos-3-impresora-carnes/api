@@ -9,7 +9,7 @@ import generarTarjeta from "../utils/cardGenerator";
  * @param res Response
  * @returns Todos los miembros de la plataforma.
  */
-async function getAllMembers(req: any, res: any) {
+export async function getAllMembers(req: any, res: any) {
 
 	try {
 
@@ -39,7 +39,7 @@ async function getAllMembers(req: any, res: any) {
  * @param res Response
  * @returns Miembros que pasan todos los filtros.
  */
-async function getFilteredMembers(req: any, res: any) {
+export async function getFilteredMembers(req: any, res: any) {
 
 	try {
 
@@ -63,7 +63,7 @@ async function getFilteredMembers(req: any, res: any) {
  * @param res Response
  * @returns Todos los miembros de un grupo
  */
-async function getMembersInGroup(req: any, res: any) {
+export async function getMembersInGroup(req: any, res: any) {
 
 	try {
 
@@ -96,18 +96,19 @@ async function getMembersInGroup(req: any, res: any) {
  * @param res Response
  * @returns La imagen de previsualización de un carne.
  */
-async function previewMemberCard(req: any, res: any) {
+export async function previewMemberCard(req: any, res: any) {
 
 	try {
 		// Crea el servicio
 		const memberService = new MemberService();
 
 		// Extrae el parámetro de la query
-		const memberId = req.query.memberId;
+		const memberId = req.params.memberId;
+
+		console.log(memberId)
 
 		const memberObject = await memberService.getMemberById(memberId) as MemberInterface;
 
-		console.log(memberObject)
 		const filePath = await  generarTarjeta(memberObject);
 
 		res.status(501).sendFile(filePath);
@@ -129,7 +130,7 @@ async function previewMemberCard(req: any, res: any) {
  * @param res Response
  * @returns Cornfirmación de que el miembro se mandó a imprimir.
  */
-async function printMember(req: any, res: any) {
+export async function printMember(req: any, res: any) {
 
 	try {
 
@@ -145,11 +146,3 @@ async function printMember(req: any, res: any) {
 	}
 
 }
-
-export default {
-	getAllMembers,
-	getFilteredMembers,
-	getMembersInGroup,
-	previewMemberCard,
-	printMember
-};

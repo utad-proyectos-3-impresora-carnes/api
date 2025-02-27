@@ -1,5 +1,5 @@
 import express from "express";
-import controller from "../controllers/user";
+import * as controller from "../controllers/user";
 import auth from "../middleware/auth";
 
 /**
@@ -45,6 +45,7 @@ const userRouter = express.Router();
  *               phone:
  *                 type: string
  *                 example: "+34123123123"
+ * 
  *     responses:
  *       200:
  *         description: Usuario creado exitosamente.
@@ -131,14 +132,14 @@ userRouter.post(
 
 /**
  * @swagger
- * /api/user:
+ * /api/user/{userId}:
  *   get:
  *     summary: Obtener todos los datos de un usuario para ver su perfil.
  *     tags: 
  *       - User
  * 
  *     parameters:
- *       - in: query
+ *       - in: path
  *         name: userId
  *         schema:
  *           type: string
@@ -152,7 +153,7 @@ userRouter.post(
  *         description: Error buscar los datos de un usuario en particular.
  */
 userRouter.get(
-	"/",
+	"/:userId",
 	[
 
 	],
@@ -162,14 +163,14 @@ userRouter.get(
 
 /**
  * @swagger
- * /api/user:
+ * /api/user/{userId}:
  *   patch:
  *     summary: Actualiza los datos de un usuario.
  *     tags: 
  *       - User
  * 
  *     parameters:
- *       - in: query
+ *       - in: path
  *         name: userId
  *         schema:
  *           type: string
@@ -200,7 +201,7 @@ userRouter.get(
  *         description: Error al actualizar los datos del usuario. 
  */
 userRouter.patch(
-	"/",
+	"/:userId",
 	[
 
 	],
@@ -210,14 +211,14 @@ userRouter.patch(
 
 /**
  * @swagger
- * /api/user:
+ * /api/user/{userId}:
  *   delete:
  *     summary: Elimina un usuario.
  *     tags: 
  *       - User
  * 
  *     parameters:
- *       - in: query
+ *       - in: path
  *         name: userId
  *         schema:
  *           type: string
@@ -231,7 +232,7 @@ userRouter.patch(
  *         description: Error al eliminar un usuario. 
  */
 userRouter.delete(
-	"/",
+	"/:userId",
 	[
 
 	],
@@ -240,4 +241,4 @@ userRouter.delete(
 );
 
 // Exporta el router una vez definidos todos los endpoints.
-export { userRouter };
+export default userRouter;

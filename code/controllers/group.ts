@@ -7,7 +7,7 @@ import GroupService from "../utils/group";
  * @param res Response
  * @returns Todos los grupos de la plataforma.
  */
-async function getAllGroups(req: any, res: any) {
+export async function getAllGroups(req: any, res: any) {
 
 	try {
 
@@ -37,7 +37,7 @@ async function getAllGroups(req: any, res: any) {
  * @param res Response
  * @returns Grupos que pasan todos los filtros.
  */
-async function getFilteredGroups(req: any, res: any) {
+export async function getFilteredGroups(req: any, res: any) {
 
 	try {
 
@@ -61,7 +61,7 @@ async function getFilteredGroups(req: any, res: any) {
  * @param res Response
  * @returns Confirmación de que el grupo se mandó a imprimir.
  */
-async function printGroup(req: any, res: any) {
+export async function printGroup(req: any, res: any) {
 
 	try {
 
@@ -77,9 +77,3 @@ async function printGroup(req: any, res: any) {
 	}
 
 }
-
-export default {
-	getAllGroups,
-	getFilteredGroups,
-	printGroup
-};
