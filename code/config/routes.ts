@@ -1,5 +1,4 @@
 import express from "express";
-import { exampleRouter } from "../routers/example";
 import { userRouter } from "../routers/user";
 import { memberRouter } from "../routers/member";
 import { groupRouter } from "../routers/group";
@@ -16,7 +15,6 @@ const router = express.Router();
 /**
  * Asigna un subdominio del servidor a un router en concreto.
  */
-router.use('/api/example', exampleRouter);
 router.use('/api/user', userRouter);
 router.use('/api/member', memberRouter);
 router.use('/api/group', groupRouter);

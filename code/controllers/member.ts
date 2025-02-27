@@ -107,7 +107,6 @@ async function previewMemberCard(req: any, res: any) {
 
 		const memberObject = await memberService.getMemberById(memberId) as MemberInterface;
 
-		console.log(memberObject)
 		const filePath = await  generarTarjeta(memberObject);
 
 		res.status(501).sendFile(filePath);
