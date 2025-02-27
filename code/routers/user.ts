@@ -163,7 +163,7 @@ userRouter.get(
 
 /**
  * @swagger
- * /api/user:
+ * /api/user/{userId}:
  *   patch:
  *     summary: Actualiza los datos de un usuario.
  *     tags: 
@@ -211,7 +211,7 @@ userRouter.patch(
 
 /**
  * @swagger
- * /api/user:
+ * /api/user/{userId}:
  *   delete:
  *     summary: Elimina un usuario.
  *     tags: 

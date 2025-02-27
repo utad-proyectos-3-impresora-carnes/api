@@ -14,7 +14,6 @@ import auth from "../middleware/auth";
  * Ofrece los siguientes endpoints:
  * - GET / -> devuelve todos los miembros en la base de datos
  * - GET /filtered -> devuelve los miembros que sigan una serie de filtros
- * - GET /inGroup:groupId -> devuelve los miembros que pertenezcan a un grupo
  * - GET /preview -> devuelve la previsualización de como quedaría el carné de un miembro
  * - PATCH /print:id -> manda a imprir un carne con el id dado
  */
@@ -33,8 +32,6 @@ const memberRouter = express.Router();
  *           application/json:
  *             schema:
  *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Member'
  */
 memberRouter.get(
 	"/",
@@ -45,13 +42,40 @@ memberRouter.get(
 	controller.getAllMembers
 );
 
-
 /**
  * @swagger
  * /api/member/filtered:
  *   get:
  *     summary: Obtener los miembros filtrados
- *     tags: [Member]
+ *     tags: 
+ *       - Member
+ * 
+ *     parameters:
+ *       - in: query
+ *         name: name
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: Nombre del miembro
+ *       - in: query
+ *         name: dni
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: DNI o pasaporte del miembro
+ *       - in: query
+ *         name: group
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: Grupo en el que está inscrito el miembro
+ *       - in: query
+ *         name: year
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: Año en el que se añadió al miembro
+ * 
  *     responses:
  *       200:
  *         description: Lista de miembros filtrados
@@ -60,7 +84,7 @@ memberRouter.get(
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Member'
+ *                 type: object
  */
 memberRouter.get(
 	"/filtered",
@@ -74,13 +98,13 @@ memberRouter.get(
 
 /**
  * @swagger
- * /api/member/preview:
+ * /api/member/preview/{memberId}:
  *   get:
  *     summary: Obtener la previsualización de un carné
  *     tags: [Member]
  * 
  *     parameters:
- *       - in: query
+ *       - in: path
  *         name: memberId
  *         schema:
  *           type: string
@@ -100,7 +124,7 @@ memberRouter.get(
  *                   format: binary
  */
 memberRouter.get(
-	"/preview",
+	"/preview:memberId",
 	[
 
 	],
@@ -111,17 +135,19 @@ memberRouter.get(
 
 /**
  * @swagger
- * /api/member/print:
+ * /api/member/print/{memberId}:
  *   patch:
  *     summary: Mandar a imprimir un miembro
  *     tags: [Member]
+ * 
  *     parameters:
- *       - in: query
- *         name: id
+ *       - in: path
+ *         name: memberId
  *         schema:
  *           type: string
  *         required: true
  *         description: ID del miembro
+ * 
  *     responses:
  *       200:
  *         description: Confirmación de impresión
@@ -134,7 +160,7 @@ memberRouter.get(
  *                   type: string
  */
 memberRouter.patch(
-	"/print",
+	"/print:memberId",
 	[
 
 	],
