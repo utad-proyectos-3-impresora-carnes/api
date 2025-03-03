@@ -58,7 +58,7 @@ groupRouter.get(
  *       - in: query
  *         name: type
  *         schema:
- *           type: string
+ *           type: integer
  *         required: false
  *         description: Tipo del grupo
  *       - in: query

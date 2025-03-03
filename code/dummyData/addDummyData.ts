@@ -37,7 +37,7 @@ async function createGroups(data: any): Promise<void> {
 
 			name: type,
 			type: GroupTypes[getRandomGroupType()],
-			creationYear: randomInt(20)
+			creationYear: randomInt(40) + 1990
 
 		};
 

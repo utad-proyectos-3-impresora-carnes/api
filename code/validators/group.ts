@@ -46,6 +46,21 @@ export const getAllGroups = [
  */
 export const getFilteredGroups = [
 
+
+	query("name")
+		.isString()
+		.isLength({ max: 25 }).withMessage("El máximo tamaño de este string es 25")
+		.optional(),
+
+	query("type")
+		.isNumeric()
+		.optional(),
+
+	query("year")
+		.isString()
+		.isLength({ max: 4 }).withMessage("El máximo tamaño de este string es 4")
+		.optional(),
+
 	(req: any, res: any, next: any) => validateResults(req, res, next)
 
 ]

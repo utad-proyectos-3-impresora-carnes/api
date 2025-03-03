@@ -17,7 +17,7 @@ const GroupSchema = new Schema(
 		},
 		// Fecha de creación del grupo
 		creationYear: {
-			type: Schema.Types.Date
+			type: Schema.Types.Number
 		}
 	},
 	{

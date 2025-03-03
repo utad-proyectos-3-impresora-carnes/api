@@ -1,5 +1,6 @@
+import GroupInterface from "../interfaces/group";
 import GroupService from "../utils/group";
-import { validationResult } from "express-validator";
+import { matchedData } from "express-validator";
 
 /**
  * Obtiene todos los grupos de la plataforma.
@@ -42,8 +43,19 @@ export async function getFilteredGroups(req: any, res: any) {
 
 	try {
 
-		// No tocar durante sprint 2
-		res.status(501).send("Not implemented yet! Come back in sprint 3!");
+		// Crea el servicio
+		const groupService:GroupService = new GroupService()
+
+		// Compone los filtros
+		const groupFilters: GroupInterface = {
+			...matchedData(req)
+		}
+		
+		// Busca los grupos con los filtros
+		const matchedGroups = groupService.getFilteredGroups(groupFilters);
+
+		// Devuelve los datos filtrados
+		res.status(200).send(matchedGroups);
 
 	} catch (error: any) {
 
