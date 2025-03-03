@@ -22,12 +22,10 @@ import validateResults from "../utils/validator";
  * Checks if the userId exists.
  */
 export const checkUserId = [
-
 	param("userId")
 		.exists().withMessage("El id del usuario debe existir.")
 		.notEmpty().withMessage("El id del usuario no puede estar vacío.")
 		.isMongoId().withMessage("El id del usuario debe ser de mongoDB."),
 
 	(req: any, res: any, next: any) => validateResults(req, res, next)
-
 ]

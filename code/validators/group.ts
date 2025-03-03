@@ -31,3 +31,30 @@ export const checkGroupId = [
 	(req: any, res: any, next: any) => validateResults(req, res, next)
 
 ]
+
+/**
+ * Validate the endpoint to get all groups.
+ */
+export const getAllGroups = [
+
+	(req: any, res: any, next: any) => validateResults(req, res, next)
+
+]
+
+/**
+ * Validate the endpoint to get filtered groups.
+ */
+export const getFilteredGroups = [
+
+	(req: any, res: any, next: any) => validateResults(req, res, next)
+
+]
+
+/**
+ * Validate the endpoint to print groups.
+ */
+export const printGroup = [
+
+	(req: any, res: any, next: any) => validateResults(req, res, next)
+
+]

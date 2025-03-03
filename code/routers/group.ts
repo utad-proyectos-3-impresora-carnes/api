@@ -37,6 +37,7 @@ const groupRouter = express.Router();
 groupRouter.get(
 	"/",
 	auth,
+	validator.getAllGroups,
 	controller.getAllGroups
 );
 
@@ -59,7 +60,7 @@ groupRouter.get(
  *         schema:
  *           type: string
  *         required: false
- *         description: DNI o pasaporte del miembro
+ *         description: Tipo del grupo
  *       - in: query
  *         name: year
  *         schema:
@@ -78,6 +79,7 @@ groupRouter.get(
 groupRouter.get(
 	"/filtered",
 	auth,
+	validator.getFilteredGroups,
 	controller.getFilteredGroups
 );
 
@@ -111,6 +113,7 @@ groupRouter.patch(
 	"/print/:groupId",
 	auth,
 	validator.checkGroupId,
+	validator.printGroup,
 	controller.printGroup
 );
 
