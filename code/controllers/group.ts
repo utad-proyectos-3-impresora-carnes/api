@@ -52,7 +52,7 @@ export async function getFilteredGroups(req: any, res: any) {
 		}
 		
 		// Busca los grupos con los filtros
-		const matchedGroups = groupService.getFilteredGroups(groupFilters);
+		const matchedGroups = await groupService.getFilteredGroups(groupFilters);
 
 		// Devuelve los datos filtrados
 		res.status(200).send(matchedGroups);

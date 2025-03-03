@@ -62,9 +62,9 @@ groupRouter.get(
  *         required: false
  *         description: Tipo del grupo
  *       - in: query
- *         name: year
+ *         name: creationYear
  *         schema:
- *           type: string
+ *           type: integer
  *         required: false
  *         description: Año en el que se creo el grupo
  * 

@@ -56,9 +56,8 @@ export const getFilteredGroups = [
 		.isNumeric()
 		.optional(),
 
-	query("year")
-		.isString()
-		.isLength({ max: 4 }).withMessage("El máximo tamaño de este string es 4")
+	query("creationYear")
+		.isNumeric()
 		.optional(),
 
 	(req: any, res: any, next: any) => validateResults(req, res, next)

@@ -83,7 +83,7 @@ export default class GroupService {
 
 			console.log(groupFilters);
 
-			return await GroupModel.find(groupFilters)
+			return await GroupModel.find(groupFilters);
 
 		} catch (error) {
 
