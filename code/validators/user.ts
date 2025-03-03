@@ -29,3 +29,57 @@ export const checkUserId = [
 
 	(req: any, res: any, next: any) => validateResults(req, res, next)
 ]
+
+/**
+ * Validate the endpoint to create a user.
+ */
+export const createUser = [
+
+	(req: any, res: any, next: any) => validateResults(req, res, next)
+
+]
+
+/**
+ * Validate the endpoint to login.
+ */
+export const login = [
+
+	(req: any, res: any, next: any) => validateResults(req, res, next)
+
+]
+
+/**
+ * Validate the endpoint to reset the password.
+ */
+export const resetPassword = [
+
+	(req: any, res: any, next: any) => validateResults(req, res, next)
+
+]
+
+/**
+ * Validate the endpoint to get the data of a user.
+ */
+export const getUserData = [
+
+	(req: any, res: any, next: any) => validateResults(req, res, next)
+
+]
+
+/**
+ * Validate the endpoint to update a user.
+ */
+export const updateUser = [
+
+	(req: any, res: any, next: any) => validateResults(req, res, next)
+
+]
+
+/**
+ * Validate the endpoint to delete a user.
+ */
+export const deleteUser = [
+
+	(req: any, res: any, next: any) => validateResults(req, res, next)
+
+]

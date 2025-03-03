@@ -36,9 +36,6 @@ const memberRouter = express.Router();
  */
 memberRouter.get(
 	"/",
-	[
-
-	],
 	auth,
 	validator.getAllMembers,
 	controller.getAllMembers
@@ -96,9 +93,6 @@ memberRouter.get(
  */
 memberRouter.get(
 	"/filtered",
-	[
-
-	],
 	auth,
 	validator.getFilteredMembers,
 	controller.getFilteredMembers
@@ -133,9 +127,6 @@ memberRouter.get(
  */
 memberRouter.get(
 	"/preview/:memberId",
-	[
-
-	],
 	auth,
 	validator.checkMemberId,
 	validator.previewMemberCard,
@@ -170,9 +161,6 @@ memberRouter.get(
  */
 memberRouter.patch(
 	"/print/:memberId",
-	[
-
-	],
 	auth,
 	validator.checkMemberId,
 	validator.printMember,

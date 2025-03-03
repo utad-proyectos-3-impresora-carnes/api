@@ -56,9 +56,7 @@ const userRouter = express.Router();
 
 userRouter.post(
 	"/",
-	[
-
-	],
+	validator.createUser,
 	controller.createUser
 );
 
@@ -92,9 +90,7 @@ userRouter.post(
  */
 userRouter.post(
 	"/login",
-	[
-
-	],
+	validator.login,
 	controller.login
 );
 
@@ -125,9 +121,7 @@ userRouter.post(
  */
 userRouter.post(
 	"/resetPassword",
-	[
-
-	],
+	validator.resetPassword,
 	controller.resetPassword
 );
 
@@ -155,10 +149,9 @@ userRouter.post(
  */
 userRouter.get(
 	"/:userId",
-	[
-
-	],
 	auth,
+	validator.checkUserId,
+	validator.getUserData,
 	controller.getUserData
 );
 
@@ -203,10 +196,9 @@ userRouter.get(
  */
 userRouter.patch(
 	"/:userId",
-	[
-
-	],
 	auth,
+	validator.checkUserId,
+	validator.updateUser,
 	controller.updateUser
 );
 
@@ -234,10 +226,9 @@ userRouter.patch(
  */
 userRouter.delete(
 	"/:userId",
-	[
-
-	],
 	auth,
+	validator.checkUserId,
+	validator.deleteUser,
 	controller.deleteUser
 );
 
