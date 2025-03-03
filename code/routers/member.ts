@@ -40,6 +40,7 @@ memberRouter.get(
 
 	],
 	auth,
+	validator.getAllMembers,
 	controller.getAllMembers
 );
 
@@ -99,9 +100,9 @@ memberRouter.get(
 
 	],
 	auth,
+	validator.getFilteredMembers,
 	controller.getFilteredMembers
 );
-
 
 /**
  * @swagger
@@ -136,9 +137,10 @@ memberRouter.get(
 
 	],
 	auth,
+	validator.checkMemberId,
+	validator.previewMemberCard,
 	controller.previewMemberCard
 );
-
 
 /**
  * @swagger
@@ -172,6 +174,8 @@ memberRouter.patch(
 
 	],
 	auth,
+	validator.checkMemberId,
+	validator.printMember,
 	controller.printMember
 );
 

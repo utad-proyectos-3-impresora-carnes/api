@@ -31,3 +31,39 @@ export const checkMemberId = [
 	(req: any, res: any, next: any) => validateResults(req, res, next)
 
 ]
+
+/**
+ * Validate the endpoint to get all members.
+ */
+export const getAllMembers = [
+
+	(req: any, res: any, next: any) => validateResults(req, res, next)
+
+]
+
+/**
+ * Validate the endpoint to get filtered members.
+ */
+export const getFilteredMembers = [
+
+	(req: any, res: any, next: any) => validateResults(req, res, next)
+
+]
+
+/**
+ * Validate the endpoint to preview a member.
+ */
+export const previewMemberCard = [
+
+	(req: any, res: any, next: any) => validateResults(req, res, next)
+
+]
+
+/**
+ * Validate the endpoint to print a member.
+ */
+export const printMember = [
+
+	(req: any, res: any, next: any) => validateResults(req, res, next)
+
+]
