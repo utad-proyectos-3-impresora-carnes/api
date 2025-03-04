@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import JsonWebTokenService from "../utils/jsonWebToken";
 import UserService from "../utils/user";
 
 /**
@@ -11,29 +11,34 @@ import UserService from "../utils/user";
  */
 export default async function auth(req: any, res: any, next: any) {
 
-	const token = req.header('Authorization');
-
-	// if (!token) return res.status(401).json({ error: 'Access denied, there is no token!' });
-
 	try {
 
-		// const userService: UserService = new UserService();
-		
-		// const decoded = jwt.verify(token, 'your-secret-key');
-		
-		// const user = await userService.getUserById(decoded.userId);
+		const token = req.header('Authorization').split(" ").pop();
 
-		// if (!user) {
-		// 	return res.status(401).json({ error: 'The user doesn\'t exist!' });
-		// }
-		
-		// req.user = user;
-		
+		if (!token){
+			throw new Error("No hay token!");
+		}
+
+		const jsonWebTokenService: JsonWebTokenService = new JsonWebTokenService();
+
+		const decoded = jsonWebTokenService.verifyToken(token);
+
+		const userService: UserService = new UserService();
+
+		const user = await userService.getUserById(decoded.userId);
+
+		if (!user) {
+			return res.status(401).json({ error: 'The user doesn\'t exist!' });
+		}
+
+		req.user = user;
+
 		next();
 
 	} catch (error) {
 
-		res.status(401).json({ error: 'Invalid token' });
+		console.error(error);
+		return res.status(401).json({ error: error.message });
 
 	}
 

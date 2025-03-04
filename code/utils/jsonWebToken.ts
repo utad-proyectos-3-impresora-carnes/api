@@ -42,7 +42,7 @@ export default class JsonWebTokenService {
 	 * @param tokenToVerify El token a verificar
 	 * @returns Si el token es válido.
 	 */
-	verifyToken(tokenToVerify: string): boolean {
+	verifyToken(tokenToVerify: string) {
 		try {
 
 			return jwt.verify(tokenToVerify, this.tokenSecret);
@@ -50,7 +50,7 @@ export default class JsonWebTokenService {
 		} catch (error) {
 
 			console.error(error);
-			throw new Error("Error de servicio al vefificar un token.");
+			throw new Error("El token no es válido!");
 
 		}
 	}
