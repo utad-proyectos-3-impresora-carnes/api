@@ -81,8 +81,6 @@ export default class GroupService {
 
 		try {
 
-			console.log(groupFilters);
-
 			return await GroupModel.find(groupFilters);
 
 		} catch (error) {

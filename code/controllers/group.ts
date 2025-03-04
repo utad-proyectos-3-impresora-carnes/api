@@ -44,13 +44,13 @@ export async function getFilteredGroups(req: any, res: any) {
 	try {
 
 		// Crea el servicio
-		const groupService:GroupService = new GroupService()
+		const groupService: GroupService = new GroupService()
 
 		// Compone los filtros
 		const groupFilters: GroupInterface = {
 			...matchedData(req)
 		}
-		
+
 		// Busca los grupos con los filtros
 		const matchedGroups = await groupService.getFilteredGroups(groupFilters);
 
@@ -78,8 +78,10 @@ export async function printGroup(req: any, res: any) {
 
 	try {
 
+		const { gorupId } = matchedData(req);
+
 		// No tocar durante sprint 2
-		res.status(501).send("Not implemented yet! Come back in sprint 3!");
+		res.status(501).send(`You have requested to print the group with id: ${gorupId}.\nThis is not implemented yet!\nCome back later!`);
 
 	} catch (error: any) {
 
