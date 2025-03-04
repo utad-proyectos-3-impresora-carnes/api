@@ -1,7 +1,7 @@
 import UserInterface from "../interfaces/user";
 import UserService from "../utils/user";
 import CypherService from "../utils/cypher";
-import jwt from "jsonwebtoken";
+import JsonWebTokenService from "../utils/jsonWebToken";
 import { matchedData } from "express-validator";
 
 /**
@@ -63,6 +63,9 @@ export async function login(req: any, res: any) {
 
 	try {
 
+		// Crea los servicios
+		const jsonWebTokenService: JsonWebTokenService = new JsonWebTokenService();
+
 		// Extra los datos del cuerpo.
 		const { email, password } = matchedData(req);
 
@@ -73,13 +76,13 @@ export async function login(req: any, res: any) {
 		}
 
 		// Comrprueba que los datos de autenticación sean correctos.
-		await checkAuthData(userData);
+		const userFullData = await checkAuthData(userData) as UserInterface;
 
 		// Genera el token del usuario.
-		const { token, user } = await generateUserToken(userData);
+		const token = await jsonWebTokenService.generateUserToken({ userId: userFullData._id });
 
 		// Devuelve el objeto creado.
-		res.status(201).send({ token: token, user: user });
+		res.status(201).send({ token: token, user: userFullData });
 
 	} catch (error: any) {
 
@@ -97,8 +100,9 @@ export async function login(req: any, res: any) {
 /**
  * Comprueba que los datos de autenticación del usuario sean correctos.
  * @param userData Los datos del usuario
+ * @return El usuario con todos sus datos su la autenticación es correcta.
  */
-async function checkAuthData(userData: UserInterface) {
+async function checkAuthData(userData: UserInterface): Promise<any> {
 
 	// Crea los servicios
 	const userService = new UserService();
@@ -119,24 +123,7 @@ async function checkAuthData(userData: UserInterface) {
 		throw new Error("La contraseña no es correcta!")
 	}
 
-}
-
-/**
- * Generate user token
- */
-async function generateUserToken(userData: UserInterface) {
-
-	// Crea los servicios
-	const userService = new UserService();
-
-	const userObject = await userService.getUserByEmail(userData.email);
-
-	// TODO: generate token
-	const token = jwt.sign({ userId: userObject._id }, process.env.TOKEN_KEY_CONTENTS, {
-		expiresIn: process.env.TOKEN_KEY_DURATION,
-	});
-
-	return { user: userObject, token: token };
+	return await userService.getUserById(userAuthData._id.toString());
 
 }
 

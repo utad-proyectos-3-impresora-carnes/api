@@ -32,7 +32,7 @@ router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
  */
 router.use('*', function (req: any, res: any) {
 	res.status(404).send(`
-		<h1>404! Skill issue!</h1>
+		<h1>404! Not found!</h1>
 		<label>We recommend going to our docs on <a href="http://localhost:${process.env.PORT}/api-docs">Swagger</a></label>
 		`);
 });
