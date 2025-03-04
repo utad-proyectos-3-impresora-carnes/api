@@ -79,7 +79,7 @@ export async function login(req: any, res: any) {
 		const userFullData = await checkAuthData(userData) as UserInterface;
 
 		// Genera el token del usuario.
-		const token = await jsonWebTokenService.generateUserToken({ userId: userFullData._id });
+		const token = jsonWebTokenService.generateToken({ userId: userFullData._id });
 
 		// Devuelve el objeto creado.
 		res.status(201).send({ token: token, user: userFullData });

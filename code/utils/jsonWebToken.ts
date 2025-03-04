@@ -20,13 +20,38 @@ export default class JsonWebTokenService {
 	 * @param tokenData The object to add to the token.
 	 * @returns A JWT token.
 	 */
-	async generateUserToken(tokenData: Object) {
+	generateToken(tokenData: Object): string {
 
-		const token = jwt.sign(tokenData, this.tokenSecret, {
-			expiresIn: this.tokenDuration,
-		});
+		try {
+			const token = jwt.sign(tokenData, this.tokenSecret, {
+				expiresIn: this.tokenDuration,
+			});
 
-		return token;
+			return token;
+		} catch (error) {
 
+			console.error(error);
+			throw new Error("Error de servicio al generar un token.");
+
+		}
+
+	}
+
+	/**
+	 * Verifica si el token es válido.
+	 * @param tokenToVerify El token a verificar
+	 * @returns Si el token es válido.
+	 */
+	verifyToken(tokenToVerify: string): boolean {
+		try {
+
+			return jwt.verify(tokenToVerify, this.tokenSecret);
+
+		} catch (error) {
+
+			console.error(error);
+			throw new Error("Error de servicio al vefificar un token.");
+
+		}
 	}
 }
