@@ -36,7 +36,8 @@ export const checkUserId = [
 export const createUser = [
 
 	body("email")
-		.isEmail().withMessage("Se debe introducir un email"),
+		.isEmail().withMessage("Se debe introducir un email")
+		.isLength({ max: 100 }).withMessage("El tamaño máximo del email son 100 caracteres."),
 
 	body("password")
 		.isString()
@@ -46,7 +47,7 @@ export const createUser = [
 	body("phone")
 		.isString()
 		.isLength({ min: 9, max: 20 }).withMessage("El teléfono debe tener entre 9 y 20 caracteres."),
-		
+
 	(req: any, res: any, next: any) => validateResults(req, res, next)
 
 ]
@@ -56,6 +57,14 @@ export const createUser = [
  */
 export const login = [
 
+	body("email")
+		.isEmail().withMessage("Se debe introducir un email")
+		.isLength({ max: 100 }).withMessage("El tamaño máximo del email son 100 caracteres."),
+
+	body("password")
+		.isString()
+		.isLength({ min: 8, max: 50 }).withMessage("La contraseña debe tener entre 8 y 50 caracteres."),
+
 	(req: any, res: any, next: any) => validateResults(req, res, next)
 
 ]
@@ -64,6 +73,10 @@ export const login = [
  * Validate the endpoint to reset the password.
  */
 export const resetPassword = [
+
+	body("email")
+		.isEmail().withMessage("Se debe introducir un email")
+		.isLength({ max: 100 }).withMessage("El tamaño máximo del email son 100 caracteres."),
 
 	(req: any, res: any, next: any) => validateResults(req, res, next)
 
@@ -82,6 +95,19 @@ export const getUserData = [
  * Validate the endpoint to update a user.
  */
 export const updateUser = [
+
+	body("email")
+		.isEmail().withMessage("Se debe introducir un email")
+		.isLength({ max: 100 }).withMessage("El tamaño máximo del email son 100 caracteres."),
+
+	body("password")
+		.isString()
+		.isStrongPassword({ minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 0 }).withMessage("La contraseña debe tener al menos una minúscula, una mayúscula y un número.")
+		.isLength({ min: 8, max: 50 }).withMessage("La contraseña debe tener entre 8 y 50 caracteres."),
+
+	body("phone")
+		.isString()
+		.isLength({ min: 9, max: 20 }).withMessage("El teléfono debe tener entre 9 y 20 caracteres."),
 
 	(req: any, res: any, next: any) => validateResults(req, res, next)
 
