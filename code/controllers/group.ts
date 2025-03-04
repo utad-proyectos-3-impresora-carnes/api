@@ -1,3 +1,4 @@
+import { group } from "console";
 import GroupInterface from "../interfaces/group";
 import GroupService from "../utils/group";
 import { matchedData } from "express-validator";
@@ -78,10 +79,10 @@ export async function printGroup(req: any, res: any) {
 
 	try {
 
-		const { gorupId } = matchedData(req);
+		const { groupId } = matchedData(req);
 
 		// No tocar durante sprint 2
-		res.status(501).send(`You have requested to print the group with id: ${gorupId}.\nThis is not implemented yet!\nCome back later!`);
+		res.status(501).send(`You have requested to print the group with id: ${groupId}.\nThis is not implemented yet!\nCome back later!`);
 
 	} catch (error: any) {
 

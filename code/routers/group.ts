@@ -92,7 +92,7 @@ groupRouter.get(
  * 
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: groupId
  *         schema:
  *           type: string
  *         required: true
