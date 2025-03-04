@@ -35,6 +35,18 @@ export const checkUserId = [
  */
 export const createUser = [
 
+	body("email")
+		.isEmail().withMessage("Se debe introducir un email"),
+
+	body("password")
+		.isString()
+		.isStrongPassword({ minLowercase: 1, minUppercase: 1, minNumbers: 1, minSymbols: 0 }).withMessage("La contraseña debe tener al menos una minúscula, una mayúscula y un número.")
+		.isLength({ min: 8, max: 50 }).withMessage("La contraseña debe tener entre 8 y 50 caracteres."),
+
+	body("phone")
+		.isString()
+		.isLength({ min: 9, max: 20 }).withMessage("El teléfono debe tener entre 9 y 20 caracteres."),
+		
 	(req: any, res: any, next: any) => validateResults(req, res, next)
 
 ]

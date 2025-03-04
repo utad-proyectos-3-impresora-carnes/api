@@ -24,7 +24,7 @@ const userRouter = express.Router();
 
 /**
  * @swagger
- * /api/user:
+ * /api/user/register:
  *   post:
  *     summary: Creación de un nuevo usuario.
  *     tags: 
@@ -55,7 +55,7 @@ const userRouter = express.Router();
  */
 
 userRouter.post(
-	"/",
+	"/register",
 	validator.createUser,
 	controller.createUser
 );

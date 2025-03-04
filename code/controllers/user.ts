@@ -2,7 +2,7 @@ import UserInterface from "../interfaces/user";
 import UserService from "../utils/user";
 import CypherService from "../utils/cypher";
 import jwt from "jsonwebtoken";
-import { validationResult } from "express-validator";
+import { matchedData } from "express-validator";
 
 /**
  * Crea un usuario.
@@ -19,7 +19,7 @@ export async function createUser(req: any, res: any) {
 		const cypherService: CypherService = new CypherService();
 
 		// Extra los datos del cuerpo.
-		const { email, password, phone } = req.body;
+		const { email, password, phone } = matchedData(req);
 
 		// Comprueba si el email está libre
 		if (! await userService.checkEmailAvailable(email)) {
