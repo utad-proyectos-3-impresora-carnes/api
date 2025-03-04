@@ -1,5 +1,6 @@
 import express from "express";
 import * as controller from "../controllers/member";
+import * as validator from "../validators/member";
 import auth from "../middleware/auth";
 
 /**
@@ -35,10 +36,8 @@ const memberRouter = express.Router();
  */
 memberRouter.get(
 	"/",
-	[
-
-	],
 	auth,
+	validator.getAllMembers,
 	controller.getAllMembers
 );
 
@@ -72,7 +71,7 @@ memberRouter.get(
  *       - in: query
  *         name: year
  *         schema:
- *           type: string
+ *           type: integer
  *         required: false
  *         description: Año en el que se añadió al miembro
  *       - in: query
@@ -94,13 +93,10 @@ memberRouter.get(
  */
 memberRouter.get(
 	"/filtered",
-	[
-
-	],
 	auth,
+	validator.getFilteredMembers,
 	controller.getFilteredMembers
 );
-
 
 /**
  * @swagger
@@ -131,13 +127,11 @@ memberRouter.get(
  */
 memberRouter.get(
 	"/preview/:memberId",
-	[
-
-	],
 	auth,
+	validator.checkMemberId,
+	validator.previewMemberCard,
 	controller.previewMemberCard
 );
-
 
 /**
  * @swagger
@@ -167,10 +161,9 @@ memberRouter.get(
  */
 memberRouter.patch(
 	"/print/:memberId",
-	[
-
-	],
 	auth,
+	validator.checkMemberId,
+	validator.printMember,
 	controller.printMember
 );
 

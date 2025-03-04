@@ -31,7 +31,10 @@ router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
  * Tiene que estar abajo del todo porque los routers son como los switch, van de arriba abajo y si pillan un resultado válido no siguen buscando.
  */
 router.use('*', function (req: any, res: any) {
-	res.status(404).send("<h1>404! Skill issue!</h1>");
+	res.status(404).send(`
+		<h1>404! Skill issue!</h1>
+		<label>We recommend going to our docs on <a href="http://localhost:${process.env.PORT}/api-docs">Swagger</a></label>
+		`);
 });
 
 //Exporta el router una vez definidos todos los sub routers.

@@ -1,5 +1,6 @@
 import express from "express";
 import * as controller from "../controllers/user";
+import * as validator from "../validators/user";
 import auth from "../middleware/auth";
 
 /**
@@ -23,7 +24,7 @@ const userRouter = express.Router();
 
 /**
  * @swagger
- * /api/user:
+ * /api/user/register:
  *   post:
  *     summary: Creación de un nuevo usuario.
  *     tags: 
@@ -54,10 +55,8 @@ const userRouter = express.Router();
  */
 
 userRouter.post(
-	"/",
-	[
-
-	],
+	"/register",
+	validator.createUser,
 	controller.createUser
 );
 
@@ -91,9 +90,7 @@ userRouter.post(
  */
 userRouter.post(
 	"/login",
-	[
-
-	],
+	validator.login,
 	controller.login
 );
 
@@ -124,9 +121,7 @@ userRouter.post(
  */
 userRouter.post(
 	"/resetPassword",
-	[
-
-	],
+	validator.resetPassword,
 	controller.resetPassword
 );
 
@@ -154,10 +149,9 @@ userRouter.post(
  */
 userRouter.get(
 	"/:userId",
-	[
-
-	],
 	auth,
+	validator.checkUserId,
+	validator.getUserData,
 	controller.getUserData
 );
 
@@ -202,10 +196,9 @@ userRouter.get(
  */
 userRouter.patch(
 	"/:userId",
-	[
-
-	],
 	auth,
+	validator.checkUserId,
+	validator.updateUser,
 	controller.updateUser
 );
 
@@ -233,10 +226,9 @@ userRouter.patch(
  */
 userRouter.delete(
 	"/:userId",
-	[
-
-	],
 	auth,
+	validator.checkUserId,
+	validator.deleteUser,
 	controller.deleteUser
 );
 

@@ -2,6 +2,7 @@ import UserInterface from "../interfaces/user";
 import UserService from "../utils/user";
 import CypherService from "../utils/cypher";
 import jwt from "jsonwebtoken";
+import { matchedData } from "express-validator";
 
 /**
  * Crea un usuario.
@@ -18,7 +19,7 @@ export async function createUser(req: any, res: any) {
 		const cypherService: CypherService = new CypherService();
 
 		// Extra los datos del cuerpo.
-		const { email, password, phone } = req.body;
+		const { email, password, phone } = matchedData(req);
 
 		// Comprueba si el email está libre
 		if (! await userService.checkEmailAvailable(email)) {
@@ -63,7 +64,7 @@ export async function login(req: any, res: any) {
 	try {
 
 		// Extra los datos del cuerpo.
-		const { email, password } = req.body;
+		const { email, password } = matchedData(req);
 
 		// Formatea los datos en una interfaz de datos de usuario.
 		const userData: UserInterface = {
@@ -72,7 +73,7 @@ export async function login(req: any, res: any) {
 		}
 
 		// Comrprueba que los datos de autenticación sean correctos.
-		checkAuthData(userData);
+		await checkAuthData(userData);
 
 		// Genera el token del usuario.
 		const { token, user } = await generateUserToken(userData);
@@ -97,7 +98,7 @@ export async function login(req: any, res: any) {
  * Comprueba que los datos de autenticación del usuario sean correctos.
  * @param userData Los datos del usuario
  */
-export async function checkAuthData(userData: UserInterface) {
+async function checkAuthData(userData: UserInterface) {
 
 	// Crea los servicios
 	const userService = new UserService();
@@ -123,7 +124,7 @@ export async function checkAuthData(userData: UserInterface) {
 /**
  * Generate user token
  */
-export async function generateUserToken(userData: UserInterface) {
+async function generateUserToken(userData: UserInterface) {
 
 	// Crea los servicios
 	const userService = new UserService();
@@ -150,8 +151,10 @@ export async function resetPassword(req: any, res: any) {
 
 	try {
 
+		const { email } = matchedData(req);
+
 		// No tocar durante sprint 2
-		res.status(501).send("Not implemented yet! Come back in sprint 3!");
+		res.status(501).send(`Has intentado recuperar la contraseña del usuario con el email ${email}.\nEsta funcionalidad no está implementada todavía.`);
 
 	} catch (error: any) {
 
@@ -175,7 +178,7 @@ export async function getUserData(req: any, res: any) {
 	try {
 
 		// Extrae los datos de la query
-		const userId: string = req.query.id;
+		const { userId } = matchedData(req);
 
 		// Busca el usuario
 		const userObject = await new UserService().getUserById(userId);
@@ -218,8 +221,7 @@ export async function updateUser(req: any, res: any) {
 		const cypherService: CypherService = new CypherService();
 
 		// Extrae los datos de la query
-		const userId: string = req.query.id;
-		const { email, password, phone } = req.body;
+		const { userId, email, password, phone } = matchedData(req);
 
 		// Si hay nuevo email, comprueba que esté disponible.
 		if (email !== undefined && ! await userService.checkEmailAvailable(email)) {
@@ -268,7 +270,7 @@ export async function deleteUser(req: any, res: any) {
 	try {
 
 		// Extrae los datos de la query
-		const userId: string = req.query.id;
+		const { userId } = matchedData(req);
 
 		// Busca el usuario
 		const userObject = await new UserService().deleteUserById(userId);

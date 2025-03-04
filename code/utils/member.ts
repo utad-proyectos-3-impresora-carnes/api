@@ -90,4 +90,25 @@ export default class MemberService {
 
 		}
 	}
+
+	/**
+	 * Obtiene una lista de miembros filtrados.
+	 * @param filter El objeto con los parámetros de filtrado.
+	 * @returns Lista con los miembros que cumplen las condiciones de filtrado..
+	 */
+	public async getFilteredMembers(filter: MemberInterface): Promise<any> {
+
+		try {
+
+			return await MemberModel.find(filter);
+
+		} catch (error: any) {
+
+			console.error(error)
+			throw new Error("Error getting filteres members");
+
+		}
+
+	}
+
 }

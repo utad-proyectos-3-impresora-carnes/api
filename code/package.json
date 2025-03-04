@@ -12,20 +12,21 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
+    "bwip-js": "^4.5.1",
+    "canvas": "^3.1.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "express-validator": "^7.2.1",
+    "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.10.0",
+    "sharp": "^0.33.5",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-dist": "^5.19.0",
-    "swagger-ui-express": "^5.0.1",
-	"axios": "^1.7.9",
-    "bwip-js": "^4.5.1",
-    "canvas": "^3.1.0",
-    "fs": "^0.0.1-security",
-    "sharp": "^0.33.5"
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",

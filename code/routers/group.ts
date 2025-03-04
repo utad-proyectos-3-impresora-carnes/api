@@ -1,5 +1,6 @@
 import express from "express";
 import * as controller from "../controllers/group";
+import * as validator from "../validators/group";
 import auth from "../middleware/auth";
 
 /**
@@ -35,10 +36,8 @@ const groupRouter = express.Router();
  */
 groupRouter.get(
 	"/",
-	[
-
-	],
 	auth,
+	validator.getAllGroups,
 	controller.getAllGroups
 );
 
@@ -59,13 +58,13 @@ groupRouter.get(
  *       - in: query
  *         name: type
  *         schema:
- *           type: string
+ *           type: integer
  *         required: false
- *         description: DNI o pasaporte del miembro
+ *         description: Tipo del grupo
  *       - in: query
- *         name: year
+ *         name: creationYear
  *         schema:
- *           type: string
+ *           type: integer
  *         required: false
  *         description: Año en el que se creo el grupo
  * 
@@ -79,10 +78,8 @@ groupRouter.get(
  */
 groupRouter.get(
 	"/filtered",
-	[
-
-	],
 	auth,
+	validator.getFilteredGroups,
 	controller.getFilteredGroups
 );
 
@@ -95,7 +92,7 @@ groupRouter.get(
  * 
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: groupId
  *         schema:
  *           type: string
  *         required: true
@@ -114,10 +111,9 @@ groupRouter.get(
  */
 groupRouter.patch(
 	"/print/:groupId",
-	[
-
-	],
 	auth,
+	validator.checkGroupId,
+	validator.printGroup,
 	controller.printGroup
 );
 

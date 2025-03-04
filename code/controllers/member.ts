@@ -1,6 +1,7 @@
 import MemberInterface from "../interfaces/member";
 import MemberService from "../utils/member";
 import generarTarjeta from "../utils/cardGenerator";
+import { matchedData } from "express-validator";
 
 /**
  * Obtiene todos los miembros de la plataforma.
@@ -43,47 +44,24 @@ export async function getFilteredMembers(req: any, res: any) {
 
 	try {
 
-		// No tocar durante sprint 2
-		res.status(501).send("Not implemented yet! Come back in sprint 3!");
+		// Crea el servicio
+		const memberService = new MemberService();
+
+		// Genera el filtro.
+		const filter: MemberInterface = {
+			...matchedData(req)
+		}
+		// Obiene los miembros filtrados
+		const filteredMembers = await memberService.getFilteredMembers(filter);
+
+		// Devuelve los miembros filtrados
+		res.status(501).send(filteredMembers);
 
 	} catch (error: any) {
 
 		console.error(error);
 
 		return res.status(500).send("The operation to get filtered members failed!");
-
-	}
-
-}
-
-/**
- * Obtiene los miembros de un grupo.
- * 
- * @param req Request
- * @param res Response
- * @returns Todos los miembros de un grupo
- */
-export async function getMembersInGroup(req: any, res: any) {
-
-	try {
-
-		// Crea el servicio
-		const memberService = new MemberService();
-
-		// Extrae el parámetro de la query
-		const groupId = req.query.groupId;
-
-		// Obten los miembros del grupo
-		const membersInGroup = await memberService.getMembersInGroup(groupId);
-
-		// Devuelve los miembros del grupo
-		res.status(501).send(membersInGroup);
-
-	} catch (error: any) {
-
-		console.error(error);
-
-		return res.status(500).send("The operation to fetch all members in a group failed!");
 
 	}
 
@@ -103,15 +81,13 @@ export async function previewMemberCard(req: any, res: any) {
 		const memberService = new MemberService();
 
 		// Extrae el parámetro de la query
-		const memberId = req.params.memberId;
-
-		console.log(memberId)
+		const { memberId } = matchedData(req);
 
 		const memberObject = await memberService.getMemberById(memberId) as MemberInterface;
 
-		const filePath = await  generarTarjeta(memberObject);
+		const filePath = await generarTarjeta(memberObject);
 
-		res.status(501).sendFile(filePath);
+		res.status(200).sendFile(filePath);
 
 	} catch (error: any) {
 
@@ -134,8 +110,11 @@ export async function printMember(req: any, res: any) {
 
 	try {
 
+		// Extrae el parámetro de la query
+		const { memberId } = matchedData(req);
+
 		// No tocar durante sprint 2
-		res.status(501).send("Not implemented yet! Come back in sprint 3!");
+		res.status(501).send(`Has intentado imprimir un miembro con el id ${memberId}.\nEsta funcionalidad no está implementada todavía.`);
 
 	} catch (error: any) {
 

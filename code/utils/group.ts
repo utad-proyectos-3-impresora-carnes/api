@@ -57,11 +57,11 @@ export default class GroupService {
 	 * @param groupName Nombre del grupo que se busca.
 	 * @returns El grupo con ese nombre.
 	 */
-	public async getGroupByName(groupName:string):Promise<any>{
+	public async getGroupByName(groupName: string): Promise<any> {
 
 		try {
 
-			return await GroupModel.findOne({name:groupName});
+			return await GroupModel.findOne({ name: groupName });
 
 		} catch (error) {
 
@@ -70,5 +70,24 @@ export default class GroupService {
 
 		}
 
+	}
+
+	/**
+	 * Obtiene una lista de grupos filtrados.
+	 * @param groupFilters Filtros de los grupos
+	 * @returns Grupos que cumplen los filtros.
+	 */
+	public async getFilteredGroups(groupFilters: GroupInterface): Promise<any> {
+
+		try {
+
+			return await GroupModel.find(groupFilters);
+
+		} catch (error) {
+
+			console.error(error)
+			throw new Error("Error getting filtered groups.");
+
+		}
 	}
 }
