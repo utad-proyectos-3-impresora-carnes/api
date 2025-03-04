@@ -31,7 +31,12 @@ const swaggerOptions = {
 					bearerFormat: 'JWT',
 				},
 			},
-		}
+		},
+		security: [  // This applies security globally
+			{
+				bearerAuth: [],
+			},
+		],
 	},
 	apis: ['./routers/*.ts'],
 };
