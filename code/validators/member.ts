@@ -46,6 +46,29 @@ export const getAllMembers = [
  */
 export const getFilteredMembers = [
 
+	query("name")
+		.isString()
+		.isLength({ max: 50 }).withMessage("El nombre no puede tener más de 50 caracteres")
+		.optional(),
+
+	query("dni")
+		.isString()
+		.isLength({ max: 20 }).withMessage("El dni/pasaporte no puede tener más de 20 caracteres")
+		.optional(),
+
+	query("group")
+		.isString()
+		.isLength({ max: 25 }).withMessage("El máximo tamaño del nombre del grupo es de 25 caracteres")
+		.optional(),
+
+	query("year")
+		.isNumeric().withMessage("El parámetro year debe ser un número (año con 4 cifras, ejemplo: 2000)")
+		.optional(),
+
+	query("printed")
+		.isBoolean().withMessage("El parámetro printed debe ser un booleano")
+		.optional(),
+
 	(req: any, res: any, next: any) => validateResults(req, res, next)
 
 ]

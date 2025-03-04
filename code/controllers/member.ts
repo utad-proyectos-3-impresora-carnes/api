@@ -1,7 +1,7 @@
 import MemberInterface from "../interfaces/member";
 import MemberService from "../utils/member";
 import generarTarjeta from "../utils/cardGenerator";
-import { validationResult } from "express-validator";
+import { matchedData } from "express-validator";
 
 /**
  * Obtiene todos los miembros de la plataforma.
@@ -44,8 +44,18 @@ export async function getFilteredMembers(req: any, res: any) {
 
 	try {
 
-		// No tocar durante sprint 2
-		res.status(501).send("Not implemented yet! Come back in sprint 3!");
+		// Crea el servicio
+		const memberService = new MemberService();
+
+		// Genera el filtro.
+		const filter: MemberInterface = {
+			...matchedData(req)
+		}
+		// Obiene los miembros filtrados
+		const filteredMembers = await memberService.getFilteredMembers(filter);
+
+		// Devuelve los miembros filtrados
+		res.status(501).send(filteredMembers );
 
 	} catch (error: any) {
 
@@ -110,7 +120,7 @@ export async function previewMemberCard(req: any, res: any) {
 
 		const memberObject = await memberService.getMemberById(memberId) as MemberInterface;
 
-		const filePath = await  generarTarjeta(memberObject);
+		const filePath = await generarTarjeta(memberObject);
 
 		res.status(501).sendFile(filePath);
 

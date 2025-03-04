@@ -71,7 +71,7 @@ memberRouter.get(
  *       - in: query
  *         name: year
  *         schema:
- *           type: string
+ *           type: integer
  *         required: false
  *         description: Año en el que se añadió al miembro
  *       - in: query
