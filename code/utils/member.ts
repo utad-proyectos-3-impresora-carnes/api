@@ -15,11 +15,11 @@ export default class MemberService {
 	 * Obtiene todos los meimbros presentes en la base de datos.
 	 * @returns Todos los meimbros presentes en al base de datos.
 	 */
-	public async getAllMembers(): Promise<any> {
+	public async getAllMembers(): Promise<Array<MemberInterface>> {
 
 		try {
-
-			return await MemberModel.find();
+			
+			return await MemberModel.find<MemberInterface>();
 
 		} catch (error) {
 
