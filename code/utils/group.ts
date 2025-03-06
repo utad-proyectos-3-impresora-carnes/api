@@ -15,11 +15,11 @@ export default class GroupService {
 	 * Obtiene todos los grupos presentes en la base de datos.
 	 * @returns Todos los grupos presentes en al base de datos.
 	 */
-	public async getAllGroups(): Promise<any> {
+	public async getAllGroups(): Promise<Array<GroupInterface>> {
 
 		try {
 
-			return await GroupModel.find();
+			return await GroupModel.find<GroupInterface>();
 
 		} catch (error) {
 
@@ -37,7 +37,7 @@ export default class GroupService {
 
 		try {
 
-			return await GroupModel.create({
+			return await GroupModel.create<GroupInterface>({
 				name: groupData.name,
 				type: groupData.type,
 				creationYear: groupData.creationYear
@@ -57,11 +57,11 @@ export default class GroupService {
 	 * @param groupName Nombre del grupo que se busca.
 	 * @returns El grupo con ese nombre.
 	 */
-	public async getGroupByName(groupName: string): Promise<any> {
+	public async getGroupByName(groupName: string): Promise<GroupInterface> {
 
 		try {
 
-			return await GroupModel.findOne({ name: groupName });
+			return await GroupModel.findOne<GroupInterface>({ name: groupName });
 
 		} catch (error) {
 
@@ -77,11 +77,11 @@ export default class GroupService {
 	 * @param groupFilters Filtros de los grupos
 	 * @returns Grupos que cumplen los filtros.
 	 */
-	public async getFilteredGroups(groupFilters: GroupInterface): Promise<any> {
+	public async getFilteredGroups(groupFilters: GroupInterface): Promise<Array<GroupInterface>> {
 
 		try {
 
-			return await GroupModel.find(groupFilters);
+			return await GroupModel.find<GroupInterface>(groupFilters);
 
 		} catch (error) {
 
