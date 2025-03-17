@@ -1,4 +1,4 @@
-import UserInterface from "../interfaces/user";
+import { UserBasicDataInterface, UseFullDataInterface, UserMongoObjectInterface } from "../interfaces/user";
 import UserService from "../utils/user";
 import CypherService from "../utils/cypher";
 import JsonWebTokenService from "../utils/jsonWebToken";
@@ -18,26 +18,23 @@ export async function createUser(req: any, res: any) {
 		const userService: UserService = new UserService();
 		const cypherService: CypherService = new CypherService();
 
-		// Extra los datos del cuerpo.
-		const { email, password, phone } = matchedData(req);
+		// Formatea los datos en una interfaz de datos de usuario.
+		const userData: UseFullDataInterface = {
+			...matchedData(req)
+		}
 
+		// TODO: revisar esto cuando se vean errores
 		// Comprueba si el email está libre
-		if (! await userService.checkEmailAvailable(email)) {
+		if (! await userService.checkEmailAvailable(userData.email)) {
 			throw new Error("Email is already taken! Choose another please.");
 		}
 
 		// Encripta la contraseña
-		const hashedPassword: string = await cypherService.encryptString(password);
-
-		// Formatea los datos en una interfaz de datos de usuario.
-		const userData: UserInterface = {
-			email: email,
-			password: hashedPassword,
-			phone: phone
-		}
+		const hashedPassword: string = await cypherService.encryptString(userData.password);
+		userData.password = hashedPassword;
 
 		// Crea el objeto.
-		const userObject = await userService.createUser(userData);
+		const userObject: UserMongoObjectInterface = await userService.createUser(userData);
 
 		// Devuelve el objeto creado.
 		res.status(201).send(userObject);
@@ -66,20 +63,16 @@ export async function login(req: any, res: any) {
 		// Crea los servicios
 		const jsonWebTokenService: JsonWebTokenService = new JsonWebTokenService();
 
-		// Extra los datos del cuerpo.
-		const { email, password } = matchedData(req);
-
 		// Formatea los datos en una interfaz de datos de usuario.
-		const userData: UserInterface = {
-			email,
-			password
+		const userData: UserBasicDataInterface = {
+			...matchedData(req)
 		}
 
 		// Comrprueba que los datos de autenticación sean correctos.
-		const userFullData = await checkAuthData(userData) as UserInterface;
+		const userFullData: UserMongoObjectInterface = await checkAuthData(userData);
 
 		// Genera el token del usuario.
-		const token = jsonWebTokenService.generateToken({ userId: userFullData._id });
+		const token: string = jsonWebTokenService.generateToken({ userId: userFullData._id });
 
 		// Devuelve el objeto creado.
 		res.status(201).send({ token: token, user: userFullData });
@@ -102,14 +95,14 @@ export async function login(req: any, res: any) {
  * @param userData Los datos del usuario
  * @return El usuario con todos sus datos su la autenticación es correcta.
  */
-async function checkAuthData(userData: UserInterface): Promise<any> {
+async function checkAuthData(userData: UserBasicDataInterface): Promise<UserMongoObjectInterface> {
 
 	// Crea los servicios
-	const userService = new UserService();
+	const userService: UserService = new UserService();
 	const cypherService: CypherService = new CypherService();
 
 	// Obtener el usuario.
-	const userAuthData = await userService.getUserAuthData(userData.email);
+	const userAuthData: UserMongoObjectInterface = await userService.getUserAuthData(userData.email);
 
 	// Comprueba que el usuario existiese en el sistema.
 	if (!userAuthData) {
@@ -164,18 +157,21 @@ export async function getUserData(req: any, res: any) {
 
 	try {
 
+		// Crea los servicios
+		const userService: UserService = new UserService();
+
 		// Extrae los datos de la query
 		const { userId } = matchedData(req);
 
 		// Busca el usuario
-		const userObject = await new UserService().getUserById(userId);
+		const userObject = await userService.getUserById(userId);
 
-		let data: any = userObject;
+		let data: UserMongoObjectInterface | null = userObject;
 		let status: number = 200;
 
 		// Comprueba que el usuario exista, sino, cambia los datos que se envían.
 		if (!userObject) {
-			data = "User not found!";
+			data = null;
 			status = 404;
 		}
 
@@ -207,29 +203,27 @@ export async function updateUser(req: any, res: any) {
 		const userService = new UserService();
 		const cypherService: CypherService = new CypherService();
 
-		// Extrae los datos de la query
-		const { userId, email, password, phone } = matchedData(req);
+		const { userId } = matchedData(req);
+
+		// Formatea los datos en una interfaz de datos de usuario.
+		const userData: UseFullDataInterface = {
+			...matchedData(req)
+		}
 
 		// Si hay nuevo email, comprueba que esté disponible.
-		if (email !== undefined && ! await userService.checkEmailAvailable(email)) {
+		if (userData.email !== undefined && ! await userService.checkEmailAvailable(userData.email)) {
 			throw new Error("Email is already taken! Choose another please.");
 		}
 
 		// Si hay nueva contraseña se hashea, sino, se deja en unedfined.
-		const hashedPassword: string = password !== undefined ?
-			await cypherService.encryptString(password) :
-			password;
+		const hashedPassword: string = userData.password !== undefined ?
+			await cypherService.encryptString(userData.password) :
+			userData.password;
 
-		// Formatea los datos en una interfaz de datos de usuario.
-		const userData: UserInterface = {
-			email: email,
-			password: hashedPassword,
-			phone: phone
-		}
-
+		userData.password = hashedPassword;
 
 		// Actualiza el usuario.
-		const userObject = await userService.updateUserById(userId, userData);
+		const userObject: UserMongoObjectInterface = await userService.updateUserById(userId, userData);
 
 		// Devuelve el nuevo usuario.
 		res.status(200).send(userObject);
@@ -260,7 +254,7 @@ export async function deleteUser(req: any, res: any) {
 		const { userId } = matchedData(req);
 
 		// Busca el usuario
-		const userObject = await new UserService().deleteUserById(userId);
+		const userObject: UserMongoObjectInterface = await new UserService().deleteUserById(userId);
 
 		// Devuelve el usuario.
 		res.status(200).send(userObject);
