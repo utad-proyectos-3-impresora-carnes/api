@@ -127,6 +127,27 @@ userRouter.post(
 
 /**
  * @swagger
+ * /api/user/getUserByToken:
+ *   get:
+ *     summary: Obtener todos los datos de un usuario a partir de su token.
+ *     tags: 
+ *       - User
+ * 
+ *     responses:
+ *       200:
+ *         description: Datos del usuario obtenidos exitosamente.
+ *       500:
+ *         description: Error buscar los datos de un usuario en particular.
+ */
+userRouter.get(
+	"/getUserByToken",
+	auth,
+	// validator.getUserByToken,
+	controller.getUserByToken
+);
+
+/**
+ * @swagger
  * /api/user/{userId}:
  *   get:
  *     summary: Obtener todos los datos de un usuario a partir de su id.
@@ -153,27 +174,6 @@ userRouter.get(
 	validator.checkUserId,
 	validator.getUserData,
 	controller.getUserData
-);
-
-/**
- * @swagger
- * /api/user/getUserByToken:
- *   get:
- *     summary: Obtener todos los datos de un usuario a partir de su token.
- *     tags: 
- *       - User
- * 
- *     responses:
- *       200:
- *         description: Datos del usuario obtenidos exitosamente.
- *       500:
- *         description: Error buscar los datos de un usuario en particular.
- */
-userRouter.get(
-	"/getUserByToken",
-	auth,
-	validator.getUserByToken,
-	controller.getUserByToken
 );
 
 /**
