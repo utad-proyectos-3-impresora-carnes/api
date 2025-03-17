@@ -1,4 +1,4 @@
-import UserInterface from "../interfaces/user";
+import { UserInterface } from "../interfaces/user";
 import UserModel from "../models/users";
 
 /**
