@@ -3,7 +3,7 @@ import MongoDBGenericObjectInterface from "./mongoGenericData";
 /**
  * Interfaz de un objeto usuario.
  */
-export interface UserBasicDataInterface extends MongoDBGenericObjectInterface {
+export interface UserBasicDataInterface {
 
 	/**
 	 * El email
@@ -13,7 +13,7 @@ export interface UserBasicDataInterface extends MongoDBGenericObjectInterface {
 	/**
 	 * La contraseña del usuario.
 	 */
-	password: string,
+	password?: string,
 
 }
 
@@ -27,6 +27,13 @@ export interface UseFullDataInterface extends UserBasicDataInterface {
 	/**
 	 * El nombre del usuario.
 	 */
-	name?:string,
+	name?: string,
+
+}
+
+/**
+ * Interfaz de un objeto de usuario obtenido de la base de datos de mongodb.
+ */
+export interface UserMongoObjectInterface extends UseFullDataInterface, MongoDBGenericObjectInterface {
 
 }
