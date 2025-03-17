@@ -66,9 +66,18 @@ export const resetPassword = [
 ]
 
 /**
- * Validate the endpoint to get the data of a user.
+ * Validate the endpoint to get the data of a user from the id.
  */
 export const getUserData = [
+
+	(req: any, res: any, next: any) => validateResults(req, res, next)
+
+]
+
+/**
+ * Validate the endpoint to get the data of a user from the token.
+ */
+export const getUserByToken = [
 
 	(req: any, res: any, next: any) => validateResults(req, res, next)
 

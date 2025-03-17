@@ -189,6 +189,30 @@ export async function getUserData(req: any, res: any) {
 }
 
 /**
+ * Obtener todos los datos de un usuario.
+ * 
+ * @param req Request
+ * @param res Response
+ * @returns El objeto con todos los datos de un usuario.
+ */
+export async function getUserByToken(req: any, res: any) {
+
+	try {
+
+		// Devuelve el usuario.
+		res.status(200).send(req.user);
+
+	} catch (error: any) {
+
+		console.error(error);
+
+		return res.status(500).send("The operation to get a user's data failed!");
+
+	}
+
+}
+
+/**
  * Cambia los datos del usuario que se envié en la petición.
  * 
  * @param req Request
