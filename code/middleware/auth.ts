@@ -1,5 +1,6 @@
 import JsonWebTokenService from "../utils/jsonWebToken";
 import UserService from "../utils/user";
+import { UserMongoObjectInterface } from "../interfaces/user";
 
 /**
  * Checks if the token in the request exists and is valid in the database.
@@ -13,25 +14,25 @@ export default async function auth(req: any, res: any, next: any) {
 
 	try {
 
-		// const token = req.header('Authorization').split(" ").pop();
+		const token = req.header('Authorization').split(" ").pop();
 
-		// if (!token){
-		// 	throw new Error("No hay token!");
-		// }
+		if (!token) {
+			throw new Error("No hay token!");
+		}
 
-		// const jsonWebTokenService: JsonWebTokenService = new JsonWebTokenService();
+		const jsonWebTokenService: JsonWebTokenService = new JsonWebTokenService();
 
-		// const decoded = jsonWebTokenService.verifyToken(token);
+		const decoded = jsonWebTokenService.verifyToken(token);
 
-		// const userService: UserService = new UserService();
+		const userService: UserService = new UserService();
 
-		// const user = await userService.getUserById(decoded.userId);
+		const user: UserMongoObjectInterface = await userService.getUserById(decoded.userId);
 
-		// if (!user) {
-		// 	return res.status(401).json({ error: 'The user doesn\'t exist!' });
-		// }
+		if (!user) {
+			return res.status(401).json({ error: 'The user doesn\'t exist!' });
+		}
 
-		// req.user = user;
+		req.user = user;
 
 		next();
 

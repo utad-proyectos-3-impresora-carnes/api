@@ -211,7 +211,7 @@ export async function updateUser(req: any, res: any) {
 		}
 
 		// Si hay nuevo email, comprueba que esté disponible.
-		if (userData.email !== undefined && ! await userService.checkEmailAvailable(userData.email)) {
+		if (userData.email !== undefined && userData.email !== req.user.email && ! await userService.checkEmailAvailable(userData.email)) {
 			throw new Error("Email is already taken! Choose another please.");
 		}
 
