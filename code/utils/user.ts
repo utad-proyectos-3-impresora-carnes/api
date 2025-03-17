@@ -1,4 +1,4 @@
-import UserInterface from "../interfaces/user";
+import { UserBasicDataInterface, UseFullDataInterface, UserMongoObjectInterface } from "../interfaces/user";
 import UserModel from "../models/users";
 
 /**
@@ -45,7 +45,7 @@ export default class UserService {
 	 * @param userData Datos del usuario que se quiere crear.
 	 * @returns El objeto del usaurio creado en la base de datos.
 	 */
-	public async createUser(userData: UserInterface) {
+	public async createUser(userData: UseFullDataInterface): Promise<UserMongoObjectInterface> {
 
 		try {
 
@@ -69,12 +69,12 @@ export default class UserService {
 	 * @param userId Id of the user
 	 * @returns The object of the user
 	 */
-	public async getUserById(userId: string) {
+	public async getUserById(userId: string): Promise<UserMongoObjectInterface> {
 
 		try {
 
 			// Busca un usuario según su id.
-			return await UserModel.findById(userId);
+			return await UserModel.findById<UserMongoObjectInterface>(userId);
 
 		} catch (error) {
 
@@ -85,31 +85,11 @@ export default class UserService {
 	}
 
 	/**
-	 * Get an user object from the database by email.
-	 * @param email Email of the user
-	 * @returns The object of the user
-	 */
-	public async getUserByEmail(email: string) {
-
-		try {
-
-			// Busca un usuario según su email.
-			return await UserModel.findOne({ email: email });
-
-		} catch (error) {
-
-			console.error(error)
-			throw new Error("Error looking up user by email");
-
-		}
-	}
-
-	/**
 	 * Get an user object auth data from the database by email.
 	 * @param email Email of the user
 	 * @returns The object of the user with the fields of email and password
 	 */
-	public async getUserAuthData(email: string) {
+	public async getUserAuthData(email: string): Promise<UserMongoObjectInterface> {
 
 		try {
 
@@ -130,7 +110,7 @@ export default class UserService {
 	 * @param userData The data to update
 	 * @returns The updated object of the user
 	 */
-	public async updateUserById(userId: string, userData: UserInterface) {
+	public async updateUserById(userId: string, userData: UseFullDataInterface): Promise<UserMongoObjectInterface> {
 
 		try {
 
@@ -154,7 +134,7 @@ export default class UserService {
 	 * @param userId User Id
 	 * @returns The object of teh user that has been deleted.
 	 */
-	public async deleteUserById(userId: string) {
+	public async deleteUserById(userId: string): Promise<UserMongoObjectInterface> {
 
 		try {
 

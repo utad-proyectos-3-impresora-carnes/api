@@ -1,5 +1,4 @@
-import { group } from "console";
-import GroupInterface from "../interfaces/group";
+import { GroupInterface, GroupMongoObjectInterface } from "../interfaces/group";
 import GroupService from "../utils/group";
 import { matchedData } from "express-validator";
 
@@ -15,10 +14,10 @@ export async function getAllGroups(req: any, res: any) {
 	try {
 
 		// Crea el servicio
-		const groupService = new GroupService();
+		const groupService: GroupService = new GroupService();
 
 		// Obiene todos los grupos
-		const groups = await groupService.getAllGroups();
+		const groups: Array<GroupMongoObjectInterface> = await groupService.getAllGroups();
 
 		// Devuelve todos los miembros
 		res.status(200).send(groups);
@@ -44,6 +43,8 @@ export async function getFilteredGroups(req: any, res: any) {
 
 	try {
 
+		//TODO: Dani
+
 		// Crea el servicio
 		const groupService: GroupService = new GroupService()
 
@@ -53,7 +54,7 @@ export async function getFilteredGroups(req: any, res: any) {
 		}
 
 		// Busca los grupos con los filtros
-		const matchedGroups = await groupService.getFilteredGroups(groupFilters);
+		const matchedGroups: Array<GroupMongoObjectInterface> = await groupService.getFilteredGroups(groupFilters);
 
 		// Devuelve los datos filtrados
 		res.status(200).send(matchedGroups);
