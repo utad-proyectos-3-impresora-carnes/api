@@ -1,4 +1,4 @@
-import { MemberInterface } from "../interfaces/member";
+import { MemberInterface, MemberMongoObjectInterface } from "../interfaces/member";
 import MemberModel from "../models/members";
 
 /**
@@ -15,11 +15,11 @@ export default class MemberService {
 	 * Obtiene todos los miembros presentes en la base de datos.
 	 * @returns Todos los miembros presentes en al base de datos.
 	 */
-	public async getAllMembers(): Promise<Array<MemberInterface>> {
+	public async getAllMembers(): Promise<Array<MemberMongoObjectInterface>> {
 
 		try {
 
-			return await MemberModel.find<MemberInterface>();
+			return await MemberModel.find<MemberMongoObjectInterface>();
 
 		} catch (error) {
 
@@ -34,12 +34,12 @@ export default class MemberService {
 	 * @param filter El objeto con los parámetros de filtrado.
 	 * @returns Lista con los miembros que cumplen las condiciones de filtrado..
 	 */
-	public async getFilteredMembers(filter: MemberInterface): Promise<Array<MemberInterface>> {
+	public async getFilteredMembers(filter: MemberInterface): Promise<Array<MemberMongoObjectInterface>> {
 
 		try {
 
 			// TODO: Dani
-			return await MemberModel.find<MemberInterface>(filter).populate("group");
+			return await MemberModel.find<MemberMongoObjectInterface>(filter).populate("group");
 
 		} catch (error: any) {
 
@@ -109,7 +109,7 @@ export default class MemberService {
 	 * @param memberData Los datos de un miembro.
 	 * @returns El objeto de miembro creado.
 	 */
-	public async createMember(memberData: MemberInterface): Promise<any> {
+	public async createMember(memberData: MemberInterface): Promise<MemberMongoObjectInterface> {
 
 		try {
 

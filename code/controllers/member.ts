@@ -1,4 +1,4 @@
-import { MemberInterface } from "../interfaces/member";
+import { MemberInterface, MemberMongoObjectInterface } from "../interfaces/member";
 import MemberService from "../utils/member";
 import generarTarjeta from "../utils/cardGenerator";
 import { matchedData } from "express-validator";
@@ -18,7 +18,7 @@ export async function getAllMembers(req: any, res: any) {
 		const memberService: MemberService = new MemberService();
 
 		// Obiene todos los miembros
-		const members: Array<MemberInterface> = await memberService.getAllMembers();
+		const members: Array<MemberMongoObjectInterface> = await memberService.getAllMembers();
 
 		// Devuelve todos los miembros
 		res.status(200).send(members);
@@ -52,7 +52,7 @@ export async function getFilteredMembers(req: any, res: any) {
 			...matchedData(req)
 		}
 		// Obiene los miembros filtrados
-		const filteredMembers: Array<MemberInterface> = await memberService.getFilteredMembers(filter);
+		const filteredMembers: Array<MemberMongoObjectInterface> = await memberService.getFilteredMembers(filter);
 
 		// Devuelve los miembros filtrados
 		res.status(501).send(filteredMembers);
@@ -83,9 +83,9 @@ export async function previewMemberCard(req: any, res: any) {
 		// Extrae el parámetro de la query
 		const { memberId } = matchedData(req);
 
-		const memberObject = await memberService.getMemberById(memberId) as MemberInterface;
+		const memberObject: MemberMongoObjectInterface = await memberService.getMemberById(memberId);
 
-		const filePath = await generarTarjeta(memberObject);
+		const filePath: string = await generarTarjeta(memberObject);
 
 		res.status(200).sendFile(filePath);
 

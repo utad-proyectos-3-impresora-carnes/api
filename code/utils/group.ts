@@ -1,4 +1,4 @@
-import { GroupInterface } from "../interfaces/group";
+import { GroupInterface, GroupMongoObjectInterface } from "../interfaces/group";
 import GroupModel from "../models/groups";
 
 /**
@@ -15,11 +15,11 @@ export default class GroupService {
 	 * Obtiene todos los grupos presentes en la base de datos.
 	 * @returns Todos los grupos presentes en al base de datos.
 	 */
-	public async getAllGroups(): Promise<Array<GroupInterface>> {
+	public async getAllGroups(): Promise<Array<GroupMongoObjectInterface>> {
 
 		try {
 
-			return await GroupModel.find<GroupInterface>();
+			return await GroupModel.find<GroupMongoObjectInterface>();
 
 		} catch (error) {
 
@@ -34,11 +34,11 @@ export default class GroupService {
 	 * @param groupFilters Filtros de los grupos
 	 * @returns Grupos que cumplen los filtros.
 	 */
-	public async getFilteredGroups(groupFilters: GroupInterface): Promise<Array<GroupInterface>> {
+	public async getFilteredGroups(groupFilters: GroupInterface): Promise<Array<GroupMongoObjectInterface>> {
 
 		try {
 
-			return await GroupModel.find<GroupInterface>(groupFilters);
+			return await GroupModel.find<GroupMongoObjectInterface>(groupFilters);
 
 		} catch (error) {
 
@@ -52,10 +52,10 @@ export default class GroupService {
 	 * Obtiene un grupo según su ID
 	 * @param groupId Id del grupo
 	 */
-	public async getGroupById(groupId: string): Promise<GroupInterface> {
+	public async getGroupById(groupId: string): Promise<GroupMongoObjectInterface> {
 		try {
 
-			return GroupModel.findById<GroupInterface>(groupId);
+			return GroupModel.findById<GroupMongoObjectInterface>(groupId);
 
 		} catch (error: any) {
 
@@ -86,7 +86,7 @@ export default class GroupService {
 	 * Creates a group.
 	 * @param groupData The data of the group to create.
 	 */
-	public async createGroup(groupData: GroupInterface): Promise<GroupInterface> {
+	public async createGroup(groupData: GroupInterface): Promise<GroupMongoObjectInterface> {
 
 		try {
 
