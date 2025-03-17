@@ -1,15 +1,15 @@
-import GroupTypes from "../constants/groupTypes";
+import { GroupTypes } from "../constants/groupTypes";
 import MongoDBGenericObjectInterface from "./mongoGenericData";
 
 /**
  * Interfaz de un objeto grupo.
  */
-export default interface GroupInterface extends MongoDBGenericObjectInterface {
+export interface GroupInterface {
 
 	/**
 	 * Nombre del grupo
 	 */
-	name:string,
+	name: string,
 
 	/**
 	 * Typo del grupo
@@ -20,5 +20,12 @@ export default interface GroupInterface extends MongoDBGenericObjectInterface {
 	 * Año de creación del grupo
 	 */
 	creationYear?: number
+
+}
+
+/**
+ * Interfaz de un objeto grupo obtenido de la base de datos.
+ */
+export interface GroupMongoObjectInterface extends GroupInterface, MongoDBGenericObjectInterface {
 
 }

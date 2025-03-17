@@ -5,7 +5,7 @@ import { Schema, model } from "mongoose";
  */
 const MemberSchema = new Schema(
 	{
-		
+
 		// El nombre completo del miembro.
 		fullName: {
 			type: Schema.Types.String
@@ -15,25 +15,25 @@ const MemberSchema = new Schema(
 		dni: {
 			type: Schema.Types.String
 		},
-		
+
 		// El grupo del miembro
 		group: {
-			
+
 			_id: {
 				type: Schema.Types.String
 			},
-			
+
 			name: {
 				type: Schema.Types.String
 			}
 
 		},
-		
+
 		// El link a la foto en el servidor de la UTAD
 		profileImageLink: {
 			type: Schema.Types.String
 		},
-			
+
 		// Fecha de expedición del último carné (dejar en null si todavía no se ha impreso).
 		lastCardPrintedDate: {
 			type: Schema.Types.Date,

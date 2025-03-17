@@ -31,6 +31,28 @@ const swaggerOptions = {
 					bearerFormat: 'JWT',
 				},
 			},
+			// Modelos de Swagger
+			schemas: {
+				MongoDBGenericObject: {
+					type: "object",
+					properties: {
+						_id: {
+							type: "string",
+							description: "El id del objeto.",
+						},
+						createdAt: {
+							type: "date",
+							format: "date-time",
+							description: "Fecha en la que el objeto fue creado.",
+						},
+						updatedAt: {
+							type: "string",
+							format: "date-time",
+							description: "Fecha en la que el objeto fue actualizado por última vez.",
+						}
+					},
+				},
+			},
 		},
 		security: [  // This applies security globally
 			{
@@ -39,6 +61,7 @@ const swaggerOptions = {
 		],
 	},
 	apis: ['./routers/*.ts'],
+
 };
 
 const swaggerDocs = swaggerJsdoc(swaggerOptions);

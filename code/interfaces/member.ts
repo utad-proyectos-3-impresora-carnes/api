@@ -1,10 +1,10 @@
-import GroupInterface from "./group";
+import { GroupInterface } from "./group";
 import MongoDBGenericObjectInterface from "./mongoGenericData";
 
 /**
  * Interfaz de un objeto miembro.
  */
-export default interface MemberInterface extends MongoDBGenericObjectInterface {
+export interface MemberInterface {
 
 	/**
 	 * El nombre completo
@@ -30,4 +30,11 @@ export default interface MemberInterface extends MongoDBGenericObjectInterface {
 	 * Fecha de la primera impresión del carné
 	 */
 	lastCardPrintedDate: Date
+}
+
+/**
+ * Interfaz de un objeto de miembro obtenido de la base de datos de mongodb.
+ */
+export interface MemberMongoObjectInterface extends MemberInterface, MongoDBGenericObjectInterface {
+
 }

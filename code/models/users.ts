@@ -10,11 +10,18 @@ const UserSchema = new Schema(
 			type: Schema.Types.String,
 			unique: true
 		},
+
 		// Contraseña cifrada, marcada para que no se devuelva en los select.
 		password: {
 			type: Schema.Types.String,
 			select: false
 		},
+
+		// Nombre del usuario.
+		name: {
+			type: Schema.Types.String
+		},
+
 		// Teléfono del usuario. De momento no es usado pero será necesario para el doble factor de autenticación.
 		phone: {
 			type: Schema.Types.String

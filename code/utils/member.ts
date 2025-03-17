@@ -1,4 +1,4 @@
-import MemberInterface from "../interfaces/member";
+import { MemberInterface, MemberMongoObjectInterface } from "../interfaces/member";
 import MemberModel from "../models/members";
 
 /**
@@ -12,62 +12,39 @@ export default class MemberService {
 	}
 
 	/**
-	 * Obtiene todos los meimbros presentes en la base de datos.
-	 * @returns Todos los meimbros presentes en al base de datos.
+	 * Obtiene todos los miembros presentes en la base de datos.
+	 * @returns Todos los miembros presentes en al base de datos.
 	 */
-	public async getAllMembers(): Promise<any> {
+	public async getAllMembers(): Promise<Array<MemberMongoObjectInterface>> {
 
 		try {
 
-			return await MemberModel.find();
+			return await MemberModel.find<MemberMongoObjectInterface>();
 
 		} catch (error) {
 
-			console.error(error)
+			console.error(error);
 			throw new Error("Error checking fetching all members data available");
 
 		}
 	}
 
 	/**
-	 * Obtiene todos los miembros cuyo grupo contenga ese id.
-	 * @param groupId El id del grupo.
-	 * @returns Los miembros en un grupo.
+	 * Obtiene una lista de miembros filtrados.
+	 * @param filter El objeto con los parámetros de filtrado.
+	 * @returns Lista con los miembros que cumplen las condiciones de filtrado..
 	 */
-	public async getMembersInGroup(groupId: string): Promise<any> {
+	public async getFilteredMembers(filter: MemberInterface): Promise<Array<MemberMongoObjectInterface>> {
 
 		try {
 
-			return await MemberModel.find({ "group.id": groupId })
-
-		} catch (error) {
-
-			console.error(error)
-			throw new Error("Error checking getting all members in a group");
-
-		}
-	}
-
-	/**
-	 * Crea un miembro.
-	 * @param memberData Los datos de un miembro.
-	 * @returns El objeto de miembro creado.
-	 */
-	public async createMember(memberData: MemberInterface): Promise<any> {
-
-		try {
-
-			return await MemberModel.create({
-				fullName: memberData.fullName,
-				dni: memberData.dni,
-				group: memberData.group,
-				profileImageLink: memberData.profileImageLink
-			});
+			// TODO: Dani
+			return await MemberModel.find<MemberMongoObjectInterface>(filter).populate("group");
 
 		} catch (error: any) {
 
-			console.error(error)
-			throw new Error("Error creating a new member.");
+			console.error(error);
+			throw new Error("Error getting filteres members");
 
 		}
 
@@ -78,34 +55,77 @@ export default class MemberService {
 	 * @param memberId El id del miembro
 	 * @returns El objeto del miembro cuya id se buscó
 	 */
-	public async getMemberById(memberId: string): Promise<any> {
+	public async getMemberById(memberId: string): Promise<MemberInterface> {
 		try {
 
-			return await MemberModel.findById(memberId).populate("group");
+			return await MemberModel.findById<MemberInterface>(memberId).populate("group");
 
 		} catch (error) {
 
-			console.error(error)
+			console.error(error);
 			throw new Error("Error fetching member by id.");
 
 		}
 	}
 
 	/**
-	 * Obtiene una lista de miembros filtrados.
-	 * @param filter El objeto con los parámetros de filtrado.
-	 * @returns Lista con los miembros que cumplen las condiciones de filtrado..
+	 * Check wether the member with this id exists on the database.
+	 * @param memberId The id of the group.
 	 */
-	public async getFilteredMembers(filter: MemberInterface): Promise<any> {
-
+	public async checkGroupExists(memberId: string): Promise<boolean> {
 		try {
 
-			return await MemberModel.find(filter);
+			return this.getMemberById(memberId) !== null;
 
 		} catch (error: any) {
 
-			console.error(error)
-			throw new Error("Error getting filteres members");
+			console.error(error);
+			throw new Error("Error checking if member exists.");
+
+		}
+	}
+
+	// /**
+	//  * Obtiene todos los miembros cuyo grupo contenga ese id.
+	//  * @param groupId El id del grupo.
+	//  * @returns Los miembros en un grupo.
+	//  */
+	// public async getMembersInGroup(groupId: string): Promise<any> {
+
+	// 	try {
+
+	// 		return await MemberModel.find({ "group.id": groupId })
+
+	// 	} catch (error) {
+
+	// 		console.error(error);
+	// 		throw new Error("Error checking getting all members in a group");
+
+	// 	}
+	// }
+
+	/**
+	 * Crea un miembro.
+	 * @param memberData Los datos de un miembro.
+	 * @returns El objeto de miembro creado.
+	 */
+	public async createMember(memberData: MemberInterface): Promise<MemberMongoObjectInterface> {
+
+		try {
+
+			const member = await MemberModel.create({
+				fullName: memberData.fullName,
+				dni: memberData.dni,
+				group: memberData.group,
+				profileImageLink: memberData.profileImageLink
+			});
+
+			return this.getMemberById(member._id.toString());
+
+		} catch (error: any) {
+
+			console.error(error);
+			throw new Error("Error creating a new member.");
 
 		}
 

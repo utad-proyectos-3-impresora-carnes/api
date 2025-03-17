@@ -1,4 +1,4 @@
-import GroupInterface from "../interfaces/group";
+import { GroupInterface, GroupMongoObjectInterface } from "../interfaces/group";
 import GroupModel from "../models/groups";
 
 /**
@@ -15,16 +15,69 @@ export default class GroupService {
 	 * Obtiene todos los grupos presentes en la base de datos.
 	 * @returns Todos los grupos presentes en al base de datos.
 	 */
-	public async getAllGroups(): Promise<any> {
+	public async getAllGroups(): Promise<Array<GroupMongoObjectInterface>> {
 
 		try {
 
-			return await GroupModel.find();
+			return await GroupModel.find<GroupMongoObjectInterface>();
 
 		} catch (error) {
 
-			console.error(error)
+			console.error(error);
 			throw new Error("Error checking fetching all groups available");
+
+		}
+	}
+
+	/**
+	 * Obtiene una lista de grupos filtrados.
+	 * @param groupFilters Filtros de los grupos
+	 * @returns Grupos que cumplen los filtros.
+	 */
+	public async getFilteredGroups(groupFilters: GroupInterface): Promise<Array<GroupMongoObjectInterface>> {
+
+		try {
+
+			return await GroupModel.find<GroupMongoObjectInterface>(groupFilters);
+
+		} catch (error) {
+
+			console.error(error);
+			throw new Error("Error getting filtered groups.");
+
+		}
+	}
+
+	/**
+	 * Obtiene un grupo según su ID
+	 * @param groupId Id del grupo
+	 */
+	public async getGroupById(groupId: string): Promise<GroupMongoObjectInterface> {
+		try {
+
+			return GroupModel.findById<GroupMongoObjectInterface>(groupId);
+
+		} catch (error: any) {
+
+			console.error(error);
+			throw new Error("Error getting group by id.");
+
+		}
+	}
+
+	/**
+	 * Check wether the group with this id exists on the database.
+	 * @param groupId The id of the group.
+	 */
+	public async checkGroupExists(groupId: string): Promise<boolean> {
+		try {
+
+			return this.getGroupById(groupId) !== null;
+
+		} catch (error: any) {
+
+			console.error(error);
+			throw new Error("Error checking if group exists.");
 
 		}
 	}
@@ -33,61 +86,45 @@ export default class GroupService {
 	 * Creates a group.
 	 * @param groupData The data of the group to create.
 	 */
-	public async createGroup(groupData: GroupInterface): Promise<any> {
+	public async createGroup(groupData: GroupInterface): Promise<GroupMongoObjectInterface> {
 
 		try {
 
-			return await GroupModel.create({
+			const group = await GroupModel.create({
 				name: groupData.name,
 				type: groupData.type,
 				creationYear: groupData.creationYear
 			});
 
+			return await this.getGroupById(group._id.toString());
+
 		} catch (error: any) {
 
-			console.error(error)
+			console.error(error);
 			throw new Error("Error checking creating a group.");
 
 		}
 
 	}
 
-	/**
-	 * Obtiene un grupo basado en su nombre.
-	 * @param groupName Nombre del grupo que se busca.
-	 * @returns El grupo con ese nombre.
-	 */
-	public async getGroupByName(groupName: string): Promise<any> {
+	// /**
+	//  * Obtiene un grupo basado en su nombre.
+	//  * @param groupName Nombre del grupo que se busca.
+	//  * @returns El grupo con ese nombre.
+	//  */
+	// public async getGroupByName(groupName: string): Promise<GroupInterface> {
 
-		try {
+	// 	try {
 
-			return await GroupModel.findOne({ name: groupName });
+	// 		return await GroupModel.findOne<GroupInterface>({ name: groupName });
 
-		} catch (error) {
+	// 	} catch (error) {
 
-			console.error(error)
-			throw new Error("Error checking fetching group by name.");
+	// 		console.error(error);
+	// 		throw new Error("Error checking fetching group by name.");
 
-		}
+	// 	}
 
-	}
+	// }
 
-	/**
-	 * Obtiene una lista de grupos filtrados.
-	 * @param groupFilters Filtros de los grupos
-	 * @returns Grupos que cumplen los filtros.
-	 */
-	public async getFilteredGroups(groupFilters: GroupInterface): Promise<any> {
-
-		try {
-
-			return await GroupModel.find(groupFilters);
-
-		} catch (error) {
-
-			console.error(error)
-			throw new Error("Error getting filtered groups.");
-
-		}
-	}
 }
