@@ -1,10 +1,10 @@
-import GroupInterface from "./group";
+import { GroupInterface } from "./group";
 import MongoDBGenericObjectInterface from "./mongoGenericData";
 
 /**
  * Interfaz de un objeto miembro.
  */
-export default interface MemberInterface extends MongoDBGenericObjectInterface {
+export interface MemberInterface extends MongoDBGenericObjectInterface {
 
 	/**
 	 * El nombre completo
