@@ -1,4 +1,4 @@
-import GroupInterface from "../interfaces/group";
+import { GroupInterface } from "../interfaces/group";
 import GroupModel from "../models/groups";
 
 /**
@@ -23,53 +23,10 @@ export default class GroupService {
 
 		} catch (error) {
 
-			console.error(error)
+			console.error(error);
 			throw new Error("Error checking fetching all groups available");
 
 		}
-	}
-
-	/**
-	 * Creates a group.
-	 * @param groupData The data of the group to create.
-	 */
-	public async createGroup(groupData: GroupInterface): Promise<any> {
-
-		try {
-
-			return await GroupModel.create<GroupInterface>({
-				name: groupData.name,
-				type: groupData.type,
-				creationYear: groupData.creationYear
-			});
-
-		} catch (error: any) {
-
-			console.error(error)
-			throw new Error("Error checking creating a group.");
-
-		}
-
-	}
-
-	/**
-	 * Obtiene un grupo basado en su nombre.
-	 * @param groupName Nombre del grupo que se busca.
-	 * @returns El grupo con ese nombre.
-	 */
-	public async getGroupByName(groupName: string): Promise<GroupInterface> {
-
-		try {
-
-			return await GroupModel.findOne<GroupInterface>({ name: groupName });
-
-		} catch (error) {
-
-			console.error(error)
-			throw new Error("Error checking fetching group by name.");
-
-		}
-
 	}
 
 	/**
@@ -85,9 +42,89 @@ export default class GroupService {
 
 		} catch (error) {
 
-			console.error(error)
+			console.error(error);
 			throw new Error("Error getting filtered groups.");
 
 		}
 	}
+
+	/**
+	 * Obtiene un grupo según su ID
+	 * @param groupId Id del grupo
+	 */
+	public async getGroupById(groupId: string): Promise<GroupInterface> {
+		try {
+
+			return GroupModel.findById<GroupInterface>(groupId);
+
+		} catch (error: any) {
+
+			console.error(error);
+			throw new Error("Error getting group by id.");
+
+		}
+	}
+
+	/**
+	 * Check wether the group with this id exists on the database.
+	 * @param groupId The id of the group.
+	 */
+	public async checkGroupExists(groupId: string): Promise<boolean> {
+		try {
+
+			return this.getGroupById(groupId) !== null;
+
+		} catch (error: any) {
+
+			console.error(error);
+			throw new Error("Error checking if group exists.");
+
+		}
+	}
+
+	/**
+	 * Creates a group.
+	 * @param groupData The data of the group to create.
+	 */
+	public async createGroup(groupData: GroupInterface): Promise<GroupInterface> {
+
+		try {
+
+			const group = await GroupModel.create({
+				name: groupData.name,
+				type: groupData.type,
+				creationYear: groupData.creationYear
+			});
+
+			return await this.getGroupById(group._id.toString());
+
+		} catch (error: any) {
+
+			console.error(error);
+			throw new Error("Error checking creating a group.");
+
+		}
+
+	}
+
+	// /**
+	//  * Obtiene un grupo basado en su nombre.
+	//  * @param groupName Nombre del grupo que se busca.
+	//  * @returns El grupo con ese nombre.
+	//  */
+	// public async getGroupByName(groupName: string): Promise<GroupInterface> {
+
+	// 	try {
+
+	// 		return await GroupModel.findOne<GroupInterface>({ name: groupName });
+
+	// 	} catch (error) {
+
+	// 		console.error(error);
+	// 		throw new Error("Error checking fetching group by name.");
+
+	// 	}
+
+	// }
+
 }
