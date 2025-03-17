@@ -44,6 +44,8 @@ export async function getFilteredGroups(req: any, res: any) {
 
 	try {
 
+		//TODO: Dani
+
 		// Crea el servicio
 		const groupService: GroupService = new GroupService()
 

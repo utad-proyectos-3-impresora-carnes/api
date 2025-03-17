@@ -1,4 +1,4 @@
-import MemberInterface from "../interfaces/member";
+import { MemberInterface } from "../interfaces/member";
 import MemberService from "../utils/member";
 import generarTarjeta from "../utils/cardGenerator";
 import { matchedData } from "express-validator";
@@ -15,10 +15,10 @@ export async function getAllMembers(req: any, res: any) {
 	try {
 
 		// Crea el servicio
-		const memberService = new MemberService();
+		const memberService: MemberService = new MemberService();
 
 		// Obiene todos los miembros
-		const members = await memberService.getAllMembers();
+		const members: Array<MemberInterface> = await memberService.getAllMembers();
 
 		// Devuelve todos los miembros
 		res.status(200).send(members);
@@ -45,14 +45,14 @@ export async function getFilteredMembers(req: any, res: any) {
 	try {
 
 		// Crea el servicio
-		const memberService = new MemberService();
+		const memberService: MemberService = new MemberService();
 
 		// Genera el filtro.
 		const filter: MemberInterface = {
 			...matchedData(req)
 		}
 		// Obiene los miembros filtrados
-		const filteredMembers = await memberService.getFilteredMembers(filter);
+		const filteredMembers: Array<MemberInterface> = await memberService.getFilteredMembers(filter);
 
 		// Devuelve los miembros filtrados
 		res.status(501).send(filteredMembers);
