@@ -1,19 +1,20 @@
+/**
+ * Externa imports.
+ */
 import sharp from 'sharp';
 import bwipjs from 'bwip-js';
 import axios from 'axios';
 import fs from 'fs';
-import { createCanvas, loadImage } from 'canvas';
-import { MemberInterface } from '../interfaces/member';
+import { createCanvas } from 'canvas';
 import path from 'path';
+
+/**
+ * Local imports
+ */
+import { MemberInterface } from '../interfaces/member';
 import { CardBackgrounds } from '../constants/cardBackgrounds';
 
 const pathToGeneratedImages: string = path.join(__dirname, "..", "assets", "images", "generated");
-
-function verifyGenratedImageDirExists() {
-	if (!fs.existsSync(pathToGeneratedImages)) {
-		fs.mkdirSync(pathToGeneratedImages);
-	}
-}
 
 /**
  * Genera una tarjera para previsualización (fondo azul).
@@ -38,6 +39,7 @@ export async function generatePreviewCard(memberData: MemberInterface): Promise<
 
 	}
 }
+
 /**
  * Genera una tarjera para impresión (sin fondo).
  * @param memberData The data of the member whose card will be generated.
@@ -62,27 +64,51 @@ export async function generatePrintableCard(memberData: MemberInterface): Promis
 	}
 }
 
-async function generateGenericCard(memberData: MemberInterface, filePath: string, cardBackground?: CardBackgrounds) {
-	const tarjetaWidth = 1013, tarjetaHeight = 642;
-	const tarjeta = sharp({ create: { width: tarjetaWidth, height: tarjetaHeight, channels: 3, background: 'white' } });
+/**
+ * Comprueba que el directorio en el que se quiere generar la imagen existe.
+ */
+function verifyGenratedImageDirExists() {
+	if (!fs.existsSync(pathToGeneratedImages)) {
+		fs.mkdirSync(pathToGeneratedImages, { recursive: true });
+	}
+}
 
-	const fotoBuffer = await cargarImagen(memberData.profileImageLink);
-	const fotoRedimensionada = await sharp(fotoBuffer).resize(236, 303).toBuffer();
+/**
+ * Genra una imagen png con el formato de carné del mimebro pasado por parámetro.
+ * @param memberData Los datos del miembro.
+ * @param filePath El path del fichero generado.
+ * @param cardBackground El fondo del carné.
+ * @returns Nada
+ */
+async function generateGenericCard(memberData: MemberInterface, filePath: string, cardBackground?: CardBackgrounds): Promise<void> {
 
-	const barcodeBuffer = await generarCodigoBarras(memberData.dni);
-	const barcodeResized = await sharp(barcodeBuffer).resize(420, 53).toBuffer();
+	const cardHeight = 642;
+	const cardWidth = 1013;
 
-	const canvas = createCanvas(tarjetaWidth, tarjetaHeight);
-	const ctx = canvas.getContext('2d');
+	const background: string = cardBackground ? cardBackground : "white";
 
-	ctx.fillStyle = 'black';
-	ctx.font = '30px Arial';
-	ctx.fillText(memberData.fullName, 464, 202);
-	ctx.fillText(memberData?.group?.name, 464, 302);
+	const cardInstance = sharp({
+		create: {
+			height: cardHeight,
+			width: cardWidth,
+			channels: 4,
+			background: background
+		}
+	});
 
-	const textBuffer = canvas.toBuffer('image/png');
+	// Generate a buffer with the member photo.
+	const fotoBuffer: Buffer = await cargarImagen(memberData.profileImageLink);
+	const fotoRedimensionada: Buffer = await sharp(fotoBuffer).resize(236, 303).toBuffer();
 
-	const finalImage = await tarjeta
+	// Generate a buffer with the member dni barcode.
+	const barcodeBuffer: Buffer = await generarCodigoBarras(memberData.dni);
+	const barcodeResized: Buffer = await sharp(barcodeBuffer).resize(420, 53).toBuffer();
+
+	// Generate a buffer with the text of the image.
+	const textBuffer: Buffer<ArrayBufferLike> = addText(memberData, cardWidth, cardHeight);
+
+	// Compose all the buffers in a single image.
+	const finalImage = await cardInstance
 		.composite([
 			{ input: fotoRedimensionada, left: 74, top: 60 },
 			{ input: barcodeResized, left: 464, top: 530 },
@@ -91,41 +117,61 @@ async function generateGenericCard(memberData: MemberInterface, filePath: string
 		.toFormat('png')
 		.toBuffer();
 
-	// Ensure the 'out' directory exists
-	const dirPath = path.dirname(filePath);
-	if (!fs.existsSync(dirPath)) {
-		fs.mkdirSync(dirPath, { recursive: true });
-	}
-
+	// Write the image to disk.
 	fs.writeFileSync(filePath, finalImage);
 
-	return filePath;
 }
 
+/**
+ * Genera una imagen con el texto necesario de la tarjeta.
+ * @param memberData Datos del miembro cuyo texto de va a coger.
+ * @param cardWidth El ancho de la tarjeta
+ * @param cardHeight El alto de la tarjeta
+ * @returns Un buffer de imagen png con el texto que se debe añadir.
+ */
+function addText(memberData: MemberInterface, cardWidth: number, cardHeight: number): Buffer<ArrayBufferLike> {
+
+	const canvas = createCanvas(cardWidth, cardHeight);
+	const ctx = canvas.getContext('2d');
+
+	ctx.fillStyle = 'black';
+	ctx.font = '30px Arial';
+	ctx.fillText(memberData.fullName, 464, 202);
+	ctx.fillText(memberData?.group?.name, 464, 302);
+
+	return canvas.toBuffer('image/png');
+
+}
+
+/**
+ * Descarga la foto del miembro y la pasa a buffer.
+ * @param fotoPath El link a la foto del mimebro.
+ * @returns Un buffer con la foto del miembro.
+ */
 async function cargarImagen(fotoPath: string): Promise<Buffer> {
-	if (fotoPath.startsWith("http")) {
-		try {
-			const response = await axios({ url: fotoPath, responseType: 'arraybuffer' });
-			return response.data;
-		} catch (error) {
-			throw new Error("No se pudo descargar la imagen desde la URL.");
-		}
-	} else {
-		return fs.readFileSync(fotoPath);
+	try {
+		const response = await axios({ url: fotoPath, responseType: 'arraybuffer' });
+		console.log("axios", response.data)
+
+		const respAlt = await fetch(fotoPath);
+		console.log("fetc", respAlt)
+		return response.data;
+	} catch (error) {
+		throw new Error("No se pudo descargar la imagen desde la URL.");
 	}
 }
 
+/**
+ * Generates a buffer of the image of a barcode with the dni encoded.
+ * @param dni The DNI to encode.
+ * @returns The buffer with an image of a barcode encoding the dni.
+ */
 async function generarCodigoBarras(dni: string): Promise<Buffer> {
-	return new Promise((resolve, reject) => {
-		bwipjs.toBuffer({
-			bcid: 'code128',
-			text: dni,
-			scale: 3,
-			height: 67,
-			includetext: false,
-		}, (err, png) => {
-			if (err) reject(err);
-			else resolve(png);
-		});
-	});
+	return await bwipjs.toBuffer({
+		bcid: 'code128',
+		text: dni,
+		scale: 3,
+		height: 67,
+		includetext: false,
+	})
 }
