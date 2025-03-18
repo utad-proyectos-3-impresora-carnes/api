@@ -3,7 +3,6 @@
  */
 import sharp from 'sharp';
 import bwipjs from 'bwip-js';
-import axios from 'axios';
 import fs from 'fs';
 import { createCanvas } from 'canvas';
 import path from 'path';
@@ -97,7 +96,7 @@ async function generateGenericCard(memberData: MemberInterface, filePath: string
 	});
 
 	// Generate a buffer with the member photo.
-	const fotoBuffer: Buffer = await cargarImagen(memberData.profileImageLink);
+	const fotoBuffer: ArrayBuffer = await cargarImagen(memberData.profileImageLink);
 	const fotoRedimensionada: Buffer = await sharp(fotoBuffer).resize(236, 303).toBuffer();
 
 	// Generate a buffer with the member dni barcode.
@@ -148,17 +147,14 @@ function addText(memberData: MemberInterface, cardWidth: number, cardHeight: num
  * @param fotoPath El link a la foto del mimebro.
  * @returns Un buffer con la foto del miembro.
  */
-async function cargarImagen(fotoPath: string): Promise<Buffer> {
-	try {
-		const response = await axios({ url: fotoPath, responseType: 'arraybuffer' });
-		console.log("axios", response.data)
+async function cargarImagen(fotoPath: string): Promise<ArrayBuffer> {
 
-		const respAlt = await fetch(fotoPath);
-		console.log("fetc", respAlt)
-		return response.data;
-	} catch (error) {
-		throw new Error("No se pudo descargar la imagen desde la URL.");
-	}
+	const response = await fetch(fotoPath);
+
+	const blob: Blob = await response.blob();
+
+	return await blob.arrayBuffer();
+
 }
 
 /**
