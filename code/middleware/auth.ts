@@ -14,6 +14,10 @@ export default async function auth(req: any, res: any, next: any) {
 
 	try {
 
+		if (!req.header('Authorization')) {
+			throw new Error("Se debe enviar un token JWT!");
+		}
+
 		const token = req.header('Authorization').split(" ").pop();
 
 		if (!token) {

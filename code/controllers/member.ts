@@ -1,6 +1,6 @@
 import { MemberInterface, MemberMongoObjectInterface } from "../interfaces/member";
 import MemberService from "../utils/member";
-import generarTarjeta from "../utils/cardGenerator";
+import { generatePreviewCard } from "../utils/cardGenerator";
 import { matchedData } from "express-validator";
 
 /**
@@ -85,7 +85,7 @@ export async function previewMemberCard(req: any, res: any) {
 
 		const memberObject: MemberMongoObjectInterface = await memberService.getMemberById(memberId);
 
-		const filePath: string = await generarTarjeta(memberObject);
+		const filePath: string = await generatePreviewCard(memberObject);
 
 		res.status(200).sendFile(filePath);
 
