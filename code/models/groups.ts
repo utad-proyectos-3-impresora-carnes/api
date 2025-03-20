@@ -12,7 +12,7 @@ const GroupSchema = new Schema(
 		},
 		// El tipo del grupo. Solo los valores del enum son válidos.
 		type: {
-			type: Schema.Types.String,
+			type: Schema.Types.Number,
 			enum: GroupTypes
 		},
 		// Fecha de creación del grupo
