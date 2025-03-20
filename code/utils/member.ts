@@ -38,6 +38,8 @@ export default class MemberService {
 
 		try {
 
+			//TODO: Dani
+
 			// TODO: Dani
 			return await MemberModel.find<MemberMongoObjectInterface>(filter).populate("group");
 

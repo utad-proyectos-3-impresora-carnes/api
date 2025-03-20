@@ -38,6 +38,8 @@ export default class GroupService {
 
 		try {
 
+			//TODO: Dani
+
 			return await GroupModel.find<GroupMongoObjectInterface>(groupFilters);
 
 		} catch (error) {

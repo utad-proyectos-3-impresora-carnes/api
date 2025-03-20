@@ -44,6 +44,8 @@ export async function getFilteredMembers(req: any, res: any) {
 
 	try {
 
+		//TODO: Dani
+
 		// Crea el servicio
 		const memberService: MemberService = new MemberService();
 
