@@ -40,14 +40,15 @@ export default class GroupService {
 
 			const processedFilters: any = groupFilters;
 
+			// Quita campos no usados
 			Object.keys(processedFilters).forEach(key => processedFilters[key] === undefined && delete processedFilters[key])
 
+			// Cambia el nombre por una expresión regular.
 			if (groupFilters.name !== undefined) {
 				processedFilters.name = { $regex: '^' + groupFilters.name, $options: 'i' }
 			}
 
-			console.log(processedFilters);
-
+			// Ejecuta la query
 			return await GroupModel.find<GroupMongoObjectInterface>(processedFilters);
 
 		} catch (error) {
