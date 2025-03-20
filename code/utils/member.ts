@@ -38,8 +38,27 @@ export default class MemberService {
 
 		try {
 
-			//TODO: Dani
+			const processedFilters: any = filter;
 
+			// Quita campos no usados
+			Object.keys(processedFilters).forEach(key => processedFilters[key] === undefined && delete processedFilters[key])
+
+			// Cambia el nombre por una expresión regular.
+			if (processedFilters.fullName !== undefined) {
+				processedFilters.fullName = { $regex: '^' + processedFilters.fullName, $options: 'i' }
+			}
+
+			// Cambia el nombre por una expresión regular.
+			if (processedFilters.dni !== undefined) {
+				processedFilters.dni = { $regex: '^' + processedFilters.dni, $options: 'i' }
+			}
+
+			// // Cambia el nombre por una expresión regular.
+			// if (processedFilters?.group?.name !== undefined) {
+			// 	processedFilters.group.name = { $regex: '^' + processedFilters.group.name, $options: 'i' }
+			// }
+
+			console.log(processedFilters)
 			// TODO: Dani
 			return await MemberModel.find<MemberMongoObjectInterface>(filter).populate("group");
 
