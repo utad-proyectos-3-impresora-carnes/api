@@ -24,12 +24,12 @@ export interface MemberInterface {
 	/**
 	 * El link a la imagen de perfil.
 	 */
-	profileImageLink: string,
+	profileImageLink?: string,
 
 	/**
 	 * Fecha de la primera impresión del carné
 	 */
-	lastCardPrintedDate: Date
+	lastCardPrintedDate?: Date,
 
 	/**
 	 * Año de creación del miembro

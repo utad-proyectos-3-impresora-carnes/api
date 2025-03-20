@@ -44,16 +44,32 @@ export async function getFilteredMembers(req: any, res: any) {
 
 	try {
 
-		//TODO: Dani
-
 		// Crea el servicio
 		const memberService: MemberService = new MemberService();
 
+		// Extraer parámetros de la query
+		const { fullName, dni, group, year, printed } = matchedData(req);
+
+		// Parsear el booleano
+		const boolPrinted = printed == "true" ? true : false;
+
 		// Genera el filtro.
 		const filter: MemberInterface = {
-			...matchedData(req)
+			fullName: fullName,
+			dni: dni,
+
+			// Grupo con nombre o undefined si no hay parámetro.
+			group: group !== undefined ? {
+				name: group
+			} : undefined,
+
+			// Año de creación del usuario o undefined si no hay.
+			creationYear: year !== undefined ? Number(year) : undefined,
+
+			// Pone una fecha cualquiera, o undefined si no tiene.
+			lastCardPrintedDate: boolPrinted ? new Date() : undefined
 		}
-		console.log(filter)
+
 		// Obiene los miembros filtrados
 		const filteredMembers: Array<MemberMongoObjectInterface> = await memberService.getFilteredMembers(filter);
 

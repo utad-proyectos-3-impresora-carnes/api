@@ -51,7 +51,7 @@ memberRouter.get(
  * 
  *     parameters:
  *       - in: query
- *         name: name
+ *         name: fullName
  *         schema:
  *           type: string
  *         required: false
@@ -168,4 +168,4 @@ memberRouter.patch(
 );
 
 // Exporta el router una vez definidos todos los endpointss.
-export default memberRouter ;
+export default memberRouter;
