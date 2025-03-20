@@ -30,6 +30,11 @@ export interface MemberInterface {
 	 * Fecha de la primera impresión del carné
 	 */
 	lastCardPrintedDate: Date
+
+	/**
+	 * Año de creación del miembro
+	 */
+	creationYear?: number
 }
 
 /**

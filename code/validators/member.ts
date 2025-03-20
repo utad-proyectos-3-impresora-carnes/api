@@ -29,7 +29,7 @@ export const getAllMembers = [
  */
 export const getFilteredMembers = [
 
-	query("name")
+	query("fullName")
 		.isString()
 		.isLength({ max: 50 }).withMessage("El nombre no puede tener más de 50 caracteres")
 		.optional(),

@@ -53,6 +53,7 @@ export async function getFilteredMembers(req: any, res: any) {
 		const filter: MemberInterface = {
 			...matchedData(req)
 		}
+		console.log(filter)
 		// Obiene los miembros filtrados
 		const filteredMembers: Array<MemberMongoObjectInterface> = await memberService.getFilteredMembers(filter);
 

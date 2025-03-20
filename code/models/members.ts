@@ -38,6 +38,11 @@ const MemberSchema = new Schema(
 		lastCardPrintedDate: {
 			type: Schema.Types.Date,
 			default: undefined
+		},
+
+		// Fecha de creación del usuario
+		creationYear: {
+			type: Schema.Types.Number
 		}
 	},
 	{
