@@ -38,9 +38,17 @@ export default class GroupService {
 
 		try {
 
-			//TODO: Dani
+			const processedFilters: any = groupFilters;
 
-			return await GroupModel.find<GroupMongoObjectInterface>(groupFilters);
+			Object.keys(processedFilters).forEach(key => processedFilters[key] === undefined && delete processedFilters[key])
+
+			if (groupFilters.name !== undefined) {
+				processedFilters.name = { $regex: '^' + groupFilters.name, $options: 'i' }
+			}
+
+			console.log(processedFilters);
+
+			return await GroupModel.find<GroupMongoObjectInterface>(processedFilters);
 
 		} catch (error) {
 
