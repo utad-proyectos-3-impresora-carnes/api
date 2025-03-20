@@ -27,7 +27,7 @@ export default async function auth(req: any, res: any, next: any) {
 		const jsonWebTokenService: JsonWebTokenService = new JsonWebTokenService();
 
 		const decoded = jsonWebTokenService.verifyToken(token);
-
+		console.log(decoded)
 		const userService: UserService = new UserService();
 
 		const user: UserMongoObjectInterface = await userService.getUserById(decoded.userId);

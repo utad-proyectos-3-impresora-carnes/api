@@ -13,7 +13,8 @@ import path from 'path';
 import { MemberInterface } from '../interfaces/member';
 import { CardBackgrounds } from '../constants/cardBackgrounds';
 
-const pathToGeneratedImages: string = path.join(__dirname, "..", "assets", "images", "generated");
+const pathToGeneratedImages: string = path.join("assets", "images", "generated");
+const absolutePathToGeneratedImages: string = path.join(__dirname, "..", pathToGeneratedImages);
 
 /**
  * Genera una tarjera para previsualización (fondo azul).
@@ -67,8 +68,8 @@ export async function generatePrintableCard(memberData: MemberInterface): Promis
  * Comprueba que el directorio en el que se quiere generar la imagen existe.
  */
 function verifyGenratedImageDirExists() {
-	if (!fs.existsSync(pathToGeneratedImages)) {
-		fs.mkdirSync(pathToGeneratedImages, { recursive: true });
+	if (!fs.existsSync(absolutePathToGeneratedImages)) {
+		fs.mkdirSync(absolutePathToGeneratedImages, { recursive: true });
 	}
 }
 
@@ -117,7 +118,7 @@ async function generateGenericCard(memberData: MemberInterface, filePath: string
 		.toBuffer();
 
 	// Write the image to disk.
-	fs.writeFileSync(filePath, finalImage);
+	fs.writeFileSync(path.join(__dirname, "..", filePath), finalImage);
 
 }
 
