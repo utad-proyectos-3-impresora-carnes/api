@@ -1,3 +1,4 @@
+import { GroupTypes } from "../constants/groupTypes";
 import { GroupInterface, GroupMongoObjectInterface } from "../interfaces/group";
 import GroupService from "../utils/group";
 import { matchedData } from "express-validator";
@@ -43,15 +44,18 @@ export async function getFilteredGroups(req: any, res: any) {
 
 	try {
 
-		//TODO: Dani
-
 		// Crea el servicio
 		const groupService: GroupService = new GroupService()
 
-		// Compone los filtros
+		// Extrae parámetros de la query
+		const { name, type, creationYear } = matchedData(req);
+
+		// Compone los filtros.
 		const groupFilters: GroupInterface = {
-			...matchedData(req)
-		}
+			name: name,
+			type: type !== undefined ? Number(type) : undefined,
+			creationYear: creationYear !== undefined ? Number(creationYear) : undefined
+		};
 
 		// Busca los grupos con los filtros
 		const matchedGroups: Array<GroupMongoObjectInterface> = await groupService.getFilteredGroups(groupFilters);
