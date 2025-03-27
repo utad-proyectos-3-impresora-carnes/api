@@ -3,7 +3,7 @@ import swaggerUi from 'swagger-ui-express';
 import userRouter from "../routers/user";
 import memberRouter from "../routers/member";
 import groupRouter from "../routers/group";
-import swaggerDocs from "./swagger";
+import { swaggerDocs } from "./swagger";
 import debugRouter from "../routers/debug";
 
 
@@ -23,7 +23,7 @@ router.use('/api/debug', debugRouter);
 /**
  * Devuelve la documentación swagger.
  */
-router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs()));
 
 
 /**

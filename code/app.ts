@@ -1,5 +1,7 @@
 import createServer from './config/server';
 import { config } from 'dotenv';
+import morganBody from 'morgan-body';
+import { loggerStream } from './utils/handleLogger';
 
 /**
  * Inicializa las variables de entorno.
@@ -23,3 +25,11 @@ const server = createServer();
 server.listen(port, () => {
 	console.log(`Server listening on: http://${url}:${port}`)
 });
+
+morganBody(server, {
+	noColors: true,
+	skip: function (req, res) {
+		return res.statusCode < 400;
+	},
+	stream: loggerStream()
+})
