@@ -11,7 +11,6 @@ const mongooseConnect = () => {
 
 		mongoose.set('strictQuery', false);
 
-		console.log("db uri", db_uri)
 		mongoose.connect(db_uri);
 
 		mongoose.connection.on("connected", () => {

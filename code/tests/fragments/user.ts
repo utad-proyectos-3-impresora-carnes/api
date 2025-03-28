@@ -9,8 +9,10 @@ export const registerUserTest = (server: Express, email: string, password: strin
 			.post('/api/user/register')
 			.send({ "email": email, "password": password, "phone": phone })
 			.set('Accept', 'serverlication/json')
-			.expect(200)
+			.expect(201)
 		console.log(response.body);
-		expect(response.body.userObject.email).toEqual(email);
+		expect(response.body.email).toEqual(email);
+		expect(response.body.phone).toEqual(phone);
+		expect(response.body._id)
 	});
 }
