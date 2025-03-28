@@ -1,49 +1,49 @@
+import request from "supertest";
+
 import { server } from "../app";
 import { UserMongoObjectInterface } from "../interfaces/user";
-import { deleteUserTest, loginUserTest, registerUserTest } from "./fragments/user";
 
 describe('users', (): void => {
 
 	const userData: UserMongoObjectInterface = {
 		email: "userPrueba@gmail.com",
-		password: "12341234Aa$"
+		password: "12341234Aa$",
+		phone: "123456789"
 	}
 
 	let token = "";
-	const updateUserData = (tk: string, id: string) => {
-		userData._id = id;
-		token = tk;
-	}
 
-	registerUserTest(server, userData.email, userData.password, "123456789");
+	it('Should register a user.', async () => {
+		const response = await request(server)
+			.post('/api/user/register')
+			.send({ "email": userData.email, "password": userData.password, "phone": userData.phone })
+			.set('Accept', 'serverlication/json')
+			.expect(201)
+		expect(response.body.email).toEqual(userData.email);
+		expect(response.body.phone).toEqual(userData.phone);
+		expect(response.body._id)
+	});
 
-	loginUserTest(server, userData.email, userData.password, updateUserData);
-	console.log("Token", token)
-	console.log("user data", userData)
+	it('Should login a user.', async () => {
+		const response = await request(server)
+			.post('/api/user/login')
+			.send({ "email": userData.email, "password": userData.password })
+			.set('Accept', 'serverlication/json')
+			.expect(201)
+		expect(response.body.user.email).toEqual(userData.email);
+		expect(response.body.user._id);
+		expect(response.body.token);
 
-	deleteUserTest(server, userData._id, token);
+		userData._id = response.body.user._id;
+		token = response.body.token;
+	});
 
-
-	// var token = ""
-	// var id = ""
-
-
-
-	// it('should get the users', async () => {
-	// 	const response = await request(server)
-	// 		.get('/api/user/getUserData')
-	// 		.auth(token, { type: 'bearer' })
-	// 		.set('Accept', 'serverlication/json')
-	// 		.expect(200)
-	// 	expect(response.body.email).toEqual('user25@test.com')
-	// });
-
-	// it('should delete a user', async () => {
-	// 	const response = await request(server)
-	// 		.delete('/api/user/deleteUser')
-	// 		.auth(token, { type: 'bearer' })
-	// 		.set('Accept', 'serverlication/json')
-	// 		.expect(200)
-	// });
+	it('Should delete a user', async () => {
+		const response = await request(server)
+			.delete(`/api/user/${userData._id}`)
+			.auth(token, { type: 'bearer' })
+			.set('Accept', 'serverlication/json')
+			.expect(200)
+	});
 
 })
