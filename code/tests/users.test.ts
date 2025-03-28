@@ -1,10 +1,28 @@
-import request from "supertest";
 import { server } from "../app";
-import { registerUserTest } from "./fragments/user";
+import { UserMongoObjectInterface } from "../interfaces/user";
+import { deleteUserTest, loginUserTest, registerUserTest } from "./fragments/user";
 
 describe('users', (): void => {
 
-	registerUserTest(server, "userPrueba@gmail.com", "12341234Aa$", "123456789");
+	const userData: UserMongoObjectInterface = {
+		email: "userPrueba@gmail.com",
+		password: "12341234Aa$"
+	}
+
+	let token = "";
+	const updateUserData = (tk: string, id: string) => {
+		userData._id = id;
+		token = tk;
+	}
+
+	registerUserTest(server, userData.email, userData.password, "123456789");
+
+	loginUserTest(server, userData.email, userData.password, updateUserData);
+	console.log("Token", token)
+	console.log("user data", userData)
+
+	deleteUserTest(server, userData._id, token);
+
 
 	// var token = ""
 	// var id = ""
