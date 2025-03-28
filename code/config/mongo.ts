@@ -10,9 +10,10 @@ const mongooseConnect = () => {
 		const db_uri = process.env.MONGO_DB_URI;
 
 		mongoose.set('strictQuery', false);
-		
+
+		console.log("db uri", db_uri)
 		mongoose.connect(db_uri);
-		
+
 		mongoose.connection.on("connected", () => {
 			console.log("Conexión con mongoDb iniciada sin problemas.");
 		});

@@ -33,10 +33,16 @@
 		"@types/cors": "^2.8.17",
 		"@types/express": "^5.0.0",
 		"@types/jest": "^29.5.14",
-		"supertest": "^7.1.0",
 		"nodemon": "^3.1.9",
+		"supertest": "^7.1.0",
 		"ts-jest": "^29.3.0",
+		"ts-node": "^10.9.2",
 		"tsx": "^4.19.2",
 		"typescript": "^5.7.3"
+	},
+	"jest": {
+		"setupFiles": [
+			"dotenv/config"
+		]
 	}
 }
