@@ -1,7 +1,6 @@
-import request from "supertest";
-
 import { server } from "../app";
 import { UserMongoObjectInterface } from "../interfaces/user";
+import { deleteUserTest, loginUserTest, registerUserTest } from "./fragments/user";
 
 describe('users', (): void => {
 
@@ -14,36 +13,17 @@ describe('users', (): void => {
 	let token = "";
 
 	it('Should register a user.', async () => {
-		const response = await request(server)
-			.post('/api/user/register')
-			.send({ "email": userData.email, "password": userData.password, "phone": userData.phone })
-			.set('Accept', 'serverlication/json')
-			.expect(201)
-		expect(response.body.email).toEqual(userData.email);
-		expect(response.body.phone).toEqual(userData.phone);
-		expect(response.body._id)
+		registerUserTest(server, userData.email, userData.password, userData.phone);
 	});
 
 	it('Should login a user.', async () => {
-		const response = await request(server)
-			.post('/api/user/login')
-			.send({ "email": userData.email, "password": userData.password })
-			.set('Accept', 'serverlication/json')
-			.expect(201)
-		expect(response.body.user.email).toEqual(userData.email);
-		expect(response.body.user._id);
-		expect(response.body.token);
-
+		const response = await loginUserTest(server, userData.email, userData.password);
 		userData._id = response.body.user._id;
 		token = response.body.token;
 	});
 
 	it('Should delete a user', async () => {
-		const response = await request(server)
-			.delete(`/api/user/${userData._id}`)
-			.auth(token, { type: 'bearer' })
-			.set('Accept', 'serverlication/json')
-			.expect(200)
+		deleteUserTest(server, userData._id, token);
 	});
 
 })
