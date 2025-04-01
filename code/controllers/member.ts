@@ -112,20 +112,15 @@ export async function editMemberValidatioStatus(req: any, res: any) {
 		// Extrae el parámetro de la query
 		const { memberId, validationState } = matchedData(req);
 
+		// Cambia el estado de validación.
+		const memberObject: MemberMongoObjectInterface = await memberService.updateValidationState(memberId, validationState);
 
-
-		const validationConstant: ValidationStates = validationState;
-
-		console.log(memberId, validationState);
-		// const memberObject: MemberMongoObjectInterface = await memberService.getMemberById(memberId);
-
-		// const filePath: string = await generatePreviewCard(memberObject);
-
-		res.status(200).send("");
+		// Devuelve los datos.
+		res.status(200).send(memberObject);
 
 	} catch (error: any) {
 
-		handleHttpError(res, new HttpError("The operation to generate a preview card failed!"));
+		handleHttpError(res, new HttpError("The operation to update the validation state failed!"));
 
 	}
 

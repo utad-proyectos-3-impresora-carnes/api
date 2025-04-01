@@ -1,6 +1,7 @@
 import { MemberInterface, MemberMongoObjectInterface } from "../interfaces/member";
 import MemberModel from "../models/members";
 import handleLocalError from "../errors/handleLocalError";
+import { ValidationStates } from "../constants/validationStates";
 
 /**
  * Servicio de los mimebros.
@@ -110,4 +111,25 @@ export default class MemberService {
 
 	}
 
+	/**
+	 * Updates the validation state of a member.
+	 * @param memberId The id of the member
+	 * @param validationState The validaiton state of the member.
+	 * @returns The object with the validaiton state updated.
+	 */
+	public async updateValidationState(memberId: string, validationState: ValidationStates): Promise<MemberMongoObjectInterface> {
+
+		try {
+
+			await MemberModel.findByIdAndUpdate(memberId, { validationState: validationState });
+
+			return await this.getMemberById(memberId);
+
+		} catch (error: any) {
+
+			handleLocalError(error);
+			throw new Error("Error updating validation state.");
+
+		}
+	}
 }
