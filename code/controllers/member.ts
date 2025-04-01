@@ -4,6 +4,7 @@ import { generatePreviewCard } from "../utils/cardGenerator";
 import { matchedData } from "express-validator";
 import handleHttpError from "../errors/handleHttpError";
 import HttpError from "../errors/HttpError";
+import { ValidationStates } from "../constants/validationStates";
 
 /**
  * Obtiene todos los miembros de la plataforma.
@@ -96,21 +97,61 @@ export async function previewMemberCard(req: any, res: any) {
 }
 
 /**
+ * Edita el estado de validación del mimebro.
+ * 
+ * @param req Request
+ * @param res Response
+ * @returns El nuevo objeto del miembro.
+ */
+export async function editMemberValidatioStatus(req: any, res: any) {
+
+	try {
+
+		// Crea el servicio
+		const memberService = new MemberService();
+
+		// Extrae el parámetro de la query
+		const { memberId, validationState } = matchedData(req);
+
+		// Cambia el estado de validación.
+		const memberObject: MemberMongoObjectInterface = await memberService.updateValidationState(memberId, validationState);
+
+		// Devuelve los datos.
+		res.status(200).send(memberObject);
+
+	} catch (error: any) {
+
+		handleHttpError(res, new HttpError("The operation to update the validation state failed!"));
+
+	}
+
+}
+
+
+
+/**
  * Manda a imprimir un miembro.
  * 
  * @param req Request
  * @param res Response
  * @returns Cornfirmación de que el miembro se mandó a imprimir.
  */
-export async function printMember(req: any, res: any) {
+export async function printMembers(req: any, res: any) {
 
 	try {
 
+		// Crea el servicio
+		const memberService = new MemberService();
+
 		// Extrae el parámetro de la query
-		const { memberId } = matchedData(req);
+		const { memberIds } = matchedData(req);
+
+		for (const memberId of memberIds) {
+			memberService.updatePrintedDate(memberId);
+		}
 
 		// No tocar durante sprint 2
-		res.status(501).send(`Has intentado imprimir un miembro con el id ${memberId}.\nEsta funcionalidad no está implementada todavía.`);
+		res.status(501).send(`Has intentado imprimir Los mimebros con ids ${memberIds}.\nEsta funcionalidad no está implementada todavía.`);
 
 	} catch (error: any) {
 

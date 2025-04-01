@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { ValidationStates } from "../constants/validationStates";
 
 /**
  * Crear el esquema de los miembros.
@@ -16,11 +17,24 @@ const MemberSchema = new Schema(
 			type: Schema.Types.String
 		},
 
+		// Fecha de creación del grupo
+		creationYear: {
+			type: Schema.Types.Number
+		},
+
+		// El estado de la validación para imprimir un miembro.
+		validationState: {
+			type: Schema.Types.String,
+			enum: ValidationStates,
+			default: ValidationStates.TO_VALIDATE
+		},
+
 		// El grupo del miembro
 		group: {
 
 			_id: {
-				type: Schema.Types.String
+				type: Schema.Types.ObjectId,
+				ref: "Group"
 			},
 
 			name: {

@@ -88,22 +88,18 @@ async function generateGenericCard(memberData: MemberInterface, filePath: string
 
 	const background: string = cardBackground ? cardBackground : "white";
 
-	const cardInstance = sharp({
-		create: {
-			height: cardHeight,
-			width: cardWidth,
-			channels: 4,
-			background: background
-		}
-	});
+	console.log("template exists:", fs.existsSync(path.join(__dirname, "..", "assets", "images", "card_template.png")));
+
+	const cardInstance = sharp(path.join(__dirname, "..", "assets", "images", "card_template.png"))
+		.resize(cardWidth, cardHeight)
 
 	// Generate a buffer with the member photo.
 	const fotoBuffer: ArrayBuffer = await cargarImagen(memberData.profileImageLink);
-	const fotoRedimensionada: Buffer = await sharp(fotoBuffer).resize(236, 303).toBuffer();
+	const fotoRedimensionada: Buffer = await sharp(fotoBuffer).resize(236, 290).toBuffer();
 
 	// Generate a buffer with the member dni barcode.
 	const barcodeBuffer: Buffer = await generarCodigoBarras(memberData.dni);
-	const barcodeResized: Buffer = await sharp(barcodeBuffer).resize(420, 53).toBuffer();
+	const barcodeResized: Buffer = await sharp(barcodeBuffer).resize(440, 70).toBuffer();
 
 	// Generate a buffer with the text of the image.
 	const textBuffer: Buffer<ArrayBufferLike> = addText(memberData, cardWidth, cardHeight);
@@ -111,8 +107,8 @@ async function generateGenericCard(memberData: MemberInterface, filePath: string
 	// Compose all the buffers in a single image.
 	const finalImage = await cardInstance
 		.composite([
-			{ input: fotoRedimensionada, left: 74, top: 60 },
-			{ input: barcodeResized, left: 464, top: 530 },
+			{ input: fotoRedimensionada, left: 87, top: 65 },
+			{ input: barcodeResized, left: 464, top: 510 },
 			{ input: textBuffer, left: 0, top: 0 }
 		])
 		.toFormat('png')

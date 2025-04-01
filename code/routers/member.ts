@@ -135,9 +135,9 @@ memberRouter.get(
 
 /**
  * @swagger
- * /api/member/print/{memberId}:
+ * /api/member/editMemberValidatioStatus/{memberId}:
  *   patch:
- *     summary: Mandar a imprimir un miembro
+ *     summary: Edita el estado de validación de un miembro
  *     tags: [Member]
  * 
  *     parameters:
@@ -147,6 +147,17 @@ memberRouter.get(
  *           type: string
  *         required: true
  *         description: ID del miembro
+ * 
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               validationState:
+ *                 type: string
+ *                 example: "validated"
  * 
  *     responses:
  *       200:
@@ -160,12 +171,49 @@ memberRouter.get(
  *                   type: string
  */
 memberRouter.patch(
-	"/print/:memberId",
+	"/editMemberValidatioStatus/:memberId",
 	auth,
 	validator.checkMemberId,
-	validator.printMember,
-	controller.printMember
+	validator.editMemberValidatioStatus,
+	controller.editMemberValidatioStatus
+);
+
+/**
+ * @swagger
+ * /api/member/printMembers:
+ *   patch:
+ *     summary: Mandar a imprimir un miembro
+ *     tags: [Member]
+ * 
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             name: memberIds
+ *             type: array
+ *             items:
+ *               type: string
+ *             required: true
+ *             description: ID del miembro
+ * 
+ *     responses:
+ *       200:
+ *         description: Confirmación de impresión
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ */
+memberRouter.patch(
+	"/printMembers",
+	auth,
+	validator.printMembers,
+	controller.printMembers
 );
 
 // Exporta el router una vez definidos todos los endpointss.
-export default memberRouter ;
+export default memberRouter;

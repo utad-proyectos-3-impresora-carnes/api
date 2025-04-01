@@ -1,3 +1,4 @@
+import { ValidationStates } from "../constants/validationStates";
 import { GroupMongoObjectInterface } from "./group";
 import MongoDBGenericObjectInterface from "./mongoGenericData";
 
@@ -9,27 +10,38 @@ export interface MemberInterface {
 	/**
 	 * El nombre completo
 	 */
-	fullName: string,
+	fullName: string;
 
 	/**
 	 * El DNI del miembro.
 	 */
-	dni: string,
+	dni: string;
 
 	/**
 	 * El grupo del miembro.
 	 */
-	group?: GroupMongoObjectInterface,
+	group?: GroupMongoObjectInterface;
 
 	/**
 	 * El link a la imagen de perfil.
 	 */
-	profileImageLink: string,
+	profileImageLink?: string;
 
 	/**
 	 * Fecha de la primera impresión del carné
 	 */
-	lastCardPrintedDate: Date
+	lastCardPrintedDate?: Date;
+
+	/**
+	 * Año de creación del miembro
+	 */
+	creationYear?: number;
+
+	/**
+	 * Estado de la validación del miembro
+	 */
+	validationState?: ValidationStates;
+
 }
 
 /**
