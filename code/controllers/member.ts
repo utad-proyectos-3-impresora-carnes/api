@@ -2,6 +2,8 @@ import { MemberInterface, MemberMongoObjectInterface } from "../interfaces/membe
 import MemberService from "../utils/member";
 import { generatePreviewCard } from "../utils/cardGenerator";
 import { matchedData } from "express-validator";
+import handleHttpError from "../errors/handleHttpError";
+import HttpError from "../errors/HttpError";
 
 /**
  * Obtiene todos los miembros de la plataforma.
@@ -25,9 +27,7 @@ export async function getAllMembers(req: any, res: any) {
 
 	} catch (error: any) {
 
-		console.error(error);
-
-		return res.status(500).send("The operation to get all members failed!");
+		handleHttpError(res, new HttpError("The operation to get all members failed!"));
 
 	}
 
@@ -59,9 +59,7 @@ export async function getFilteredMembers(req: any, res: any) {
 
 	} catch (error: any) {
 
-		console.error(error);
-
-		return res.status(500).send("The operation to get filtered members failed!");
+		handleHttpError(res, new HttpError("The operation to get filtered members failed!"));
 
 	}
 
@@ -91,9 +89,7 @@ export async function previewMemberCard(req: any, res: any) {
 
 	} catch (error: any) {
 
-		console.error(error);
-
-		return res.status(500).send("The operation to generate a preview card failed!");
+		handleHttpError(res, new HttpError("The operation to generate a preview card failed!"));
 
 	}
 
@@ -118,9 +114,7 @@ export async function printMember(req: any, res: any) {
 
 	} catch (error: any) {
 
-		console.error(error);
-
-		return res.status(500).send("The operation to schedule a print failed!");
+		handleHttpError(res, new HttpError("The operation to schedule a print failed!"));
 
 	}
 

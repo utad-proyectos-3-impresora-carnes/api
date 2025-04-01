@@ -3,6 +3,8 @@ import UserService from "../utils/user";
 import CypherService from "../utils/cypher";
 import JsonWebTokenService from "../utils/jsonWebToken";
 import { matchedData } from "express-validator";
+import handleHttpError from "../errors/handleHttpError";
+import HttpError from "../errors/HttpError";
 
 /**
  * Crea un usuario.
@@ -41,9 +43,7 @@ export async function createUser(req: any, res: any) {
 
 	} catch (error: any) {
 
-		console.error(error);
-
-		return res.status(500).send(error.message);
+		handleHttpError(res, new HttpError("The operation to create a user failed (try another email)!"));
 
 	}
 
@@ -79,12 +79,7 @@ export async function login(req: any, res: any) {
 
 	} catch (error: any) {
 
-		console.error(error);
-
-		return res.status(500).send({
-			alert: "The operation to log in failed!",
-			description: error.message
-		});
+		handleHttpError(res, new HttpError("The operation to log in failed", 401));
 
 	}
 
@@ -138,9 +133,7 @@ export async function resetPassword(req: any, res: any) {
 
 	} catch (error: any) {
 
-		console.error(error);
-
-		return res.status(500).send("The operation to reset password failed!");
+		handleHttpError(res, new HttpError("The operation to reset a password failed"));
 
 	}
 
@@ -180,9 +173,7 @@ export async function getUserData(req: any, res: any) {
 
 	} catch (error: any) {
 
-		console.error(error);
-
-		return res.status(500).send("The operation to get a user's data failed!");
+		handleHttpError(res, new HttpError("The operation to get a user's data failed!"));
 
 	}
 
@@ -204,9 +195,7 @@ export async function getUserByToken(req: any, res: any) {
 
 	} catch (error: any) {
 
-		console.error(error);
-
-		return res.status(500).send("The operation to get a user's data failed!");
+		handleHttpError(res, new HttpError("The operation to get a user's data failed!"));
 
 	}
 
@@ -254,9 +243,7 @@ export async function updateUser(req: any, res: any) {
 
 	} catch (error: any) {
 
-		console.error(error);
-
-		return res.status(500).send("The operation to update a user failed!");
+		handleHttpError(res, new HttpError("The operation to update a user failed!"));
 
 	}
 
@@ -285,9 +272,7 @@ export async function deleteUser(req: any, res: any) {
 
 	} catch (error: any) {
 
-		console.error(error);
-
-		return res.status(500).send("The operation to get a user's data failed!");
+		handleHttpError(res, new HttpError("The operation to get a user's data failed!"));
 
 	}
 
