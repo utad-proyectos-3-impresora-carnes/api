@@ -12,6 +12,7 @@ import path from 'path';
  */
 import { MemberInterface } from '../interfaces/member';
 import { CardBackgrounds } from '../constants/cardBackgrounds';
+import handleLocalError from '../errors/handleLocalError';
 
 const pathToGeneratedImages: string = path.join("assets", "images", "generated");
 const absolutePathToGeneratedImages: string = path.join(__dirname, "..", pathToGeneratedImages);
@@ -34,7 +35,7 @@ export async function generatePreviewCard(memberData: MemberInterface): Promise<
 
 	} catch (error) {
 
-		console.error(error);
+		handleLocalError(error);
 		throw error;
 
 	}
@@ -58,7 +59,7 @@ export async function generatePrintableCard(memberData: MemberInterface): Promis
 
 	} catch (error) {
 
-		console.error(error);
+		handleLocalError(error);
 		throw error;
 
 	}

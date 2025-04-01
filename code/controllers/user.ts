@@ -247,7 +247,6 @@ export async function updateUser(req: any, res: any) {
 
 	}
 
-
 }
 
 /**

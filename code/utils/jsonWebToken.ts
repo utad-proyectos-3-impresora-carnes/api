@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import handleLocalError from "../errors/handleLocalError";
 
 /**
  * Servicio para realizar las operaciones de generación/verificación de tokens.
@@ -30,7 +31,7 @@ export default class JsonWebTokenService {
 			return token;
 		} catch (error) {
 
-			console.error(error);
+			handleLocalError(error);
 			throw new Error("Error de servicio al generar un token.");
 
 		}
@@ -49,7 +50,7 @@ export default class JsonWebTokenService {
 
 		} catch (error) {
 
-			console.error(error);
+			handleLocalError(error);
 			throw new Error("El token no es válido!");
 
 		}

@@ -9,7 +9,7 @@ export default class CypherService {
 
 	constructor() {
 
-		this.encryptionRounds = Number(process.env.ENCRYPTION_ROUNDS);
+		this.encryptionRounds = Number(process.env.ENCRYPTION_ROUNDS || 10);
 
 	}
 
@@ -36,6 +36,6 @@ export default class CypherService {
 	public async checkIfStringMatchesHash(stringToCheck: string, hashRecorded: string) {
 
 		return bcrypt.compare(stringToCheck, hashRecorded);
-		
+
 	}
 }

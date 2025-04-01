@@ -1,3 +1,4 @@
+import handleLocalError from "../errors/handleLocalError";
 import { GroupInterface, GroupMongoObjectInterface } from "../interfaces/group";
 import GroupModel from "../models/groups";
 
@@ -23,7 +24,7 @@ export default class GroupService {
 
 		} catch (error) {
 
-			console.error(error);
+			handleLocalError(error);
 			throw new Error("Error checking fetching all groups available");
 
 		}
@@ -42,7 +43,7 @@ export default class GroupService {
 
 		} catch (error) {
 
-			console.error(error);
+			handleLocalError(error);
 			throw new Error("Error getting filtered groups.");
 
 		}
@@ -59,7 +60,7 @@ export default class GroupService {
 
 		} catch (error: any) {
 
-			console.error(error);
+			handleLocalError(error);
 			throw new Error("Error getting group by id.");
 
 		}
@@ -76,7 +77,7 @@ export default class GroupService {
 
 		} catch (error: any) {
 
-			console.error(error);
+			handleLocalError(error);
 			throw new Error("Error checking if group exists.");
 
 		}
@@ -100,7 +101,7 @@ export default class GroupService {
 
 		} catch (error: any) {
 
-			console.error(error);
+			handleLocalError(error);
 			throw new Error("Error checking creating a group.");
 
 		}
