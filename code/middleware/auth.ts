@@ -1,6 +1,8 @@
 import JsonWebTokenService from "../utils/jsonWebToken";
 import UserService from "../utils/user";
 import { UserMongoObjectInterface } from "../interfaces/user";
+import handleHttpError from "../errors/handleHttpError";
+import HttpError from "../errors/HttpError";
 
 /**
  * Checks if the token in the request exists and is valid in the database.
@@ -13,6 +15,10 @@ import { UserMongoObjectInterface } from "../interfaces/user";
 export default async function auth(req: any, res: any, next: any) {
 
 	try {
+
+		if (!req.header('Authorization')) {
+			throw new Error("Se debe enviar un token JWT!");
+		}
 
 		const token = req.header('Authorization').split(" ").pop();
 
@@ -29,7 +35,7 @@ export default async function auth(req: any, res: any, next: any) {
 		const user: UserMongoObjectInterface = await userService.getUserById(decoded.userId);
 
 		if (!user) {
-			return res.status(401).json({ error: 'The user doesn\'t exist!' });
+			throw new Error("El usuario no existe!");
 		}
 
 		req.user = user;
@@ -38,8 +44,7 @@ export default async function auth(req: any, res: any, next: any) {
 
 	} catch (error) {
 
-		console.error(error);
-		return res.status(401).json({ error: error.message });
+		handleHttpError(res, new HttpError("INVALID_TOKEN", 401));
 
 	}
 

@@ -1,9 +1,9 @@
 import path from 'path';
 import fs from 'fs';
-import MemberInterface from '../interfaces/member';
-import GroupTypes from '../constants/groupTypes';
+import { MemberInterface } from '../interfaces/member';
+import { GroupTypes } from '../constants/groupTypes';
 import { randomInt } from 'crypto';
-import GroupInterface from '../interfaces/group';
+import { GroupInterface } from '../interfaces/group';
 import GroupService from '../utils/group';
 import MemberService from '../utils/member';
 import { connection } from 'mongoose';
@@ -57,7 +57,10 @@ async function createMembers(data: any) {
 
 		const pathToImage = path.join(__dirname, "images", pokemon, pokemon + ".png");
 		const mainType: string = data[pokemon]["Type"].split(",").map(pokemonType => pokemonType.trim())[0];
-		const groupObject: any = await groupService.getGroupByName(mainType);
+		const groupFilter: GroupInterface = {
+			name: mainType
+		}
+		const groupObject: any = await groupService.getFilteredGroups(groupFilter);
 
 		const memberData: MemberInterface = {
 
@@ -73,7 +76,7 @@ async function createMembers(data: any) {
 		}
 
 		memberService.createMember(memberData);
-		
+
 	}
 
 }
