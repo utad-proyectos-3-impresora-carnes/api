@@ -135,6 +135,51 @@ memberRouter.get(
 
 /**
  * @swagger
+ * /api/member/editMemberValidatioStatus/{memberId}:
+ *   patch:
+ *     summary: Edita el estado de validación de un miembro
+ *     tags: [Member]
+ * 
+ *     parameters:
+ *       - in: path
+ *         name: memberId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: ID del miembro
+ * 
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               validationState:
+ *                 type: string
+ *                 example: "validated"
+ * 
+ *     responses:
+ *       200:
+ *         description: Confirmación de impresión
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ */
+memberRouter.patch(
+	"/editMemberValidatioStatus/:memberId",
+	auth,
+	validator.checkMemberId,
+	validator.editMemberValidatioStatus,
+	controller.editMemberValidatioStatus
+);
+
+/**
+ * @swagger
  * /api/member/print/{memberId}:
  *   patch:
  *     summary: Mandar a imprimir un miembro
@@ -168,4 +213,4 @@ memberRouter.patch(
 );
 
 // Exporta el router una vez definidos todos los endpointss.
-export default memberRouter ;
+export default memberRouter;

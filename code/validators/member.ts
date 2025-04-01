@@ -1,5 +1,6 @@
 import { param, query, body } from "express-validator";
 import validateResults from "../utils/validator";
+import { ValidationStates } from "../constants/validationStates";
 
 /**
  * Checks if the memberId exists.
@@ -64,6 +65,26 @@ export const previewMemberCard = [
 	(req: any, res: any, next: any) => validateResults(req, res, next)
 
 ]
+
+/**
+ * Validate the endpoint to edit a member validaiton status.
+ */
+export const editMemberValidatioStatus = [
+
+	body("validationState")
+		.isString()
+		.isLength({ max: 25 }).withMessage("El máximo tamaño del tamaño de validación es de 25 caracteres")
+		.custom((param: ValidationStates) => {
+			if (!Object.values(ValidationStates).includes(param)) {
+				return false;
+			}
+			return true;
+		}).withMessage("No es un valor de validación válido"),
+
+	(req: any, res: any, next: any) => validateResults(req, res, next)
+
+]
+
 
 /**
  * Validate the endpoint to print a member.

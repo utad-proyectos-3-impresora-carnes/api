@@ -86,25 +86,6 @@ export default class MemberService {
 		}
 	}
 
-	// /**
-	//  * Obtiene todos los miembros cuyo grupo contenga ese id.
-	//  * @param groupId El id del grupo.
-	//  * @returns Los miembros en un grupo.
-	//  */
-	// public async getMembersInGroup(groupId: string): Promise<any> {
-
-	// 	try {
-
-	// 		return await MemberModel.find({ "group.id": groupId })
-
-	// 	} catch (error) {
-
-	// 		console.error(error);
-	// 		throw new Error("Error checking getting all members in a group");
-
-	// 	}
-	// }
-
 	/**
 	 * Crea un miembro.
 	 * @param memberData Los datos de un miembro.

@@ -1,5 +1,6 @@
 import { param, query, body } from "express-validator";
 import validateResults from "../utils/validator";
+import { GroupTypes } from "../constants/groupTypes";
 
 /**
  * Checks if the groupId exists.
@@ -36,6 +37,13 @@ export const getFilteredGroups = [
 
 	query("type")
 		.isNumeric()
+		.custom((param: GroupTypes) => {
+			if (!Object.values(GroupTypes).includes(param)) {
+				return false;
+			}
+			return true;
+		})
+		.withMessage("No es un valor de tipo de grupo válido")
 		.optional(),
 
 	query("creationYear")

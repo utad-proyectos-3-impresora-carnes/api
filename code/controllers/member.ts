@@ -4,6 +4,7 @@ import { generatePreviewCard } from "../utils/cardGenerator";
 import { matchedData } from "express-validator";
 import handleHttpError from "../errors/handleHttpError";
 import HttpError from "../errors/HttpError";
+import { ValidationStates } from "../constants/validationStates";
 
 /**
  * Obtiene todos los miembros de la plataforma.
@@ -94,6 +95,43 @@ export async function previewMemberCard(req: any, res: any) {
 	}
 
 }
+
+/**
+ * Edita el estado de validación del mimebro.
+ * 
+ * @param req Request
+ * @param res Response
+ * @returns El nuevo objeto del miembro.
+ */
+export async function editMemberValidatioStatus(req: any, res: any) {
+
+	try {
+		// Crea el servicio
+		const memberService = new MemberService();
+
+		// Extrae el parámetro de la query
+		const { memberId, validationState } = matchedData(req);
+
+
+
+		const validationConstant: ValidationStates = validationState;
+
+		console.log(memberId, validationState);
+		// const memberObject: MemberMongoObjectInterface = await memberService.getMemberById(memberId);
+
+		// const filePath: string = await generatePreviewCard(memberObject);
+
+		res.status(200).send("");
+
+	} catch (error: any) {
+
+		handleHttpError(res, new HttpError("The operation to generate a preview card failed!"));
+
+	}
+
+}
+
+
 
 /**
  * Manda a imprimir un miembro.

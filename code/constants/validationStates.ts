@@ -6,11 +6,11 @@ export enum ValidationStates {
 	/**
 	 * No validated yet
 	 */
-	TO_VALIDATE = "to_valdiate",
+	TO_VALIDATE = "to_validate",
 	/**
 	 * Validated
 	 */
-	VALIDATED = "valdiated",
+	VALIDATED = "validated",
 	/**
 	 * Rejected
 	 */
