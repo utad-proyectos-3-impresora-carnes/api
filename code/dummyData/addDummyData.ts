@@ -72,7 +72,7 @@ async function createMembers(data: any) {
 				name: groupObject?.name
 			},
 			lastCardPrintedDate: undefined,
-			creationYear: data[pokemon]["Defense Base"] + data[pokemon]["Attack Base"]
+			creationYear: randomInt(40) + 1990
 
 		}
 
@@ -88,8 +88,8 @@ async function createMembers(data: any) {
  */
 export default async function addDummyData(req: any, res: any) {
 
-	await connection.dropCollection("Group");
-	await connection.dropCollection("Member");
+	await connection.dropCollection("groups");
+	await connection.dropCollection("members");
 
 	const pathToDataFile = path.join(__dirname, "pokemonDB_dataset.json");
 

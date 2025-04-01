@@ -115,10 +115,7 @@ export default class MemberService {
 		try {
 
 			const member = await MemberModel.create({
-				fullName: memberData.fullName,
-				dni: memberData.dni,
-				group: memberData.group,
-				profileImageLink: memberData.profileImageLink
+				...memberData
 			});
 
 			return this.getMemberById(member._id.toString());
