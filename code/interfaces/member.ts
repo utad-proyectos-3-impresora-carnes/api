@@ -1,3 +1,4 @@
+import { ValidationStates } from "../constants/validationStates";
 import { GroupMongoObjectInterface } from "./group";
 import MongoDBGenericObjectInterface from "./mongoGenericData";
 
@@ -35,6 +36,12 @@ export interface MemberInterface {
 	 * Año de creación del miembro
 	 */
 	creationYear?: number;
+
+	/**
+	 * Estado de la validación del miembro
+	 */
+	validationState?: ValidationStates;
+
 }
 
 /**

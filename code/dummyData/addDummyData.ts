@@ -9,8 +9,8 @@ import MemberService from '../utils/member';
 import { connection } from 'mongoose';
 
 
-function getRandomGroupType(): string {
-	const values: Array<string> = Object.values(GroupTypes).filter(value => typeof value === "string");
+function getRandomGroupType(): GroupTypes {
+	const values: GroupTypes[] = Object.values(GroupTypes);
 	return values[Math.floor(Math.random() * values.length)];
 }
 
@@ -36,7 +36,7 @@ async function createGroups(data: any): Promise<void> {
 		const groupData: GroupInterface = {
 
 			name: type,
-			type: GroupTypes[getRandomGroupType()],
+			type: getRandomGroupType(),
 			creationYear: randomInt(40) + 1990
 
 		};

@@ -25,7 +25,8 @@ const MemberSchema = new Schema(
 		// El estado de la validación para imprimir un miembro.
 		validationState: {
 			type: Schema.Types.String,
-			enum: ValidationStates
+			enum: ValidationStates,
+			default: ValidationStates.TO_VALIDATE
 		},
 
 		// El grupo del miembro
