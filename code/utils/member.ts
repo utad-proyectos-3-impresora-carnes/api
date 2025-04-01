@@ -132,4 +132,24 @@ export default class MemberService {
 
 		}
 	}
+	/**
+	 * Uopdates the lastCardPrinted value of the member.
+	 * @param memberId The id of the member.
+	 * @returns The memebr with the printed date updated.
+	 */
+	public async updatePrintedDate(memberId: string): Promise<MemberMongoObjectInterface> {
+
+		try {
+
+			await MemberModel.findByIdAndUpdate(memberId, { lastCardPrintedDate: Date.now() });
+
+			return await this.getMemberById(memberId);
+
+		} catch (error: any) {
+
+			handleLocalError(error);
+			throw new Error("Error updating validation state.");
+
+		}
+	}
 }

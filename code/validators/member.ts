@@ -92,8 +92,9 @@ export const editMemberValidatioStatus = [
 export const printMembers = [
 
 	body("memberIds")
-		.isArray()
-		.withMessage("Se debe enviar un array con los miembros a imprimir"),
+		.exists(),
+	// .isArray()
+	// .withMessage("Se debe enviar un array con los miembros a imprimir"),
 
 	(req: any, res: any, next: any) => validateResults(req, res, next)
 

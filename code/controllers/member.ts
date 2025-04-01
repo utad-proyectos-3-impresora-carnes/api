@@ -106,6 +106,7 @@ export async function previewMemberCard(req: any, res: any) {
 export async function editMemberValidatioStatus(req: any, res: any) {
 
 	try {
+
 		// Crea el servicio
 		const memberService = new MemberService();
 
@@ -139,11 +140,18 @@ export async function printMembers(req: any, res: any) {
 
 	try {
 
+		// Crea el servicio
+		const memberService = new MemberService();
+
 		// Extrae el parámetro de la query
-		const { memberId } = matchedData(req);
+		const { memberIds } = matchedData(req);
+
+		for (const memberId of memberIds) {
+			memberService.updatePrintedDate(memberId);
+		}
 
 		// No tocar durante sprint 2
-		res.status(501).send(`Has intentado imprimir un miembro con el id ${memberId}.\nEsta funcionalidad no está implementada todavía.`);
+		res.status(501).send(`Has intentado imprimir Los mimebros con ids ${memberIds}.\nEsta funcionalidad no está implementada todavía.`);
 
 	} catch (error: any) {
 

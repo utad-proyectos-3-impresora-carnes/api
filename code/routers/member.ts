@@ -185,15 +185,17 @@ memberRouter.patch(
  *     summary: Mandar a imprimir un miembro
  *     tags: [Member]
  * 
- *     parameters:
- *       - in: path
- *         name: memberIds
- *         schema:
- *           type: array
- *           items:
- *             type: string
- *         required: true
- *         description: ID del miembro
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             name: memberIds
+ *             type: array
+ *             items:
+ *               type: string
+ *             required: true
+ *             description: ID del miembro
  * 
  *     responses:
  *       200:
