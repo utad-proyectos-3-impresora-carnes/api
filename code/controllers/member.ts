@@ -135,7 +135,7 @@ export async function editMemberValidatioStatus(req: any, res: any) {
  * @param res Response
  * @returns Cornfirmación de que el miembro se mandó a imprimir.
  */
-export async function printMember(req: any, res: any) {
+export async function printMembers(req: any, res: any) {
 
 	try {
 

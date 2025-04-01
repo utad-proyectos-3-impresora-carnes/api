@@ -180,16 +180,18 @@ memberRouter.patch(
 
 /**
  * @swagger
- * /api/member/print/{memberId}:
+ * /api/member/printMembers:
  *   patch:
  *     summary: Mandar a imprimir un miembro
  *     tags: [Member]
  * 
  *     parameters:
  *       - in: path
- *         name: memberId
+ *         name: memberIds
  *         schema:
- *           type: string
+ *           type: array
+ *           items:
+ *             type: string
  *         required: true
  *         description: ID del miembro
  * 
@@ -205,11 +207,10 @@ memberRouter.patch(
  *                   type: string
  */
 memberRouter.patch(
-	"/print/:memberId",
+	"/printMembers",
 	auth,
-	validator.checkMemberId,
-	validator.printMember,
-	controller.printMember
+	validator.printMembers,
+	controller.printMembers
 );
 
 // Exporta el router una vez definidos todos los endpointss.

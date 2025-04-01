@@ -89,7 +89,11 @@ export const editMemberValidatioStatus = [
 /**
  * Validate the endpoint to print a member.
  */
-export const printMember = [
+export const printMembers = [
+
+	body("memberIds")
+		.isArray()
+		.withMessage("Se debe enviar un array con los miembros a imprimir"),
 
 	(req: any, res: any, next: any) => validateResults(req, res, next)
 
