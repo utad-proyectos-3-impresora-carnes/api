@@ -68,8 +68,8 @@ async function createMembers(data: any) {
 			dni: data[pokemon]["HP Min"] + data[pokemon]["Attack Base"],
 			profileImageLink: pathToImage,
 			group: {
-				_id: groupObject?._id,
-				name: groupObject?.name
+				_id: groupObject[0]?._id,
+				name: groupObject[0]?.name
 			},
 			lastCardPrintedDate: undefined,
 			creationYear: randomInt(40) + 1990
