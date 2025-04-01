@@ -1,17 +1,9 @@
-interface HttpErrorOptions {
-	res: any;
-	message?: string;
-	statusCode?: number;
-	lang?: string;
-}
-
 /**
  * Class for an standars http error.
  */
 export default class HttpError extends Error {
 
-	private readonly res: any;
-	private readonly statusCode: number;
+	private readonly _statusCode: number;
 
 	/**
 	 * 
@@ -19,20 +11,13 @@ export default class HttpError extends Error {
 	 * @param code The code of the error
 	 * @param statusCode The http status code to display to the client.
 	 */
-	constructor(options: HttpErrorOptions) {
-
-		super(options.message);
-
-		this.res = options.res;
-		this.statusCode = options.statusCode;
-
+	constructor(message: string, code: number) {
+		super(message);
+		this._statusCode = code;
 	}
 
-	/**
-	 * Sends the response with the error.
-	 */
-	send() {
-		this.res.status(this.statusCode).send(this.message);
+	public get statusCode(): number {
+		return this._statusCode;
 	}
 
 }
