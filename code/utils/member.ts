@@ -1,5 +1,6 @@
 import { MemberInterface, MemberMongoObjectInterface } from "../interfaces/member";
 import MemberModel from "../models/members";
+import handleLocalError from "../errors/handleLocalError";
 
 /**
  * Servicio de los mimebros.
@@ -23,7 +24,7 @@ export default class MemberService {
 
 		} catch (error) {
 
-			console.error(error);
+			handleLocalError(error);
 			throw new Error("Error checking fetching all members data available");
 
 		}
@@ -43,7 +44,7 @@ export default class MemberService {
 
 		} catch (error: any) {
 
-			console.error(error);
+			handleLocalError(error);
 			throw new Error("Error getting filteres members");
 
 		}
@@ -62,7 +63,7 @@ export default class MemberService {
 
 		} catch (error) {
 
-			console.error(error);
+			handleLocalError(error);
 			throw new Error("Error fetching member by id.");
 
 		}
@@ -79,7 +80,7 @@ export default class MemberService {
 
 		} catch (error: any) {
 
-			console.error(error);
+			handleLocalError(error);
 			throw new Error("Error checking if member exists.");
 
 		}
@@ -124,7 +125,7 @@ export default class MemberService {
 
 		} catch (error: any) {
 
-			console.error(error);
+			handleLocalError(error);
 			throw new Error("Error creating a new member.");
 
 		}

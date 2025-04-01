@@ -32,7 +32,7 @@ const groupRouter = express.Router();
  *         content:
  *           application/json:
  *             schema:
- *               type: array
+ *               type: MongoDBGenericObject
  */
 groupRouter.get(
 	"/",

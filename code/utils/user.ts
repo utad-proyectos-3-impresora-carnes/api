@@ -1,3 +1,4 @@
+import handleLocalError from "../errors/handleLocalError";
 import { UserBasicDataInterface, UseFullDataInterface, UserMongoObjectInterface } from "../interfaces/user";
 import UserModel from "../models/users";
 
@@ -34,7 +35,7 @@ export default class UserService {
 
 		} catch (error) {
 
-			console.error(error)
+			handleLocalError(error);
 			throw new Error("Error checking if email is available");
 
 		}
@@ -57,7 +58,7 @@ export default class UserService {
 
 		} catch (error) {
 
-			console.error(error)
+			handleLocalError(error);
 			throw new Error("Error adding user to the database");
 
 		}
@@ -78,7 +79,7 @@ export default class UserService {
 
 		} catch (error) {
 
-			console.error(error)
+			handleLocalError(error);
 			throw new Error("Error looking up user by id");
 
 		}
@@ -98,7 +99,7 @@ export default class UserService {
 
 		} catch (error) {
 
-			console.error(error)
+			handleLocalError(error);
 			throw new Error("Error getting user auth data.");
 
 		}
@@ -122,7 +123,7 @@ export default class UserService {
 
 		} catch (error) {
 
-			console.error(error)
+			handleLocalError(error);
 			throw new Error("Error looking up user by id");
 
 		}
@@ -143,7 +144,7 @@ export default class UserService {
 
 		} catch (error) {
 
-			console.error(error)
+			handleLocalError(error);
 			throw new Error("Error deleting user by id");
 
 		}

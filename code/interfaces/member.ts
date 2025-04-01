@@ -1,4 +1,4 @@
-import { GroupInterface } from "./group";
+import { GroupMongoObjectInterface } from "./group";
 import MongoDBGenericObjectInterface from "./mongoGenericData";
 
 /**
@@ -19,7 +19,7 @@ export interface MemberInterface {
 	/**
 	 * El grupo del miembro.
 	 */
-	group?: GroupInterface,
+	group?: GroupMongoObjectInterface,
 
 	/**
 	 * El link a la imagen de perfil.

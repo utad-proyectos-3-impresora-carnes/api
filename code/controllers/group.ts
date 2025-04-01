@@ -1,3 +1,5 @@
+import handleHttpError from "../errors/handleHttpError";
+import HttpError from "../errors/HttpError";
 import { GroupInterface, GroupMongoObjectInterface } from "../interfaces/group";
 import GroupService from "../utils/group";
 import { matchedData } from "express-validator";
@@ -24,9 +26,7 @@ export async function getAllGroups(req: any, res: any) {
 
 	} catch (error: any) {
 
-		console.error(error);
-
-		return res.status(500).send("The operation to get all groups failed!");
+		handleHttpError(res, new HttpError("The operation to get all groups failed!"));
 
 	}
 
@@ -61,9 +61,7 @@ export async function getFilteredGroups(req: any, res: any) {
 
 	} catch (error: any) {
 
-		console.error(error);
-
-		return res.status(500).send("The operation to get filtered groups failed!");
+		handleHttpError(res, new HttpError("The operation to get filtered groups failed!"));
 
 	}
 
@@ -87,9 +85,7 @@ export async function printGroup(req: any, res: any) {
 
 	} catch (error: any) {
 
-		console.error(error);
-
-		return res.status(500).send("The operation to schedule a print failed!");
+		handleHttpError(res, new HttpError("The operation to schedule a print failed!"));
 
 	}
 
