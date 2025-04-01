@@ -11,7 +11,7 @@ export default class HttpError extends Error {
 	 * @param code The code of the error
 	 * @param statusCode The http status code to display to the client.
 	 */
-	constructor(message: string, code: number) {
+	constructor(message: string, code: number = 500) {
 		super(message);
 		this._statusCode = code;
 	}
