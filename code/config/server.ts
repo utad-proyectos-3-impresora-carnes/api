@@ -20,7 +20,7 @@ export default function createServer(): Express {
 	server.use(express.json());
 
 	// Añadir los ficheros estáticos
-	server.use(express.static('assets'));
+	server.use("/assets", express.static('assets'));
 
 	// Manda los logs a slack.
 	sendLogs(server);
