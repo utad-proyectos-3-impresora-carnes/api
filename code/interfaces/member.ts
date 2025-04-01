@@ -9,27 +9,32 @@ export interface MemberInterface {
 	/**
 	 * El nombre completo
 	 */
-	fullName: string,
+	fullName: string;
 
 	/**
 	 * El DNI del miembro.
 	 */
-	dni: string,
+	dni: string;
 
 	/**
 	 * El grupo del miembro.
 	 */
-	group?: GroupMongoObjectInterface,
+	group?: GroupMongoObjectInterface;
 
 	/**
 	 * El link a la imagen de perfil.
 	 */
-	profileImageLink: string,
+	profileImageLink?: string;
 
 	/**
 	 * Fecha de la primera impresión del carné
 	 */
-	lastCardPrintedDate: Date
+	lastCardPrintedDate?: Date;
+
+	/**
+	 * Año de creación del miembro
+	 */
+	creationYear?: number;
 }
 
 /**

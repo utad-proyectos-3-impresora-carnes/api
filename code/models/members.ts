@@ -16,11 +16,17 @@ const MemberSchema = new Schema(
 			type: Schema.Types.String
 		},
 
+		// Fecha de creación del grupo
+		creationYear: {
+			type: Schema.Types.Number
+		},
+
 		// El grupo del miembro
 		group: {
 
 			_id: {
-				type: Schema.Types.String
+				type: Schema.Types.ObjectId,
+				ref: "Group"
 			},
 
 			name: {
