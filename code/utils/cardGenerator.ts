@@ -147,12 +147,20 @@ function addText(memberData: MemberInterface, cardWidth: number, cardHeight: num
  */
 async function cargarImagen(fotoPath: string): Promise<ArrayBuffer> {
 
-	const response = await fetch(fotoPath);
+	let image: any;
 
-	const blob: Blob = await response.blob();
+	try {
+		// Try fetch image online
+		const response = await fetch(fotoPath);
+		const blob: Blob = await response.blob();
+		image = await blob.arrayBuffer();
 
-	return await blob.arrayBuffer();
+	} catch (error) {
+		// Fallback to local path
+		image = fs.readFileSync(fotoPath);
+	}
 
+	return image;
 }
 
 /**
