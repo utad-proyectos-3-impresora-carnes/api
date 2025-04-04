@@ -127,8 +127,6 @@ export async function editMemberValidatioStatus(req: any, res: any) {
 
 }
 
-
-
 /**
  * Manda a imprimir un miembro.
  * 
@@ -146,12 +144,11 @@ export async function printMembers(req: any, res: any) {
 		// Extrae el parámetro de la query
 		const { memberIds } = matchedData(req);
 
-		for (const memberId of memberIds) {
-			memberService.updatePrintedDate(memberId);
-		}
+		// Manda los miembros seleccionados a la base de datos.
+		const members: MemberMongoObjectInterface[] = await memberService.addMembersToMysqlTable(memberIds);
 
 		// No tocar durante sprint 2
-		res.status(501).send(`Has intentado imprimir Los mimebros con ids ${memberIds}.\nEsta funcionalidad no está implementada todavía.`);
+		res.status(200).send(members);
 
 	} catch (error: any) {
 

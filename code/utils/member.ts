@@ -1,7 +1,9 @@
 import { MemberInterface, MemberMongoObjectInterface } from "../interfaces/member";
-import MemberModel from "../models/members";
+import MemberModel from "../models/noSql/members";
 import handleLocalError from "../errors/handleLocalError";
 import { ValidationStates } from "../constants/validationStates";
+import { TempMember } from "../models/sql/tempMember";
+import fs from "fs";
 
 /**
  * Servicio de los mimebros.
@@ -132,6 +134,7 @@ export default class MemberService {
 
 		}
 	}
+
 	/**
 	 * Uopdates the lastCardPrinted value of the member.
 	 * @param memberId The id of the member.
@@ -149,6 +152,49 @@ export default class MemberService {
 
 			handleLocalError(error);
 			throw new Error("Error updating validation state.");
+
+		}
+	}
+
+	/**
+	 * Adds a set of members to the mysql table to print them.
+	 * @param memberIds The ids of the members.
+	 * @returns The member objects updated.
+	 */
+	public async addMembersToMysqlTable(memberIds: string[]): Promise<MemberMongoObjectInterface[]> {
+
+		try {
+
+			// Cleans table of previous membres
+			await TempMember.truncate();
+
+			const memberArray: Array<MemberMongoObjectInterface> = new Array<MemberMongoObjectInterface>();
+
+			for (const id of memberIds) {
+
+				const member: MemberMongoObjectInterface = await this.getMemberById(id);
+
+				const image: ArrayBuffer = fs.readFileSync(member.profileImageLink).buffer;
+
+				// Add member to table
+				const mysqlMember = await TempMember.create({
+					fullName: member.fullName,
+					dni: member.dni,
+					group: member.group.name,
+					// TODO: handle this in case the storage for images change
+					profileImage: image
+				})
+
+				memberArray.push(await this.updatePrintedDate(id));
+
+			}
+
+			return memberArray;
+
+		} catch (error: any) {
+
+			handleLocalError(error);
+			throw new Error("Error adding members to mysql table");
 
 		}
 	}

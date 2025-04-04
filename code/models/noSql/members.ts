@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { ValidationStates } from "../constants/validationStates";
+import { ValidationStates } from "../../constants/validationStates";
 
 /**
  * Crear el esquema de los miembros.
