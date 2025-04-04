@@ -1,71 +1,73 @@
 import { Sequelize, Options } from "sequelize"
 
 /**
- * Connect to mysql database
+ * Class to handle the mysql connection.
  */
-export async function mySqlConnect() {
+export class MySqlConnection {
 
-	try {
+	/**
+	 * Unique class of mysql connection.
+	 */
+	private static instance: MySqlConnection;
+	private readonly _options: Options;
+	private readonly _connection: Sequelize;
+	private readonly _databaseName: string;
 
-		const options: Options = {
+	private constructor() {
+
+		this._options = {
 			username: process.env.MYSQL_DB_USER,
 			password: process.env.MYSQL_DB_PASSWORD,
 			host: process.env.MYSQL_DB_URL,
 			port: Number(process.env.MYSQL_DB_PORT),
 			dialect: "mysql"
-
 		};
 
-		const databaseName: string = process.env.MYSQL_DB;
+		this._databaseName = process.env.MYSQL_DB;
 
-		await checkDatabaseExists(options, databaseName);
-
-		options.database = databaseName;
-
-		await initializeConnection(options);
-
-	} catch (error) {
-		console.error('Unable to connect to the database:', error);
-	}
-}
-
-/**
- * Checks if the databse exists, otherwise, creates it.
- * @param options The options to connect to the db manager.
- * @param databaseName The name of the database to create.
- */
-async function checkDatabaseExists(options: Options, databaseName: string): Promise<void> {
-	try {
-
-		const sequelize: Sequelize = new Sequelize(options);
-
-		await sequelize.query(`CREATE DATABASE IF NOT EXISTS \`${databaseName}\`;`);
-
-		await sequelize.close();
-
-	} catch (error) {
-
-		throw error;
+		this._connection = new Sequelize({ ...this._options, database: this._databaseName });
 
 	}
-}
 
-/**
- * Initializes the connection with all its configuration.
- * @param options The options to connect to the databse.
- */
-async function initializeConnection(options: Options): Promise<void> {
-	try {
-
-		const connection: Sequelize = new Sequelize(options);
-
-		await connection.authenticate();
-
-		connection.sync();
-
-	} catch (error) {
-
-		throw error;
-
+	public static getInstance(): MySqlConnection {
+		if (!MySqlConnection.instance) {
+			MySqlConnection.instance = new MySqlConnection();
+		}
+		return MySqlConnection.instance;
 	}
+
+	public get connection(): Sequelize {
+		return this._connection;
+	}
+
+	public async checkDatabaseExists(): Promise<void> {
+		try {
+
+			const connection: Sequelize = new Sequelize(this._options);
+
+			await connection.query(`CREATE DATABASE IF NOT EXISTS \`${this._databaseName}\`;`);
+
+			await connection.close();
+
+		} catch (error) {
+
+			throw error;
+
+		}
+	}
+
+	public async initializeConnection(): Promise<void> {
+		try {
+
+			await this._connection.authenticate();
+			this._connection.sync();
+
+		} catch (error) {
+
+			throw error;
+
+		}
+	}
+
 }
+

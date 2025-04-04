@@ -3,7 +3,7 @@ import { Express } from "express";
 import router from "./routes";
 import cors from 'cors';
 import { mongooseConnect } from "./mongo";
-import { mySqlConnect } from "./mysql";
+import { MySqlConnection } from "./mysql";
 import { sendLogs } from "../utils/handleLogger";
 
 /**
@@ -31,7 +31,10 @@ export default function createServer(): Express {
 
 	// Conectar a la base de datos
 	mongooseConnect();
-	mySqlConnect();
+	const mySqlConnection: MySqlConnection = MySqlConnection.getInstance();
+	mySqlConnection.checkDatabaseExists().then(() => {
+		mySqlConnection.initializeConnection();
+	})
 
 	return server;
 }
