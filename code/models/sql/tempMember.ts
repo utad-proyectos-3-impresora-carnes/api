@@ -9,6 +9,26 @@ const TempMember = MySqlConnection.getInstance().connection.define(
 			autoIncrement: true,
 			primaryKey: true,
 		},
+
+		name: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
+
+		dni: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
+
+		group: {
+			type: DataTypes.STRING,
+			allowNull: false,
+		},
+
+		profileImage: {
+			type: DataTypes.BLOB,
+			allowNull: true
+		}
 	}
 )
 
