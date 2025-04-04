@@ -1,6 +1,6 @@
 import handleLocalError from "../errors/handleLocalError";
 import { UserBasicDataInterface, UseFullDataInterface, UserMongoObjectInterface } from "../interfaces/user";
-import UserModel from "../models/users";
+import UserModel from "../models/noSql/users";
 
 /**
  * Servicio del usuario.

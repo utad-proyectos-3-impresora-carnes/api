@@ -1,5 +1,5 @@
 import { Schema, model } from "mongoose";
-import { GroupTypes } from "../constants/groupTypes";
+import { GroupTypes } from "../../constants/groupTypes";
 
 /**
  * Crear el esquema del grupo

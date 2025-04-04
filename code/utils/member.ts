@@ -1,5 +1,5 @@
 import { MemberInterface, MemberMongoObjectInterface } from "../interfaces/member";
-import MemberModel from "../models/members";
+import MemberModel from "../models/noSql/members";
 import handleLocalError from "../errors/handleLocalError";
 import { ValidationStates } from "../constants/validationStates";
 
