@@ -10,7 +10,7 @@ const TempMember = MySqlConnection.getInstance().connection.define(
 			primaryKey: true,
 		},
 
-		name: {
+		fullName: {
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
