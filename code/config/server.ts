@@ -3,9 +3,11 @@ import { Express } from "express";
 import router from "./routes";
 import cors from 'cors';
 import { mongooseConnect } from "./mongo";
-import { MySqlConnection } from "./mysql";
+import { MySqlConnection } from "../config/mySql";
 import { sendLogs } from "../utils/handleLogger";
 import { TempMember } from "../models/sql/tempMember";
+import { CronJob } from "cron";
+import { deleteCardPreviews, updateDataFromDatabase } from "../utils/cronTasks";
 
 /**
  * Crea el servidor con toda la configuración necesaria.
@@ -34,6 +36,9 @@ export default function createServer(): Express {
 	mongooseConnect();
 	mysqlSync();
 
+	// Schedule cron jobs
+	scheduleCronJobs();
+
 	return server;
 }
 
@@ -43,4 +48,19 @@ function mysqlSync() {
 		mySqlConnection.initializeConnection();
 		TempMember.sync();
 	})
+}
+
+function scheduleCronJobs() {
+	CronJob.from({
+		cronTime: "0 0 * * *",
+		onTick: deleteCardPreviews,
+		onComplete: null,
+		start: true
+	});
+	CronJob.from({
+		cronTime: "0 0 * * *",
+		onTick: updateDataFromDatabase,
+		onComplete: null,
+		start: true
+	});
 }
