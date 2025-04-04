@@ -12,4 +12,4 @@ const TempMember = MySqlConnection.getInstance().connection.define(
 	}
 )
 
-export { TempMember }
+export { TempMember };

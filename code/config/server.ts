@@ -5,6 +5,7 @@ import cors from 'cors';
 import { mongooseConnect } from "./mongo";
 import { MySqlConnection } from "./mysql";
 import { sendLogs } from "../utils/handleLogger";
+import { TempMember } from "../models/sql/tempMember";
 
 /**
  * Crea el servidor con toda la configuración necesaria.
@@ -31,10 +32,15 @@ export default function createServer(): Express {
 
 	// Conectar a la base de datos
 	mongooseConnect();
+	mysqlSync();
+
+	return server;
+}
+
+function mysqlSync() {
 	const mySqlConnection: MySqlConnection = MySqlConnection.getInstance();
 	mySqlConnection.checkDatabaseExists().then(() => {
 		mySqlConnection.initializeConnection();
+		TempMember.sync();
 	})
-
-	return server;
 }

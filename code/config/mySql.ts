@@ -1,4 +1,6 @@
 import { Sequelize, Options } from "sequelize"
+import { config } from 'dotenv';
+config();
 
 /**
  * Class to handle the mysql connection.
@@ -20,7 +22,8 @@ export class MySqlConnection {
 			password: process.env.MYSQL_DB_PASSWORD,
 			host: process.env.MYSQL_DB_URL,
 			port: Number(process.env.MYSQL_DB_PORT),
-			dialect: "mysql"
+			dialect: "mysql",
+			logging: false
 		};
 
 		this._databaseName = process.env.MYSQL_DB;
@@ -60,7 +63,9 @@ export class MySqlConnection {
 		try {
 
 			await this._connection.authenticate();
-			this._connection.sync();
+			this._connection.sync().then(() => {
+				console.log("Conexión con mySql iniciada sin problemas.")
+			})
 
 		} catch (error) {
 
