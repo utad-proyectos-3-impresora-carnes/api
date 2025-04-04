@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { MySqlConnection } from "../../config/mysql";
+import { MySqlConnection } from "../../config/mySql";
 
 const TempMember = MySqlConnection.getInstance().connection.define(
 	"TemporaryMember",
