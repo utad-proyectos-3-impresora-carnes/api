@@ -166,7 +166,7 @@ export default class MemberService {
 		try {
 
 			// Cleans table of previous membres
-			await TempMember.destroy({});
+			await TempMember.truncate();
 
 			const memberArray: Array<MemberMongoObjectInterface> = new Array<MemberMongoObjectInterface>();
 
@@ -174,13 +174,15 @@ export default class MemberService {
 
 				const member: MemberMongoObjectInterface = await this.getMemberById(id);
 
+				const image: ArrayBuffer = fs.readFileSync(member.profileImageLink).buffer;
+
 				// Add member to table
-				await TempMember.create({
+				const mysqlMember = await TempMember.create({
 					fullName: member.fullName,
 					dni: member.dni,
 					group: member.group.name,
 					// TODO: handle this in case the storage for images change
-					profileImage: fs.readFileSync(member.profileImageLink)
+					profileImage: image
 				})
 
 				memberArray.push(await this.updatePrintedDate(id));
