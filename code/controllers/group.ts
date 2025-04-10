@@ -19,12 +19,12 @@ export async function getMetadata(req: any, res: any) {
 
 		const groupTypes = Object.values(GroupTypes);
 
-		// Devuelve todos los miembros
+		// Devuelve todos los metadatos de los grupos
 		res.status(200).send({ groupTypes: groupTypes });
 
 	} catch (error: any) {
 
-		handleHttpError(res, new HttpError("The operation to get all groups failed!"));
+		handleHttpError(res, new HttpError("The operation to get group metadata failed!"));
 
 	}
 
@@ -47,7 +47,7 @@ export async function getAllGroups(req: any, res: any) {
 		// Obiene todos los grupos
 		const groups: Array<GroupMongoObjectInterface> = await groupService.getAllGroups();
 
-		// Devuelve todos los miembros
+		// Devuelve todos los grupos
 		res.status(200).send(groups);
 
 	} catch (error: any) {

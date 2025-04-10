@@ -22,7 +22,29 @@ const memberRouter = express.Router();
 
 /**
  * @swagger
- * /api/member/:
+ * /api/member/metadata:
+ *   get:
+ *     summary: Obtener los metadatos de los miembros
+ *     tags: [Group]
+ * 
+ *     responses:
+ *       200:
+ *         description: Metadatos de los miembros
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: MongoDBGenericObject
+ */
+memberRouter.get(
+	"/metadata",
+	auth,
+	validator.getMetadata,
+	controller.getMetadata
+);
+
+/**
+ * @swagger
+ * /api/member/allMembers:
  *   get:
  *     summary: Obtener todos los miembros
  *     tags: [Member]
@@ -35,7 +57,7 @@ const memberRouter = express.Router();
  *               type: array
  */
 memberRouter.get(
-	"/",
+	"/allMembers",
 	auth,
 	validator.getAllMembers,
 	controller.getAllMembers
