@@ -1,8 +1,12 @@
 import fs from "fs";
 import path from "node:path";
+import handleLocalError from "../errors/handleLocalError";
 
-export function deleteCardPreviews() {
-	console.log("Doing task");
+/**
+ * Deletes all the card previews generated.
+ * @returns Void
+ */
+export function deleteCardPreviews(): void {
 
 	try {
 
@@ -19,10 +23,13 @@ export function deleteCardPreviews() {
 		}
 
 	} catch (error: any) {
-
+		handleLocalError(error);
 	}
 }
 
+/**
+ * Updates the database from information upstream.
+ */
 export function updateDataFromDatabase() {
 
 }
