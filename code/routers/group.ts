@@ -67,6 +67,18 @@ groupRouter.get(
  *           type: integer
  *         required: false
  *         description: Año en el que se creo el grupo
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: Cantidad de datos a recibir
+ *       - in: query
+ *         name: offset
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: Cantidad de datos a saltar
  * 
  *     responses:
  *       200:

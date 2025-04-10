@@ -4,7 +4,6 @@ import { generatePreviewCard } from "../utils/cardGenerator";
 import { matchedData } from "express-validator";
 import handleHttpError from "../errors/handleHttpError";
 import HttpError from "../errors/HttpError";
-import { ValidationStates } from "../constants/validationStates";
 
 /**
  * Obtiene todos los miembros de la plataforma.

@@ -80,7 +80,19 @@ memberRouter.get(
  *           type: boolean
  *         required: false
  *         description: Si el carné ha sido ya impreso
- *
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: Cantidad de datos a recibir
+ *       - in: query
+ *         name: offset
+ *         schema:
+ *           type: integer
+ *         required: false
+ *         description: Cantidad de datos a saltar
+ * 
  *     responses:
  *       200:
  *         description: Lista de miembros filtrados

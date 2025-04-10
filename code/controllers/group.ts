@@ -1,6 +1,7 @@
 import handleHttpError from "../errors/handleHttpError";
 import HttpError from "../errors/HttpError";
 import { GroupInterface, GroupMongoObjectInterface } from "../interfaces/group";
+import { PaginationInterface } from "../interfaces/pagination";
 import GroupService from "../utils/group";
 import { matchedData } from "express-validator";
 
@@ -47,7 +48,7 @@ export async function getFilteredGroups(req: any, res: any) {
 		const groupService: GroupService = new GroupService()
 
 		// Extrae parámetros de la query
-		const { name, type, creationYear } = matchedData(req);
+		const { name, type, creationYear, limit, offset } = matchedData(req);
 
 		// Compone los filtros.
 		const groupFilters: GroupInterface = {
@@ -56,8 +57,13 @@ export async function getFilteredGroups(req: any, res: any) {
 			creationYear: creationYear !== undefined ? Number(creationYear) : undefined
 		};
 
+		const pagination: PaginationInterface = {
+			limit: limit ? limit : 20,
+			offset: offset ? offset : 0
+		};
+
 		// Busca los grupos con los filtros
-		const matchedGroups: Array<GroupMongoObjectInterface> = await groupService.getFilteredGroups(groupFilters);
+		const matchedGroups: Array<GroupMongoObjectInterface> = await groupService.getFilteredGroups(groupFilters, pagination);
 
 		// Devuelve los datos filtrados
 		res.status(200).send(matchedGroups);
