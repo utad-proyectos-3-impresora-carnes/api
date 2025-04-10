@@ -1,9 +1,34 @@
+import { GroupTypes } from "../constants/groupTypes";
 import handleHttpError from "../errors/handleHttpError";
 import HttpError from "../errors/HttpError";
 import { GroupInterface, GroupMongoObjectInterface } from "../interfaces/group";
 import { PaginationInterface } from "../interfaces/pagination";
 import GroupService from "../utils/group";
 import { matchedData } from "express-validator";
+
+/**
+ * Obtiene los metadatos de los grupos
+ * 
+ * @param req Request
+ * @param res Response
+ * @returns Todos los grupos de la plataforma.
+ */
+export async function getMetadata(req: any, res: any) {
+
+	try {
+
+		const groupTypes = Object.values(GroupTypes);
+
+		// Devuelve todos los miembros
+		res.status(200).send({ groupTypes: groupTypes });
+
+	} catch (error: any) {
+
+		handleHttpError(res, new HttpError("The operation to get all groups failed!"));
+
+	}
+
+}
 
 /**
  * Obtiene todos los grupos de la plataforma.
