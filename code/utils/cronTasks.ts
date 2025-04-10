@@ -8,6 +8,7 @@ import handleLocalError from "../errors/handleLocalError";
  */
 export function deleteCardPreviews(): void {
 
+
 	try {
 
 		const previewCardsPath: string = path.join(__dirname, "..", "assets", "images", "generated");
