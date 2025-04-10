@@ -63,10 +63,10 @@ export default class MemberService {
 				processedFilters.lastCardPrintedDate = { $ne: null };
 			}
 
-			// // Cambia el nombre por una expresión regular.
-			// if (processedFilters?.group?.name !== undefined) {
-			// 	processedFilters.group.name = { $regex: '^' + processedFilters.group.name, $options: 'i' }
-			// }
+			// Cambia el nombre por una expresión regular.
+			if (processedFilters?.group?.name !== undefined) {
+				processedFilters.group.name = { $regex: '^' + processedFilters.group.name, $options: 'i' }
+			}
 
 			console.log(processedFilters, pagination);
 			// TODO: Dani

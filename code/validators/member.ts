@@ -57,7 +57,6 @@ export const getFilteredMembers = [
 		.isString()
 		.isLength({ max: 25 }).withMessage("El máximo tamaño estado de validación es de 25 caracteres")
 		.custom((param: ValidationStates) => {
-			console.log(Object.values(ValidationStates))
 			if (!Object.values(ValidationStates).includes(param)) {
 				return false;
 			}

@@ -17,7 +17,7 @@ const MemberSchema = new Schema(
 			type: Schema.Types.String
 		},
 
-		// Fecha de creación del grupo
+		// Fecha de creación del miembro
 		creationYear: {
 			type: Schema.Types.Number
 		},
@@ -54,10 +54,6 @@ const MemberSchema = new Schema(
 			default: undefined
 		},
 
-		// Fecha de creación del usuario
-		creationYear: {
-			type: Schema.Types.Number
-		}
 	},
 	{
 		// Guarda Los tiempos de creación.
