@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 /**
  * Connect to the mongo database
  */
-const mongooseConnect = () => {
+export function mongooseConnect() {
 
 	try {
 
@@ -24,5 +24,3 @@ const mongooseConnect = () => {
 	}
 
 };
-
-export default mongooseConnect;

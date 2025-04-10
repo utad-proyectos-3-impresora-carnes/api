@@ -1,6 +1,9 @@
 import { MemberInterface, MemberMongoObjectInterface } from "../interfaces/member";
-import MemberModel from "../models/members";
+import MemberModel from "../models/noSql/members";
 import handleLocalError from "../errors/handleLocalError";
+import { ValidationStates } from "../constants/validationStates";
+import { TempMember } from "../models/sql/tempMember";
+import fs from "fs";
 
 /**
  * Servicio de los mimebros.
@@ -107,25 +110,6 @@ export default class MemberService {
 		}
 	}
 
-	// /**
-	//  * Obtiene todos los miembros cuyo grupo contenga ese id.
-	//  * @param groupId El id del grupo.
-	//  * @returns Los miembros en un grupo.
-	//  */
-	// public async getMembersInGroup(groupId: string): Promise<any> {
-
-	// 	try {
-
-	// 		return await MemberModel.find({ "group.id": groupId })
-
-	// 	} catch (error) {
-
-	// 		console.error(error);
-	// 		throw new Error("Error checking getting all members in a group");
-
-	// 	}
-	// }
-
 	/**
 	 * Crea un miembro.
 	 * @param memberData Los datos de un miembro.
@@ -136,10 +120,7 @@ export default class MemberService {
 		try {
 
 			const member = await MemberModel.create({
-				fullName: memberData.fullName,
-				dni: memberData.dni,
-				group: memberData.group,
-				profileImageLink: memberData.profileImageLink
+				...memberData
 			});
 
 			return this.getMemberById(member._id.toString());
@@ -153,4 +134,89 @@ export default class MemberService {
 
 	}
 
+	/**
+	 * Updates the validation state of a member.
+	 * @param memberId The id of the member
+	 * @param validationState The validaiton state of the member.
+	 * @returns The object with the validaiton state updated.
+	 */
+	public async updateValidationState(memberId: string, validationState: ValidationStates): Promise<MemberMongoObjectInterface> {
+
+		try {
+
+			await MemberModel.findByIdAndUpdate(memberId, { validationState: validationState });
+
+			return await this.getMemberById(memberId);
+
+		} catch (error: any) {
+
+			handleLocalError(error);
+			throw new Error("Error updating validation state.");
+
+		}
+	}
+
+	/**
+	 * Uopdates the lastCardPrinted value of the member.
+	 * @param memberId The id of the member.
+	 * @returns The memebr with the printed date updated.
+	 */
+	public async updatePrintedDate(memberId: string): Promise<MemberMongoObjectInterface> {
+
+		try {
+
+			await MemberModel.findByIdAndUpdate(memberId, { lastCardPrintedDate: Date.now() });
+
+			return await this.getMemberById(memberId);
+
+		} catch (error: any) {
+
+			handleLocalError(error);
+			throw new Error("Error updating validation state.");
+
+		}
+	}
+
+	/**
+	 * Adds a set of members to the mysql table to print them.
+	 * @param memberIds The ids of the members.
+	 * @returns The member objects updated.
+	 */
+	public async addMembersToMysqlTable(memberIds: string[]): Promise<MemberMongoObjectInterface[]> {
+
+		try {
+
+			// Cleans table of previous membres
+			await TempMember.truncate();
+
+			const memberArray: Array<MemberMongoObjectInterface> = new Array<MemberMongoObjectInterface>();
+
+			for (const id of memberIds) {
+
+				const member: MemberMongoObjectInterface = await this.getMemberById(id);
+
+				const image: ArrayBuffer = fs.readFileSync(member.profileImageLink).buffer;
+
+				// Add member to table
+				const mysqlMember = await TempMember.create({
+					fullName: member.fullName,
+					dni: member.dni,
+					group: member.group.name,
+					// TODO: handle this in case the storage for images change
+					profileImage: image
+				})
+
+				memberArray.push(await this.updatePrintedDate(id));
+
+			}
+
+			return memberArray;
+
+		} catch (error: any) {
+
+			handleLocalError(error);
+			throw new Error("Error adding members to mysql table");
+
+		}
+	}
 }

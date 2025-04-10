@@ -1,6 +1,6 @@
 import handleLocalError from "../errors/handleLocalError";
 import { GroupInterface, GroupMongoObjectInterface } from "../interfaces/group";
-import GroupModel from "../models/groups";
+import GroupModel from "../models/noSql/groups";
 
 /**
  * Servicio de los mimebros.
