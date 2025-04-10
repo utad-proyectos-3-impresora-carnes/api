@@ -17,6 +17,15 @@ export const checkGroupId = [
 ]
 
 /**
+ * Validate the endpoint to get metadata.
+ */
+export const getMetadata = [
+
+	(req: any, res: any, next: any) => validateResults(req, res, next)
+
+]
+
+/**
  * Validate the endpoint to get all groups.
  */
 export const getAllGroups = [

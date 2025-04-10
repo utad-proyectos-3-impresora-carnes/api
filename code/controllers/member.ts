@@ -5,6 +5,31 @@ import { matchedData } from "express-validator";
 import handleHttpError from "../errors/handleHttpError";
 import HttpError from "../errors/HttpError";
 import { PaginationInterface } from "../interfaces/pagination";
+import { ValidationStates } from "../constants/validationStates";
+
+/**
+ * Obtiene los metadatos de los miembros
+ * 
+ * @param req Request
+ * @param res Response
+ * @returns Todos los metadatos de los miembros.
+ */
+export async function getMetadata(req: any, res: any) {
+
+	try {
+
+		const validationStates = Object.values(ValidationStates);
+
+		// Devuelve todos metadatos de los miembros
+		res.status(200).send({ validationStates: validationStates });
+
+	} catch (error: any) {
+
+		handleHttpError(res, new HttpError("The operation to get member metadata!"));
+
+	}
+
+}
 
 /**
  * Obtiene todos los miembros de la plataforma.

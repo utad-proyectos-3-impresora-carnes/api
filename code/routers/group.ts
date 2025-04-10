@@ -21,7 +21,29 @@ const groupRouter = express.Router();
 
 /**
  * @swagger
- * /api/group/:
+ * /api/group/metadata:
+ *   get:
+ *     summary: Obtener los metadatos de los grupos
+ *     tags: [Group]
+ * 
+ *     responses:
+ *       200:
+ *         description: Metadatos de los grupos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: MongoDBGenericObject
+ */
+groupRouter.get(
+	"/metadata",
+	auth,
+	validator.getMetadata,
+	controller.getMetadata
+);
+
+/**
+ * @swagger
+ * /api/group/allGroups:
  *   get:
  *     summary: Obtener todos los grupos
  *     tags: [Group]
@@ -35,7 +57,7 @@ const groupRouter = express.Router();
  *               type: MongoDBGenericObject
  */
 groupRouter.get(
-	"/",
+	"/allGroups",
 	auth,
 	validator.getAllGroups,
 	controller.getAllGroups

@@ -17,6 +17,15 @@ export const checkMemberId = [
 ]
 
 /**
+ * Validate the endpoint to get metadata of members.
+ */
+export const getMetadata = [
+
+	(req: any, res: any, next: any) => validateResults(req, res, next)
+
+]
+
+/**
  * Validate the endpoint to get all members.
  */
 export const getAllMembers = [
