@@ -25,7 +25,7 @@ const memberRouter = express.Router();
  * /api/member/metadata:
  *   get:
  *     summary: Obtener los metadatos de los miembros
- *     tags: [Group]
+ *     tags: [Member]
  * 
  *     responses:
  *       200:
