@@ -53,7 +53,7 @@ export async function getFilteredGroups(req: any, res: any) {
 		// Compone los filtros.
 		const groupFilters: GroupInterface = {
 			name: name,
-			type: type !== undefined ? Number(type) : undefined,
+			type: type,
 			creationYear: creationYear !== undefined ? Number(creationYear) : undefined
 		};
 
