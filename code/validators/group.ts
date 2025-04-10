@@ -50,6 +50,14 @@ export const getFilteredGroups = [
 		.isNumeric()
 		.optional(),
 
+	query("limit")
+		.isNumeric()
+		.optional(),
+
+	query("offset")
+		.isNumeric()
+		.optional(),
+
 	(req: any, res: any, next: any) => validateResults(req, res, next)
 
 ]

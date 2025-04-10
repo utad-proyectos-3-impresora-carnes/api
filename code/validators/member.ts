@@ -53,6 +53,14 @@ export const getFilteredMembers = [
 		.isBoolean().withMessage("El parámetro printed debe ser un booleano")
 		.optional(),
 
+	query("limit")
+		.isNumeric()
+		.optional(),
+
+	query("offset")
+		.isNumeric()
+		.optional(),
+
 	(req: any, res: any, next: any) => validateResults(req, res, next)
 
 ]
