@@ -4,6 +4,7 @@ import handleLocalError from "../errors/handleLocalError";
 import { ValidationStates } from "../constants/validationStates";
 import { TempMember } from "../models/sql/tempMember";
 import fs from "fs";
+import { PaginationInterface } from "../interfaces/pagination";
 
 /**
  * Servicio de los mimebros.
@@ -38,7 +39,7 @@ export default class MemberService {
 	 * @param filter El objeto con los parámetros de filtrado.
 	 * @returns Lista con los miembros que cumplen las condiciones de filtrado..
 	 */
-	public async getFilteredMembers(filter: MemberInterface): Promise<Array<MemberMongoObjectInterface>> {
+	public async getFilteredMembers(filter: MemberInterface, pagination: PaginationInterface): Promise<Array<MemberMongoObjectInterface>> {
 
 		try {
 

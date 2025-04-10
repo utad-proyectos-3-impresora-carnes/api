@@ -57,6 +57,7 @@ export async function getFilteredGroups(req: any, res: any) {
 			creationYear: creationYear !== undefined ? Number(creationYear) : undefined
 		};
 
+		// Añade la paginación.
 		const pagination: PaginationInterface = {
 			limit: limit ? limit : 20,
 			offset: offset ? offset : 0
