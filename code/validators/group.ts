@@ -36,7 +36,8 @@ export const getFilteredGroups = [
 		.optional(),
 
 	query("type")
-		.isNumeric()
+		.isString()
+		.isLength({ max: 25 }).withMessage("El máximo tamaño tipo de grupo es de 25 caracteres")
 		.custom((param: GroupTypes) => {
 			if (!Object.values(GroupTypes).includes(param)) {
 				return false;
@@ -47,6 +48,14 @@ export const getFilteredGroups = [
 		.optional(),
 
 	query("creationYear")
+		.isNumeric()
+		.optional(),
+
+	query("limit")
+		.isNumeric()
+		.optional(),
+
+	query("offset")
 		.isNumeric()
 		.optional(),
 

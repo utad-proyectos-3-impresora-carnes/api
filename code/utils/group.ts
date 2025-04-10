@@ -1,5 +1,6 @@
 import handleLocalError from "../errors/handleLocalError";
 import { GroupInterface, GroupMongoObjectInterface } from "../interfaces/group";
+import { PaginationInterface } from "../interfaces/pagination";
 import GroupModel from "../models/noSql/groups";
 
 /**
@@ -35,11 +36,22 @@ export default class GroupService {
 	 * @param groupFilters Filtros de los grupos
 	 * @returns Grupos que cumplen los filtros.
 	 */
-	public async getFilteredGroups(groupFilters: GroupInterface): Promise<Array<GroupMongoObjectInterface>> {
+	public async getFilteredGroups(groupFilters: GroupInterface, pagination: PaginationInterface): Promise<Array<GroupMongoObjectInterface>> {
 
 		try {
 
-			return await GroupModel.find<GroupMongoObjectInterface>(groupFilters);
+			const processedFilters: any = groupFilters;
+
+			// Quita campos no usados
+			Object.keys(processedFilters).forEach(key => processedFilters[key] === undefined && delete processedFilters[key])
+
+			// Cambia el nombre por una expresión regular.
+			if (groupFilters.name !== undefined) {
+				processedFilters.name = { $regex: '^' + groupFilters.name, $options: 'i' }
+			}
+
+			// Ejecuta la query
+			return await GroupModel.find<GroupMongoObjectInterface>(processedFilters).skip(pagination.offset).limit(pagination.limit);
 
 		} catch (error) {
 

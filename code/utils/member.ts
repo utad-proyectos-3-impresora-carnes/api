@@ -4,6 +4,7 @@ import handleLocalError from "../errors/handleLocalError";
 import { ValidationStates } from "../constants/validationStates";
 import { TempMember } from "../models/sql/tempMember";
 import fs from "fs";
+import { PaginationInterface } from "../interfaces/pagination";
 
 /**
  * Servicio de los mimebros.
@@ -38,12 +39,37 @@ export default class MemberService {
 	 * @param filter El objeto con los parámetros de filtrado.
 	 * @returns Lista con los miembros que cumplen las condiciones de filtrado..
 	 */
-	public async getFilteredMembers(filter: MemberInterface): Promise<Array<MemberMongoObjectInterface>> {
+	public async getFilteredMembers(filter: MemberInterface, pagination: PaginationInterface): Promise<Array<MemberMongoObjectInterface>> {
 
 		try {
 
-			// TODO: Dani
-			return await MemberModel.find<MemberMongoObjectInterface>(filter).populate("group");
+			const processedFilters: any = filter;
+
+			// Quita campos no usados
+			Object.keys(processedFilters).forEach(key => processedFilters[key] === undefined && delete processedFilters[key])
+
+			// Cambia el nombre por una expresión regular.
+			if (processedFilters.fullName !== undefined) {
+				processedFilters.fullName = { $regex: '^' + processedFilters.fullName, $options: 'i' }
+			}
+
+			// Cambia el nombre por una expresión regular.
+			if (processedFilters.dni !== undefined) {
+				processedFilters.dni = { $regex: '^' + processedFilters.dni, $options: 'i' }
+			}
+
+			// Cambia la fecha de última impresión por ser no nula.
+			if (processedFilters.lastCardPrintedDate !== undefined) {
+				processedFilters.lastCardPrintedDate = { $ne: null };
+			}
+
+			// Cambia el nombre por una expresión regular.
+			if (processedFilters?.group?.name !== undefined) {
+				processedFilters["group.name"] = { $regex: '^' + processedFilters.group.name, $options: 'i' }
+				delete processedFilters["group"]
+			}
+
+			return await MemberModel.find<MemberMongoObjectInterface>(processedFilters).skip(pagination.offset).limit(pagination.limit).populate("group");
 
 		} catch (error: any) {
 
@@ -177,11 +203,10 @@ export default class MemberService {
 				const image: ArrayBuffer = fs.readFileSync(member.profileImageLink).buffer;
 
 				// Add member to table
-				const mysqlMember = await TempMember.create({
+				await TempMember.create({
 					fullName: member.fullName,
 					dni: member.dni,
 					group: member.group.name,
-					// TODO: handle this in case the storage for images change
 					profileImage: image
 				})
 

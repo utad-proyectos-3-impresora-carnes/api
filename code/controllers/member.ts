@@ -4,7 +4,7 @@ import { generatePreviewCard } from "../utils/cardGenerator";
 import { matchedData } from "express-validator";
 import handleHttpError from "../errors/handleHttpError";
 import HttpError from "../errors/HttpError";
-import { ValidationStates } from "../constants/validationStates";
+import { PaginationInterface } from "../interfaces/pagination";
 
 /**
  * Obtiene todos los miembros de la plataforma.
@@ -48,12 +48,38 @@ export async function getFilteredMembers(req: any, res: any) {
 		// Crea el servicio
 		const memberService: MemberService = new MemberService();
 
+		// Extraer parámetros de la query
+		const { fullName, dni, group, year, validationState, printed, limit, offset } = matchedData(req);
+
+		// Parsear el booleano
+		const boolPrinted = printed == "true" ? true : false;
+
 		// Genera el filtro.
 		const filter: MemberInterface = {
-			...matchedData(req)
+			fullName: fullName,
+			dni: dni,
+			validationState: validationState,
+
+			// Grupo con nombre o undefined si no hay parámetro.
+			group: group !== undefined ? {
+				name: group
+			} : undefined,
+
+			// Año de creación del usuario o undefined si no hay.
+			creationYear: year !== undefined ? Number(year) : undefined,
+
+			// Pone una fecha cualquiera, o undefined si no tiene.
+			lastCardPrintedDate: boolPrinted ? new Date() : undefined
 		}
+
+		// Añade la paginación
+		const pagination: PaginationInterface = {
+			limit: limit ? limit : 20,
+			offset: offset ? offset : 0
+		};
+
 		// Obiene los miembros filtrados
-		const filteredMembers: Array<MemberMongoObjectInterface> = await memberService.getFilteredMembers(filter);
+		const filteredMembers: Array<MemberMongoObjectInterface> = await memberService.getFilteredMembers(filter, pagination);
 
 		// Devuelve los miembros filtrados
 		res.status(501).send(filteredMembers);

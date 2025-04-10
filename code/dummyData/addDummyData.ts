@@ -60,7 +60,7 @@ async function createMembers(data: any) {
 		const groupFilter: GroupInterface = {
 			name: mainType
 		}
-		const groupObject: any = await groupService.getFilteredGroups(groupFilter);
+		const groupObject: any = await groupService.getFilteredGroups(groupFilter, { limit: 200, offset: 0 });
 
 		const memberData: MemberInterface = {
 

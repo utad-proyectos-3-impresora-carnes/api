@@ -25,7 +25,6 @@ export async function createUser(req: any, res: any) {
 			...matchedData(req)
 		}
 
-		// TODO: revisar esto cuando se vean errores
 		// Comprueba si el email está libre
 		if (! await userService.checkEmailAvailable(userData.email)) {
 			throw new Error("Email is already taken! Choose another please.");
