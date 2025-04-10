@@ -49,7 +49,7 @@ export async function getFilteredMembers(req: any, res: any) {
 		const memberService: MemberService = new MemberService();
 
 		// Extraer parámetros de la query
-		const { fullName, dni, group, year, printed, limit, offset } = matchedData(req);
+		const { fullName, dni, group, year, validationState, printed, limit, offset } = matchedData(req);
 
 		// Parsear el booleano
 		const boolPrinted = printed == "true" ? true : false;
@@ -58,6 +58,7 @@ export async function getFilteredMembers(req: any, res: any) {
 		const filter: MemberInterface = {
 			fullName: fullName,
 			dni: dni,
+			validationState: validationState,
 
 			// Grupo con nombre o undefined si no hay parámetro.
 			group: group !== undefined ? {

@@ -81,6 +81,12 @@ memberRouter.get(
  *         required: false
  *         description: Si el carné ha sido ya impreso
  *       - in: query
+ *         name: validationState
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: Si el miembro está validado
+ *       - in: query
  *         name: limit
  *         schema:
  *           type: integer

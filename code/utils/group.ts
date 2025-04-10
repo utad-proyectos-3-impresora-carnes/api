@@ -50,7 +50,6 @@ export default class GroupService {
 				processedFilters.name = { $regex: '^' + groupFilters.name, $options: 'i' }
 			}
 
-			console.log(groupFilters, pagination)
 			// Ejecuta la query
 			return await GroupModel.find<GroupMongoObjectInterface>(processedFilters).skip(pagination.offset).limit(pagination.limit);
 

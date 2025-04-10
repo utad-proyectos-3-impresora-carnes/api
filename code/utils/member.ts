@@ -58,14 +58,19 @@ export default class MemberService {
 				processedFilters.dni = { $regex: '^' + processedFilters.dni, $options: 'i' }
 			}
 
+			// Cambia la fecha de última impresión por ser no nula.
+			if (processedFilters.lastCardPrintedDate !== undefined) {
+				processedFilters.lastCardPrintedDate = { $ne: null };
+			}
+
 			// // Cambia el nombre por una expresión regular.
 			// if (processedFilters?.group?.name !== undefined) {
 			// 	processedFilters.group.name = { $regex: '^' + processedFilters.group.name, $options: 'i' }
 			// }
 
-			console.log(processedFilters)
+			console.log(processedFilters, pagination);
 			// TODO: Dani
-			return await MemberModel.find<MemberMongoObjectInterface>(filter).populate("group");
+			return await MemberModel.find<MemberMongoObjectInterface>(filter).skip(pagination.offset).limit(pagination.limit).populate("group");
 
 		} catch (error: any) {
 

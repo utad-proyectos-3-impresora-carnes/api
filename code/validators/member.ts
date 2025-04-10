@@ -53,6 +53,19 @@ export const getFilteredMembers = [
 		.isBoolean().withMessage("El parámetro printed debe ser un booleano")
 		.optional(),
 
+	query("validationState")
+		.isString()
+		.isLength({ max: 25 }).withMessage("El máximo tamaño estado de validación es de 25 caracteres")
+		.custom((param: ValidationStates) => {
+			console.log(Object.values(ValidationStates))
+			if (!Object.values(ValidationStates).includes(param)) {
+				return false;
+			}
+			return true;
+		})
+		.withMessage("No es un valor de estado de validación válido")
+		.optional(),
+
 	query("limit")
 		.isNumeric()
 		.optional(),
