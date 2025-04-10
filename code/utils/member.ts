@@ -65,12 +65,11 @@ export default class MemberService {
 
 			// Cambia el nombre por una expresión regular.
 			if (processedFilters?.group?.name !== undefined) {
-				processedFilters.group.name = { $regex: '^' + processedFilters.group.name, $options: 'i' }
+				processedFilters["group.name"] = { $regex: '^' + processedFilters.group.name, $options: 'i' }
+				delete processedFilters["group"]
 			}
 
-			console.log(processedFilters, pagination);
-			// TODO: Dani
-			return await MemberModel.find<MemberMongoObjectInterface>(filter).skip(pagination.offset).limit(pagination.limit).populate("group");
+			return await MemberModel.find<MemberMongoObjectInterface>(processedFilters).skip(pagination.offset).limit(pagination.limit).populate("group");
 
 		} catch (error: any) {
 
@@ -204,11 +203,10 @@ export default class MemberService {
 				const image: ArrayBuffer = fs.readFileSync(member.profileImageLink).buffer;
 
 				// Add member to table
-				const mysqlMember = await TempMember.create({
+				await TempMember.create({
 					fullName: member.fullName,
 					dni: member.dni,
 					group: member.group.name,
-					// TODO: handle this in case the storage for images change
 					profileImage: image
 				})
 
