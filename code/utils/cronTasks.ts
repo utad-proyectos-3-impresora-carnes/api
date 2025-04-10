@@ -12,8 +12,6 @@ export function deleteCardPreviews(): void {
 
 		const previewCardsPath: string = path.join(__dirname, "..", "assets", "images", "generated");
 
-		console.log(previewCardsPath);
-
 		if (!fs.existsSync(previewCardsPath))
 			return;
 
