@@ -88,8 +88,6 @@ async function generateGenericCard(memberData: MemberInterface, filePath: string
 
 	const background: string = cardBackground ? cardBackground : "white";
 
-	console.log("template exists:", fs.existsSync(path.join(__dirname, "..", "assets", "images", "card_template.png")));
-
 	const cardInstance = sharp(path.join(__dirname, "..", "assets", "images", "card_template.png"))
 		.resize(cardWidth, cardHeight)
 

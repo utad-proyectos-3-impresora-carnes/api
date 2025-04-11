@@ -137,7 +137,7 @@ export async function previewMemberCard(req: any, res: any) {
 
 		const filePath: string = await generatePreviewCard(memberObject);
 
-		res.status(200).send(filePath);
+		res.status(200).send({ preview: filePath });
 
 	} catch (error: any) {
 
