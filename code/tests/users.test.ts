@@ -1,6 +1,6 @@
 import { server } from "../app";
 import { UserMongoObjectInterface } from "../interfaces/user";
-import { deleteUserTest, loginUserTest, registerUserTest } from "./fragments/user";
+import { deleteUserTest, getUserByTokenTest, loginUserTest, registerUserTest, getUserByIdTest, editUserByIdTest } from "./fragments/user";
 
 describe('users', (): void => {
 
@@ -12,7 +12,7 @@ describe('users', (): void => {
 
 	let token = "";
 
-	it('Should register a user.', async () => {
+	beforeAll(async () => {
 		registerUserTest(server, userData.email, userData.password, userData.phone);
 	});
 
@@ -22,7 +22,20 @@ describe('users', (): void => {
 		token = response.body.token;
 	});
 
-	it('Should delete a user', async () => {
+	it("Should return a user by token", async () => {
+		const response = await getUserByTokenTest(server, token);
+	})
+
+	it("Should return a user by id", async () => {
+		const response = await getUserByIdTest(server, token, userData._id);
+	})
+
+	it("Should edit a user by ID", async () => {
+		userData.email = "userEditado@gmail.com";
+		const response = await editUserByIdTest(server, token, userData);
+	})
+
+	afterAll(async () => {
 		deleteUserTest(server, userData._id, token);
 	});
 

@@ -142,13 +142,13 @@ userRouter.post(
 userRouter.get(
 	"/getUserByToken",
 	auth,
-	// validator.getUserByToken,
+	validator.getUserByToken,
 	controller.getUserByToken
 );
 
 /**
  * @swagger
- * /api/user/{userId}:
+ * /api/user/getUserById/{userId}:
  *   get:
  *     summary: Obtener todos los datos de un usuario a partir de su id.
  *     tags: 
@@ -169,7 +169,7 @@ userRouter.get(
  *         description: Error buscar los datos de un usuario en particular.
  */
 userRouter.get(
-	"/:userId",
+	"/getUserById/:userId",
 	auth,
 	validator.checkUserId,
 	validator.getUserData,
@@ -178,7 +178,7 @@ userRouter.get(
 
 /**
  * @swagger
- * /api/user/{userId}:
+ * /api/user/editUserById/{userId}:
  *   patch:
  *     summary: Actualiza los datos de un usuario.
  *     tags: 
@@ -216,7 +216,7 @@ userRouter.get(
  *         description: Error al actualizar los datos del usuario. 
  */
 userRouter.patch(
-	"/:userId",
+	"/editUserById/:userId",
 	auth,
 	validator.checkUserId,
 	validator.updateUser,
@@ -225,7 +225,7 @@ userRouter.patch(
 
 /**
  * @swagger
- * /api/user/{userId}:
+ * /api/user/deleteUserById/{userId}:
  *   delete:
  *     summary: Elimina un usuario.
  *     tags: 
@@ -246,7 +246,7 @@ userRouter.patch(
  *         description: Error al eliminar un usuario. 
  */
 userRouter.delete(
-	"/:userId",
+	"/deleteUserById/:userId",
 	auth,
 	validator.checkUserId,
 	validator.deleteUser,
