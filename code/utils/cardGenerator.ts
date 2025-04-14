@@ -154,8 +154,15 @@ async function cargarImagen(fotoPath: string): Promise<ArrayBuffer> {
 		image = await blob.arrayBuffer();
 
 	} catch (error) {
-		// Fallback to local path
-		image = fs.readFileSync(fotoPath);
+
+		try {
+
+			// Fallback to local path
+			image = fs.readFileSync(fotoPath);
+
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	return image;
