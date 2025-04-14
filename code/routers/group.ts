@@ -13,9 +13,9 @@ import auth from "../middleware/auth";
 /**
  * Objeto de router de los grupos.
  * Ofrece los siguientes endpoints:
- * - GET / -> devuelve todos los grupos en la base de datos
+ * - GET /metadata -> devuelve los metadatos de los grupos
+ * - GET /allGroups -> devuelve todos los grupos en la base de datos
  * - GET /filtered -> devuelve los grupos que sigan una serie de filtros
- * - PATCH /print:id -> manda a imprir un carne con el id dado
  */
 const groupRouter = express.Router();
 
@@ -115,40 +115,6 @@ groupRouter.get(
 	auth,
 	validator.getFilteredGroups,
 	controller.getFilteredGroups
-);
-
-/**
- * @swagger
- * /api/group/print/{groupId}:
- *   patch:
- *     summary: Mandar a imprimir un grupo
- *     tags: [Group]
- * 
- *     parameters:
- *       - in: path
- *         name: groupId
- *         schema:
- *           type: string
- *         required: true
- *         description: ID del grupo
- * 
- *     responses:
- *       200:
- *         description: Confirmación de impresión
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- */
-groupRouter.patch(
-	"/print/:groupId",
-	auth,
-	validator.checkGroupId,
-	validator.printGroup,
-	controller.printGroup
 );
 
 // Exporta el router una vez definidos todos los endpointss.

@@ -1,4 +1,4 @@
-import { param, query, body } from "express-validator";
+import { param, query } from "express-validator";
 import validateResults from "../utils/validator";
 import { GroupTypes } from "../constants/groupTypes";
 
@@ -14,7 +14,7 @@ export const checkGroupId = [
 
 	(req: any, res: any, next: any) => validateResults(req, res, next)
 
-]
+];
 
 /**
  * Validate the endpoint to get metadata.
@@ -23,7 +23,7 @@ export const getMetadata = [
 
 	(req: any, res: any, next: any) => validateResults(req, res, next)
 
-]
+];
 
 /**
  * Validate the endpoint to get all groups.
@@ -32,7 +32,7 @@ export const getAllGroups = [
 
 	(req: any, res: any, next: any) => validateResults(req, res, next)
 
-]
+];
 
 /**
  * Validate the endpoint to get filtered groups.
@@ -70,13 +70,4 @@ export const getFilteredGroups = [
 
 	(req: any, res: any, next: any) => validateResults(req, res, next)
 
-]
-
-/**
- * Validate the endpoint to print groups.
- */
-export const printGroup = [
-
-	(req: any, res: any, next: any) => validateResults(req, res, next)
-
-]
+];
