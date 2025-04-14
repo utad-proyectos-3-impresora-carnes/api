@@ -13,7 +13,7 @@ describe('users', (): void => {
 	let token = "";
 
 	beforeAll(async () => {
-		registerUserTest(server, userData.email, userData.password, userData.phone);
+		await registerUserTest(server, userData.email, userData.password, userData.phone);
 	});
 
 	it('Should login a user.', async () => {
@@ -36,7 +36,7 @@ describe('users', (): void => {
 	})
 
 	afterAll(async () => {
-		deleteUserTest(server, userData._id, token);
+		await deleteUserTest(server, userData._id, token);
 	});
 
 })

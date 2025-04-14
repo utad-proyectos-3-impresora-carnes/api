@@ -4,7 +4,7 @@ import { UserMongoObjectInterface } from "../../interfaces/user";
 
 /**
  * Test to register a user.
- * @param server The server to send teh query.
+ * @param server The server to send the query.
  * @param email The email.
  * @param password The password
  * @param phone The phone.
@@ -88,7 +88,7 @@ export const editUserByIdTest = async (server: Express, token: string, userData:
 	const response = await request(server)
 		.patch(`/api/user/editUserById/${userData._id}`)
 		.auth(token, { type: 'bearer' })
-		.send({ ...userData })
+		.send(userData)
 		.set('Accept', 'serverlication/json')
 		.expect(200);
 

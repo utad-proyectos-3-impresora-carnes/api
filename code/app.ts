@@ -21,8 +21,9 @@ const server: Express = createServer();
 /**
  * Inicia el servidor, escuchando en el puerto 'port'. Además una vez iniciado ejecuta la función anónima que se declare.
  */
-server.listen(port, () => {
-	console.log(`Server listening on: http://${url}:${port}`)
-});
+if (process.env.NODE_ENV !== "test")
+	server.listen(port, () => {
+		console.log(`Server listening on: http://${url}:${port}`)
+	});
 
 export { server };
