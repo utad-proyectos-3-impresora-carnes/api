@@ -2,7 +2,7 @@ import { server } from "../app";
 import { UserMongoObjectInterface } from "../interfaces/user";
 import { deleteUserTest, getUserByTokenTest, loginUserTest, registerUserTest, getUserByIdTest, editUserByIdTest } from "./fragments/user";
 
-describe('users', (): void => {
+describe("Users", (): void => {
 
 	const userData: UserMongoObjectInterface = {
 		email: "userPrueba@gmail.com",

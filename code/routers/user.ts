@@ -13,12 +13,13 @@ import auth from "../middleware/auth";
 /**
  * Objeto de router del usuario.
  * Ofrece los siguientes endpoints:
- * - POST / -> Creación de usuario.
+ * - POST /register -> Creación de usuario.
  * - POST /login -> Obtención de un token de inicio de sesión.
  * - POST /resetPassword -> Recibir un email para resetear la contraseña.
- * - GET /:id -> Obtención de todos los datos de un usuario para ver el perfil.
- * - PATCH /:id -> Actualización de un usuario identificado por su ID.
- * - DELETE /:id -> Eliminar un usuario basado en su ID.
+ * - GET /getUserByToken -> Obtención de todos los datos de un usuario para ver el perfil.
+ * - GET /getUserById/:id -> Obtención de todos los datos de un usuario para ver el perfil.
+ * - PATCH /editUserById/:id -> Actualización de un usuario identificado por su ID.
+ * - DELETE /deleteUserById/:id -> Eliminar un usuario basado en su ID.
  */
 const userRouter = express.Router();
 

@@ -3,7 +3,7 @@ import { UserMongoObjectInterface } from "../interfaces/user";
 import { getAllGroupsTest, getFilteredGroupsTest, getGroupMetadataTest } from "./fragments/group";
 import { deleteUserTest, loginUserTest, registerUserTest } from "./fragments/user";
 
-describe("groups", (): void => {
+describe("Groups", (): void => {
 	const userData: UserMongoObjectInterface = {
 		email: "groupPrueba@gmail.com",
 		password: "12341234Aa$",
