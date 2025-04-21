@@ -98,22 +98,22 @@ export default class MemberService {
 		}
 	}
 
-	/**
-	 * Check wether the member with this id exists on the database.
-	 * @param memberId The id of the group.
-	 */
-	public async checkGroupExists(memberId: string): Promise<boolean> {
-		try {
+	// /**
+	//  * Check wether the member with this id exists on the database.
+	//  * @param memberId The id of the member.
+	//  */
+	// public async checkMemberExists(memberId: string): Promise<boolean> {
+	// 	try {
 
-			return this.getMemberById(memberId) !== null;
+	// 		return this.getMemberById(memberId) !== null;
 
-		} catch (error: any) {
+	// 	} catch (error: any) {
 
-			handleLocalError(error);
-			throw new Error("Error checking if member exists.");
+	// 		handleLocalError(error);
+	// 		throw new Error("Error checking if member exists.");
 
-		}
-	}
+	// 	}
+	// }
 
 	/**
 	 * Crea un miembro.
@@ -137,6 +137,24 @@ export default class MemberService {
 
 		}
 
+	}
+
+	/**
+	 * Deletes a member by id.
+	 * @param memberId The member id
+	 * @returns The delted object
+	 */
+	public async deleteMember(memberId: string) {
+		try {
+
+			return await MemberModel.findByIdAndDelete(memberId);
+
+		} catch (error: any) {
+
+			handleLocalError(error);
+			throw new Error("Error deleting a member.");
+
+		}
 	}
 
 	/**
