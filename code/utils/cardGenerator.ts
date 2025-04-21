@@ -88,8 +88,6 @@ async function generateGenericCard(memberData: MemberInterface, filePath: string
 
 	const background: string = cardBackground ? cardBackground : "white";
 
-	console.log("template exists:", fs.existsSync(path.join(__dirname, "..", "assets", "images", "card_template.png")));
-
 	const cardInstance = sharp(path.join(__dirname, "..", "assets", "images", "card_template.png"))
 		.resize(cardWidth, cardHeight)
 
@@ -145,7 +143,7 @@ function addText(memberData: MemberInterface, cardWidth: number, cardHeight: num
  * @param fotoPath El link a la foto del mimebro.
  * @returns Un buffer con la foto del miembro.
  */
-async function cargarImagen(fotoPath: string): Promise<ArrayBuffer> {
+export async function cargarImagen(fotoPath: string): Promise<ArrayBuffer> {
 
 	let image: any;
 
@@ -156,8 +154,15 @@ async function cargarImagen(fotoPath: string): Promise<ArrayBuffer> {
 		image = await blob.arrayBuffer();
 
 	} catch (error) {
-		// Fallback to local path
-		image = fs.readFileSync(fotoPath);
+
+		try {
+
+			// Fallback to local path
+			image = fs.readFileSync(fotoPath);
+
+		} catch (error) {
+			throw error;
+		}
 	}
 
 	return image;

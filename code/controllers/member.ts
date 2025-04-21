@@ -107,7 +107,7 @@ export async function getFilteredMembers(req: any, res: any) {
 		const filteredMembers: Array<MemberMongoObjectInterface> = await memberService.getFilteredMembers(filter, pagination);
 
 		// Devuelve los miembros filtrados
-		res.status(501).send(filteredMembers);
+		res.status(200).send(filteredMembers);
 
 	} catch (error: any) {
 
@@ -137,7 +137,7 @@ export async function previewMemberCard(req: any, res: any) {
 
 		const filePath: string = await generatePreviewCard(memberObject);
 
-		res.status(200).send(filePath);
+		res.status(200).send({ preview: filePath });
 
 	} catch (error: any) {
 

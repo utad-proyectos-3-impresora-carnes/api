@@ -101,27 +101,3 @@ export async function getFilteredGroups(req: any, res: any) {
 	}
 
 }
-
-/**
- * Manda a imprimir un grupo.
- * 
- * @param req Request
- * @param res Response
- * @returns Confirmación de que el grupo se mandó a imprimir.
- */
-export async function printGroup(req: any, res: any) {
-
-	try {
-
-		const { groupId } = matchedData(req);
-
-		// No tocar durante sprint 2
-		res.status(501).send(`You have requested to print the group with id: ${groupId}.\nThis is not implemented yet!\nCome back later!`);
-
-	} catch (error: any) {
-
-		handleHttpError(res, new HttpError("The operation to schedule a print failed!"));
-
-	}
-
-}
