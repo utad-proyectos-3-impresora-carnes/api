@@ -51,3 +51,20 @@ export const getFilteredMembersTest = async (server: Express, token: string, mem
 	return response;
 }
 
+/**
+ * Test to preview a member.
+ * @param server The server to send the query.
+ * @param token The token of authorization.
+ * @returns The query response.
+ */
+export const previewMemberTest = async (server: Express, token: string, memberId: string) => {
+	const response = await request(server)
+		.get(`/api/member/preview/${memberId}`)
+		.auth(token, { type: 'bearer' })
+		.set('Accept', 'serverlication/json')
+		.expect(200);
+
+	return response;
+}
+
+

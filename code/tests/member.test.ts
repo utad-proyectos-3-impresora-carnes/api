@@ -3,7 +3,7 @@ import { UserMongoObjectInterface } from "../interfaces/user";
 import { deleteUserTest, loginUserTest, registerUserTest } from "./fragments/user";
 import MemberService from "../utils/member";
 import { MemberMongoObjectInterface } from "../interfaces/member";
-import { getAllMembersTest, getFilteredMembersTest, getMemberMetadataTest } from "./fragments/member";
+import { getAllMembersTest, getFilteredMembersTest, getMemberMetadataTest, previewMemberTest } from "./fragments/member";
 
 describe("Members", () => {
 
@@ -46,7 +46,7 @@ describe("Members", () => {
 	})
 
 	it("Should get string to the path of the image generated", async () => {
-
+		await previewMemberTest(server, token, testMember._id);
 	})
 
 	it("Should edit the validation status of a member", async () => {
