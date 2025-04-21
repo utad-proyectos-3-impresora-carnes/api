@@ -143,7 +143,7 @@ function addText(memberData: MemberInterface, cardWidth: number, cardHeight: num
  * @param fotoPath El link a la foto del mimebro.
  * @returns Un buffer con la foto del miembro.
  */
-async function cargarImagen(fotoPath: string): Promise<ArrayBuffer> {
+export async function cargarImagen(fotoPath: string): Promise<ArrayBuffer> {
 
 	let image: any;
 

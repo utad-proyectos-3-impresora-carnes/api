@@ -3,7 +3,8 @@ import { UserMongoObjectInterface } from "../interfaces/user";
 import { deleteUserTest, loginUserTest, registerUserTest } from "./fragments/user";
 import MemberService from "../utils/member";
 import { MemberMongoObjectInterface } from "../interfaces/member";
-import { getAllMembersTest, getFilteredMembersTest, getMemberMetadataTest, previewMemberTest } from "./fragments/member";
+import { editMemberValidationStateTest, getAllMembersTest, getFilteredMembersTest, getMemberMetadataTest, previewMemberTest, printMemberTest } from "./fragments/member";
+import { ValidationStates } from "../constants/validationStates";
 
 describe("Members", () => {
 
@@ -27,7 +28,10 @@ describe("Members", () => {
 		testMember = await memberService.createMember({
 			fullName: "Miembro de prueba",
 			dni: "123456789A",
-			profileImageLink: "https://t4.ftcdn.net/jpg/02/66/72/41/360_F_266724172_Iy8gdKgMa7XmrhYYxLCxyhx6J7070Pr8.jpg"
+			profileImageLink: "https://t4.ftcdn.net/jpg/02/66/72/41/360_F_266724172_Iy8gdKgMa7XmrhYYxLCxyhx6J7070Pr8.jpg",
+			group: {
+				name: "Grupo prueba"
+			}
 		});
 	});
 
@@ -50,11 +54,11 @@ describe("Members", () => {
 	})
 
 	it("Should edit the validation status of a member", async () => {
-
+		await editMemberValidationStateTest(server, token, testMember._id, ValidationStates.VALIDATED);
 	})
 
 	it("Should send a member to print", async () => {
-
+		await printMemberTest(server, token, [testMember._id]);
 	})
 
 	afterAll(async () => {

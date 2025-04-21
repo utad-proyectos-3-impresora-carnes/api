@@ -5,6 +5,8 @@ import { ValidationStates } from "../constants/validationStates";
 import { TempMember } from "../models/sql/tempMember";
 import fs from "fs";
 import { PaginationInterface } from "../interfaces/pagination";
+import { cargarImagen } from "./cardGenerator";
+import e from "express";
 
 /**
  * Servicio de los mimebros.
@@ -218,7 +220,7 @@ export default class MemberService {
 
 				const member: MemberMongoObjectInterface = await this.getMemberById(id);
 
-				const image: ArrayBuffer = fs.readFileSync(member.profileImageLink).buffer;
+				const image: ArrayBuffer = await cargarImagen(member.profileImageLink);
 
 				// Add member to table
 				await TempMember.create({
