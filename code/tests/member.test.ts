@@ -3,6 +3,7 @@ import { UserMongoObjectInterface } from "../interfaces/user";
 import { deleteUserTest, loginUserTest, registerUserTest } from "./fragments/user";
 import MemberService from "../utils/member";
 import { MemberMongoObjectInterface } from "../interfaces/member";
+import { getAllMembersTest, getFilteredMembersTest, getMemberMetadataTest } from "./fragments/member";
 
 describe("Members", () => {
 
@@ -25,20 +26,23 @@ describe("Members", () => {
 
 		testMember = await memberService.createMember({
 			fullName: "Miembro de prueba",
-			dni: "123456789A"
+			dni: "123456789A",
+			profileImageLink: "https://t4.ftcdn.net/jpg/02/66/72/41/360_F_266724172_Iy8gdKgMa7XmrhYYxLCxyhx6J7070Pr8.jpg"
 		});
 	});
 
 	it("Should get members metadata", async () => {
-
+		await getMemberMetadataTest(server, token);
 	})
 
 	it("Should get all members", async () => {
-
+		await getAllMembersTest(server, token);
 	})
 
 	it("Should get filtered members", async () => {
-
+		await getFilteredMembersTest(server, token, {
+			fullName: testMember.fullName
+		});
 	})
 
 	it("Should get string to the path of the image generated", async () => {
