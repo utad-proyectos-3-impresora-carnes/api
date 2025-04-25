@@ -72,7 +72,7 @@ async function createMembers(data: any) {
 				name: groupObject[0]?.name
 			},
 			lastCardPrintedDate: undefined,
-			creationYear: randomInt(40) + 1990
+			creationYear: randomInt(5) + 2020
 
 		}
 
