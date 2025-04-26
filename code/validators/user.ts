@@ -31,6 +31,10 @@ export const createUser = [
 		.isString()
 		.isLength({ min: 9, max: 20 }).withMessage("El teléfono debe tener entre 9 y 20 caracteres."),
 
+	body("name")
+		.isString()
+		.isLength({ max: 20 }).withMessage("El nombre no puede tener más de 20 caracteres."),
+
 	(req: any, res: any, next: any) => validateResults(req, res, next)
 
 ]

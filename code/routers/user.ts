@@ -44,6 +44,9 @@ const userRouter = express.Router();
  *               password:
  *                 type: string
  *                 example: "12341234Aa"
+ *               name:
+ *                 type: string
+ *                 example: "Pepe"
  *               phone:
  *                 type: string
  *                 example: "+34123123123"
